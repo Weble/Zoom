@@ -11,6 +11,8 @@ use \Exception;
  */
 class OAuth {
 
+  const ZOOM_OATH_URL = 'https://zoom.us/oauth/token?grant_type=client_credentials';
+
   /**
    * Generates a Server2Server OAuth token from Zoom API.
    *
@@ -25,8 +27,7 @@ class OAuth {
    * @throws \Exception
    */
   public static function generateToken(string $apiKey, string $apiSecret) {
-    $url = 'https://zoom.us/oauth/token?grant_type=client_credentials';
-    $ch = curl_init($url);
+    $ch = curl_init(self::ZOOM_OATH_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
       'Authorization: Basic ' . base64_encode($apiKey . ':' . $apiSecret),
