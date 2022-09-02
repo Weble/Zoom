@@ -11,7 +11,7 @@ use \Exception;
  */
 class OAuth {
 
-  const ZOOM_OATH_URL = 'https://zoom.us/oauth/token?grant_type=client_credentials';
+  const ZOOM_OATH_URL = 'https://zoom.us/oauth/token?grant_type=account_credentials';
 
   /**
    * Generates a Server2Server OAuth token from Zoom API.
