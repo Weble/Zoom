@@ -14,20 +14,14 @@ PHP 7.2 and later
 ## Installation & Usage
 
 ```php
+// @see https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
 $apiKey = "[YOUR_API_KEY]";
 $apiSecret = "[YOUR_API_SECRET]";
 
-$payload = array(
-    "iss" => $apiKey,
-    // How much time the jtw token should last
-    "exp" => (int) (new DateTime())->add(new DateInterval('PT60M'))->format('U'),
-);
+// Valid for 1 hour.
+$oauth_token = \Weble\Zoom\OAuth::generateToken($apiKey, $apiSecret);
 
-// This is the JWT token. It will last for the time you expressed above.
-// We suggest you cache it for the same duration, to avoid generating a new one each time
-$jwt = \Firebase\JWT\JWT::encode($payload, $apiSecret);
-
-$this->config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($jwt);
+$this->config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($oauth_token);
 $apiInstance = new \Weble\Zoom\Api\UsersApi(
     new \GuzzleHttp\Client(),
     $config
