@@ -17,9 +17,10 @@ PHP 7.2 and later
 // @see https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
 $apiKey = "[YOUR_API_KEY]";
 $apiSecret = "[YOUR_API_SECRET]";
+$accountId = "[YOUR_ACCOUNT_ID]";
 
 // Valid for 1 hour.
-$oauth_token = \Weble\Zoom\OAuth::generateToken($apiKey, $apiSecret);
+$oauth_token = \Weble\Zoom\OAuth::generateToken($apiKey, $apiSecret, $accountId);
 
 $config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($oauth_token);
 $apiInstance = new \Weble\Zoom\Api\UsersApi(

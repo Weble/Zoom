@@ -20,18 +20,22 @@ class OAuth {
    *   The API key.
    * @param string $apiSecret
    *  The API secret.
+   * @param string $accountId
+   *  The account ID.
    *
    * @return string
    *   The OAuth token.
    *
    * @throws \Exception
    */
-  public static function generateToken(string $apiKey, string $apiSecret) {
-    $ch = curl_init(self::ZOOM_OATH_URL);
+  public static function generateToken(string $apiKey, string $apiSecret, string $accountId) {
+    $ch = curl_init(self::ZOOM_OATH_URL . '&account_id=' . $accountId);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
       'Authorization: Basic ' . base64_encode($apiKey . ':' . $apiSecret),
+
     ]);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
     $response_raw = curl_exec($ch);
     curl_close($ch);
     if (empty($response_raw)) {
