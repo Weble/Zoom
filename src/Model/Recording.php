@@ -467,7 +467,7 @@ class Recording implements ModelInterface, ArrayAccess
     /**
      * Sets download_url
      *
-     * @param string $download_url The URL using which the recording file can be downloaded. **To access a private or password protected cloud recording, you must use a [Zoom JWT App Type](https://marketplace.zoom.us/docs/guides/getting-started/app-types/create-jwt-app). Use the generated JWT token as the value of the `access_token` query parameter and include this query parameter at the end of the URL as shown in the example.**   <br> Example: `https://api.zoom.us/recording/download/{{ Download Path }}?access_token={{ JWT Token }}`
+     * @param string $download_url The URL using which the recording file can be downloaded. **To access a private or password protected cloud recording, you must use a [Zoom JWT OAuth Server 2 Server app](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/). <br> Consult: https://marketplace.zoom.us/docs/guides/guides/managing-recordings/`
      *
      * @return $this
      */
