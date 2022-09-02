@@ -21,7 +21,7 @@ $apiSecret = "[YOUR_API_SECRET]";
 // Valid for 1 hour.
 $oauth_token = \Weble\Zoom\OAuth::generateToken($apiKey, $apiSecret);
 
-$this->config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($oauth_token);
+$config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($oauth_token);
 $apiInstance = new \Weble\Zoom\Api\UsersApi(
     new \GuzzleHttp\Client(),
     $config
