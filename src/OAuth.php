@@ -31,12 +31,15 @@ class OAuth {
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
       'Authorization: Basic ' . base64_encode($apiKey . ':' . $apiSecret),
     ]);
-    $response = curl_exec($ch);
+    $response_raw = curl_exec($ch);
     curl_close($ch);
-    if (empty($response)) {
-      throw new Exception('Failed to generate token: ' . curl_error($ch));
+    if (empty($response_raw)) {
+      throw new Exception('Failed to generate token, probably invalid key and secret were provided.');
     }
-    $response = json_decode($response, TRUE);
+    $response = json_decode($response_raw, TRUE);
+    if (empty($response)) {
+      throw new Exception('Failed to generate token: ' . $response_raw);
+    }
     if (empty($response['access_token'])) {
       throw new Exception('Unable to generate OAuth token: ' . serialize($response));
     }
