@@ -21,7 +21,7 @@ class OAuth {
    *
    * @return string
    *   The OAuth token.
-   * 
+   *
    * @throws \Exception
    */
   public static function generateToken(string $apiKey, string $apiSecret) {
