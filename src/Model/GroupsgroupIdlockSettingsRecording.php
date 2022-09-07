@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -212,14 +212,14 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['local_recording'] = isset($data['local_recording']) ? $data['local_recording'] : null;
-        $this->container['cloud_recording'] = isset($data['cloud_recording']) ? $data['cloud_recording'] : null;
-        $this->container['auto_recording'] = isset($data['auto_recording']) ? $data['auto_recording'] : null;
-        $this->container['cloud_recording_download'] = isset($data['cloud_recording_download']) ? $data['cloud_recording_download'] : null;
-        $this->container['account_user_access_recording'] = isset($data['account_user_access_recording']) ? $data['account_user_access_recording'] : null;
-        $this->container['host_delete_cloud_recording'] = isset($data['host_delete_cloud_recording']) ? $data['host_delete_cloud_recording'] : null;
-        $this->container['auto_delete_cmr'] = isset($data['auto_delete_cmr']) ? $data['auto_delete_cmr'] : null;
-        $this->container['recording_authentication'] = isset($data['recording_authentication']) ? $data['recording_authentication'] : null;
+        $this->container['local_recording'] = $data['local_recording'] ?? null;
+        $this->container['cloud_recording'] = $data['cloud_recording'] ?? null;
+        $this->container['auto_recording'] = $data['auto_recording'] ?? null;
+        $this->container['cloud_recording_download'] = $data['cloud_recording_download'] ?? null;
+        $this->container['account_user_access_recording'] = $data['account_user_access_recording'] ?? null;
+        $this->container['host_delete_cloud_recording'] = $data['host_delete_cloud_recording'] ?? null;
+        $this->container['auto_delete_cmr'] = $data['auto_delete_cmr'] ?? null;
+        $this->container['recording_authentication'] = $data['recording_authentication'] ?? null;
     }
 
     /**
@@ -444,7 +444,7 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -456,9 +456,9 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -469,7 +469,7 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -485,7 +485,7 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -504,7 +504,7 @@ class GroupsgroupIdlockSettingsRecording implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

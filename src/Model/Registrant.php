@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Registrant implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -258,23 +258,23 @@ class Registrant implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['email'] = isset($data['email']) ? $data['email'] : null;
-        $this->container['first_name'] = isset($data['first_name']) ? $data['first_name'] : null;
-        $this->container['last_name'] = isset($data['last_name']) ? $data['last_name'] : null;
-        $this->container['address'] = isset($data['address']) ? $data['address'] : null;
-        $this->container['city'] = isset($data['city']) ? $data['city'] : null;
-        $this->container['country'] = isset($data['country']) ? $data['country'] : null;
-        $this->container['zip'] = isset($data['zip']) ? $data['zip'] : null;
-        $this->container['state'] = isset($data['state']) ? $data['state'] : null;
-        $this->container['phone'] = isset($data['phone']) ? $data['phone'] : null;
-        $this->container['industry'] = isset($data['industry']) ? $data['industry'] : null;
-        $this->container['org'] = isset($data['org']) ? $data['org'] : null;
-        $this->container['job_title'] = isset($data['job_title']) ? $data['job_title'] : null;
-        $this->container['purchasing_time_frame'] = isset($data['purchasing_time_frame']) ? $data['purchasing_time_frame'] : null;
-        $this->container['role_in_purchase_process'] = isset($data['role_in_purchase_process']) ? $data['role_in_purchase_process'] : null;
-        $this->container['no_of_employees'] = isset($data['no_of_employees']) ? $data['no_of_employees'] : null;
-        $this->container['comments'] = isset($data['comments']) ? $data['comments'] : null;
-        $this->container['custom_questions'] = isset($data['custom_questions']) ? $data['custom_questions'] : null;
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['last_name'] = $data['last_name'] ?? null;
+        $this->container['address'] = $data['address'] ?? null;
+        $this->container['city'] = $data['city'] ?? null;
+        $this->container['country'] = $data['country'] ?? null;
+        $this->container['zip'] = $data['zip'] ?? null;
+        $this->container['state'] = $data['state'] ?? null;
+        $this->container['phone'] = $data['phone'] ?? null;
+        $this->container['industry'] = $data['industry'] ?? null;
+        $this->container['org'] = $data['org'] ?? null;
+        $this->container['job_title'] = $data['job_title'] ?? null;
+        $this->container['purchasing_time_frame'] = $data['purchasing_time_frame'] ?? null;
+        $this->container['role_in_purchase_process'] = $data['role_in_purchase_process'] ?? null;
+        $this->container['no_of_employees'] = $data['no_of_employees'] ?? null;
+        $this->container['comments'] = $data['comments'] ?? null;
+        $this->container['custom_questions'] = $data['custom_questions'] ?? null;
     }
 
     /**
@@ -721,7 +721,7 @@ class Registrant implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -733,9 +733,9 @@ class Registrant implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -746,7 +746,7 @@ class Registrant implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -762,7 +762,7 @@ class Registrant implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -781,7 +781,7 @@ class Registrant implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

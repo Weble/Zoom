@@ -100,7 +100,7 @@ class RoomsLocationApi
      */
     public function addAZRLocation($body = null)
     {
-        list($response) = $this->addAZRLocationWithHttpInfo($body);
+        [$response] = $this->addAZRLocationWithHttpInfo($body);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class RoomsLocationApi
      */
     public function addAZRLocationWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20077';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20077::class;
         $request = $this->addAZRLocationRequest($body);
 
         try {
@@ -149,12 +149,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class RoomsLocationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20077',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20077::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class RoomsLocationApi
     {
         return $this->addAZRLocationAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class RoomsLocationApi
      */
     public function addAZRLocationAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20077';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20077::class;
         $request = $this->addAZRLocationRequest($body);
 
         return $this->client
@@ -219,12 +217,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -320,7 +318,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -340,7 +338,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -363,7 +361,7 @@ class RoomsLocationApi
      */
     public function changeParentLocation($location_id, $body = null)
     {
-        list($response) = $this->changeParentLocationWithHttpInfo($location_id, $body);
+        [$response] = $this->changeParentLocationWithHttpInfo($location_id, $body);
         return $response;
     }
 
@@ -413,12 +411,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -458,9 +456,7 @@ class RoomsLocationApi
     {
         return $this->changeParentLocationAsyncWithHttpInfo($location_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -485,12 +481,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -601,7 +597,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -621,7 +617,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -643,7 +639,7 @@ class RoomsLocationApi
      */
     public function getZRLocationProfile($location_id)
     {
-        list($response) = $this->getZRLocationProfileWithHttpInfo($location_id);
+        [$response] = $this->getZRLocationProfileWithHttpInfo($location_id);
         return $response;
     }
 
@@ -660,7 +656,7 @@ class RoomsLocationApi
      */
     public function getZRLocationProfileWithHttpInfo($location_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20078';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20078::class;
         $request = $this->getZRLocationProfileRequest($location_id);
 
         try {
@@ -692,12 +688,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -712,7 +708,7 @@ class RoomsLocationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20078',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20078::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -736,9 +732,7 @@ class RoomsLocationApi
     {
         return $this->getZRLocationProfileAsyncWithHttpInfo($location_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -754,7 +748,7 @@ class RoomsLocationApi
      */
     public function getZRLocationProfileAsyncWithHttpInfo($location_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20078';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20078::class;
         $request = $this->getZRLocationProfileRequest($location_id);
 
         return $this->client
@@ -762,12 +756,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -874,7 +868,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -894,7 +888,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -917,7 +911,7 @@ class RoomsLocationApi
      */
     public function getZRLocationSettings($setting_type, $location_id)
     {
-        list($response) = $this->getZRLocationSettingsWithHttpInfo($setting_type, $location_id);
+        [$response] = $this->getZRLocationSettingsWithHttpInfo($setting_type, $location_id);
         return $response;
     }
 
@@ -967,12 +961,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1012,9 +1006,7 @@ class RoomsLocationApi
     {
         return $this->getZRLocationSettingsAsyncWithHttpInfo($setting_type, $location_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1039,12 +1031,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1162,7 +1154,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1182,7 +1174,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1203,7 +1195,7 @@ class RoomsLocationApi
      */
     public function getZRLocationStructure()
     {
-        list($response) = $this->getZRLocationStructureWithHttpInfo();
+        [$response] = $this->getZRLocationStructureWithHttpInfo();
         return $response;
     }
 
@@ -1219,7 +1211,7 @@ class RoomsLocationApi
      */
     public function getZRLocationStructureWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20079';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20079::class;
         $request = $this->getZRLocationStructureRequest();
 
         try {
@@ -1251,12 +1243,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1271,7 +1263,7 @@ class RoomsLocationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20079',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20079::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1294,9 +1286,7 @@ class RoomsLocationApi
     {
         return $this->getZRLocationStructureAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1311,7 +1301,7 @@ class RoomsLocationApi
      */
     public function getZRLocationStructureAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20079';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20079::class;
         $request = $this->getZRLocationStructureRequest();
 
         return $this->client
@@ -1319,12 +1309,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1416,7 +1406,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1436,7 +1426,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1461,7 +1451,7 @@ class RoomsLocationApi
      */
     public function listZRLocations($parent_location_id = null, $type = null, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->listZRLocationsWithHttpInfo($parent_location_id, $type, $page_size, $next_page_token);
+        [$response] = $this->listZRLocationsWithHttpInfo($parent_location_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -1481,7 +1471,7 @@ class RoomsLocationApi
      */
     public function listZRLocationsWithHttpInfo($parent_location_id = null, $type = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20076';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20076::class;
         $request = $this->listZRLocationsRequest($parent_location_id, $type, $page_size, $next_page_token);
 
         try {
@@ -1513,12 +1503,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1533,7 +1523,7 @@ class RoomsLocationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20076',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20076::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1560,9 +1550,7 @@ class RoomsLocationApi
     {
         return $this->listZRLocationsAsyncWithHttpInfo($parent_location_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1581,7 +1569,7 @@ class RoomsLocationApi
      */
     public function listZRLocationsAsyncWithHttpInfo($parent_location_id = null, $type = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20076';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20076::class;
         $request = $this->listZRLocationsRequest($parent_location_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -1589,12 +1577,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1710,7 +1698,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1730,7 +1718,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1753,7 +1741,7 @@ class RoomsLocationApi
      */
     public function updateZRLocationProfile($location_id, $body = null)
     {
-        list($response) = $this->updateZRLocationProfileWithHttpInfo($location_id, $body);
+        [$response] = $this->updateZRLocationProfileWithHttpInfo($location_id, $body);
         return $response;
     }
 
@@ -1803,12 +1791,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1848,9 +1836,7 @@ class RoomsLocationApi
     {
         return $this->updateZRLocationProfileAsyncWithHttpInfo($location_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1875,12 +1861,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1991,7 +1977,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2011,7 +1997,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2035,7 +2021,7 @@ class RoomsLocationApi
      */
     public function updateZRLocationSettings($setting_type, $location_id, $body = null)
     {
-        list($response) = $this->updateZRLocationSettingsWithHttpInfo($setting_type, $location_id, $body);
+        [$response] = $this->updateZRLocationSettingsWithHttpInfo($setting_type, $location_id, $body);
         return $response;
     }
 
@@ -2086,12 +2072,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2132,9 +2118,7 @@ class RoomsLocationApi
     {
         return $this->updateZRLocationSettingsAsyncWithHttpInfo($setting_type, $location_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2160,12 +2144,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2287,7 +2271,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2307,7 +2291,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2329,7 +2313,7 @@ class RoomsLocationApi
      */
     public function updateZoomRoomsLocationStructure($body = null)
     {
-        list($response) = $this->updateZoomRoomsLocationStructureWithHttpInfo($body);
+        [$response] = $this->updateZoomRoomsLocationStructureWithHttpInfo($body);
         return $response;
     }
 
@@ -2378,12 +2362,12 @@ class RoomsLocationApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2422,9 +2406,7 @@ class RoomsLocationApi
     {
         return $this->updateZoomRoomsLocationStructureAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2448,12 +2430,12 @@ class RoomsLocationApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2549,7 +2531,7 @@ class RoomsLocationApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2569,7 +2551,7 @@ class RoomsLocationApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

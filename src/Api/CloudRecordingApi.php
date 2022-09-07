@@ -104,7 +104,7 @@ class CloudRecordingApi
      */
     public function getAccountCloudRecording($account_id, $page_size = '30', $next_page_token = null, $from = null, $to = null)
     {
-        list($response) = $this->getAccountCloudRecordingWithHttpInfo($account_id, $page_size, $next_page_token, $from, $to);
+        [$response] = $this->getAccountCloudRecordingWithHttpInfo($account_id, $page_size, $next_page_token, $from, $to);
         return $response;
     }
 
@@ -125,7 +125,7 @@ class CloudRecordingApi
      */
     public function getAccountCloudRecordingWithHttpInfo($account_id, $page_size = '30', $next_page_token = null, $from = null, $to = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20073';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20073::class;
         $request = $this->getAccountCloudRecordingRequest($account_id, $page_size, $next_page_token, $from, $to);
 
         try {
@@ -157,12 +157,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -177,7 +177,7 @@ class CloudRecordingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20073',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20073::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -205,9 +205,7 @@ class CloudRecordingApi
     {
         return $this->getAccountCloudRecordingAsyncWithHttpInfo($account_id, $page_size, $next_page_token, $from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -227,7 +225,7 @@ class CloudRecordingApi
      */
     public function getAccountCloudRecordingAsyncWithHttpInfo($account_id, $page_size = '30', $next_page_token = null, $from = null, $to = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20073';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20073::class;
         $request = $this->getAccountCloudRecordingRequest($account_id, $page_size, $next_page_token, $from, $to);
 
         return $this->client
@@ -235,12 +233,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -371,7 +369,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -391,7 +389,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -414,7 +412,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrantCreate($meeting_id, $body)
     {
-        list($response) = $this->meetingRecordingRegistrantCreateWithHttpInfo($meeting_id, $body);
+        [$response] = $this->meetingRecordingRegistrantCreateWithHttpInfo($meeting_id, $body);
         return $response;
     }
 
@@ -432,7 +430,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrantCreateWithHttpInfo($meeting_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20113';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20113::class;
         $request = $this->meetingRecordingRegistrantCreateRequest($meeting_id, $body);
 
         try {
@@ -464,12 +462,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -484,7 +482,7 @@ class CloudRecordingApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20113',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20113::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -509,9 +507,7 @@ class CloudRecordingApi
     {
         return $this->meetingRecordingRegistrantCreateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -528,7 +524,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrantCreateAsyncWithHttpInfo($meeting_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20113';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20113::class;
         $request = $this->meetingRecordingRegistrantCreateRequest($meeting_id, $body);
 
         return $this->client
@@ -536,12 +532,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -658,7 +654,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -678,7 +674,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -773,9 +769,7 @@ class CloudRecordingApi
     {
         return $this->meetingRecordingRegistrantStatusAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -798,9 +792,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -908,7 +900,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -928,7 +920,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -953,7 +945,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrants($meeting_id, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->meetingRecordingRegistrantsWithHttpInfo($meeting_id, $status, $page_size, $page_number);
+        [$response] = $this->meetingRecordingRegistrantsWithHttpInfo($meeting_id, $status, $page_size, $page_number);
         return $response;
     }
 
@@ -973,7 +965,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrantsWithHttpInfo($meeting_id, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList1';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList1::class;
         $request = $this->meetingRecordingRegistrantsRequest($meeting_id, $status, $page_size, $page_number);
 
         try {
@@ -1005,12 +997,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1025,7 +1017,7 @@ class CloudRecordingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RegistrationList1',
+                        '\\' . \Weble\Zoom\Model\RegistrationList1::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1052,9 +1044,7 @@ class CloudRecordingApi
     {
         return $this->meetingRecordingRegistrantsAsyncWithHttpInfo($meeting_id, $status, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1073,7 +1063,7 @@ class CloudRecordingApi
      */
     public function meetingRecordingRegistrantsAsyncWithHttpInfo($meeting_id, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList1';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList1::class;
         $request = $this->meetingRecordingRegistrantsRequest($meeting_id, $status, $page_size, $page_number);
 
         return $this->client
@@ -1081,12 +1071,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1212,7 +1202,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1232,7 +1222,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1327,9 +1317,7 @@ class CloudRecordingApi
     {
         return $this->recordingDeleteAsyncWithHttpInfo($meeting_id, $action)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1352,9 +1340,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1457,7 +1443,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1477,7 +1463,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1575,9 +1561,7 @@ class CloudRecordingApi
     {
         return $this->recordingDeleteOneAsyncWithHttpInfo($meeting_id, $recording_id, $action)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1601,9 +1585,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1721,7 +1703,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1741,7 +1723,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1763,7 +1745,7 @@ class CloudRecordingApi
      */
     public function recordingGet($meeting_id)
     {
-        list($response) = $this->recordingGetWithHttpInfo($meeting_id);
+        [$response] = $this->recordingGetWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -1812,12 +1794,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1856,9 +1838,7 @@ class CloudRecordingApi
     {
         return $this->recordingGetAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1882,12 +1862,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1994,7 +1974,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2014,7 +1994,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2109,9 +2089,7 @@ class CloudRecordingApi
     {
         return $this->recordingRegistrantQuestionUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2134,9 +2112,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2244,7 +2220,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2264,7 +2240,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2286,7 +2262,7 @@ class CloudRecordingApi
      */
     public function recordingRegistrantsQuestionsGet($meeting_id)
     {
-        list($response) = $this->recordingRegistrantsQuestionsGetWithHttpInfo($meeting_id);
+        [$response] = $this->recordingRegistrantsQuestionsGetWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -2303,7 +2279,7 @@ class CloudRecordingApi
      */
     public function recordingRegistrantsQuestionsGetWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\RecordingRegistrantQuestions';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingRegistrantQuestions::class;
         $request = $this->recordingRegistrantsQuestionsGetRequest($meeting_id);
 
         try {
@@ -2335,12 +2311,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2355,7 +2331,7 @@ class CloudRecordingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RecordingRegistrantQuestions',
+                        '\\' . \Weble\Zoom\Model\RecordingRegistrantQuestions::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2379,9 +2355,7 @@ class CloudRecordingApi
     {
         return $this->recordingRegistrantsQuestionsGetAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2397,7 +2371,7 @@ class CloudRecordingApi
      */
     public function recordingRegistrantsQuestionsGetAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\RecordingRegistrantQuestions';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingRegistrantQuestions::class;
         $request = $this->recordingRegistrantsQuestionsGetRequest($meeting_id);
 
         return $this->client
@@ -2405,12 +2379,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2517,7 +2491,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2537,7 +2511,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2559,7 +2533,7 @@ class CloudRecordingApi
      */
     public function recordingSettingUpdate($meeting_id)
     {
-        list($response) = $this->recordingSettingUpdateWithHttpInfo($meeting_id);
+        [$response] = $this->recordingSettingUpdateWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -2576,7 +2550,7 @@ class CloudRecordingApi
      */
     public function recordingSettingUpdateWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\RecordingSettings';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingSettings::class;
         $request = $this->recordingSettingUpdateRequest($meeting_id);
 
         try {
@@ -2608,12 +2582,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2628,7 +2602,7 @@ class CloudRecordingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RecordingSettings',
+                        '\\' . \Weble\Zoom\Model\RecordingSettings::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2652,9 +2626,7 @@ class CloudRecordingApi
     {
         return $this->recordingSettingUpdateAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2670,7 +2642,7 @@ class CloudRecordingApi
      */
     public function recordingSettingUpdateAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\RecordingSettings';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingSettings::class;
         $request = $this->recordingSettingUpdateRequest($meeting_id);
 
         return $this->client
@@ -2678,12 +2650,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2790,7 +2762,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2810,7 +2782,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2905,9 +2877,7 @@ class CloudRecordingApi
     {
         return $this->recordingSettingsUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2930,9 +2900,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3040,7 +3008,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3060,7 +3028,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3155,9 +3123,7 @@ class CloudRecordingApi
     {
         return $this->recordingStatusUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3180,9 +3146,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3290,7 +3254,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3310,7 +3274,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3408,9 +3372,7 @@ class CloudRecordingApi
     {
         return $this->recordingStatusUpdateOneAsyncWithHttpInfo($meeting_id, $recording_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3434,9 +3396,7 @@ class CloudRecordingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3559,7 +3519,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3579,7 +3539,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3608,7 +3568,7 @@ class CloudRecordingApi
      */
     public function recordingsList($user_id, $page_size = '30', $next_page_token = null, $mc = 'false', $trash = 'false', $from = null, $to = null, $trash_type = 'meeting_recordings')
     {
-        list($response) = $this->recordingsListWithHttpInfo($user_id, $page_size, $next_page_token, $mc, $trash, $from, $to, $trash_type);
+        [$response] = $this->recordingsListWithHttpInfo($user_id, $page_size, $next_page_token, $mc, $trash, $from, $to, $trash_type);
         return $response;
     }
 
@@ -3632,7 +3592,7 @@ class CloudRecordingApi
      */
     public function recordingsListWithHttpInfo($user_id, $page_size = '30', $next_page_token = null, $mc = 'false', $trash = 'false', $from = null, $to = null, $trash_type = 'meeting_recordings')
     {
-        $returnType = '\Weble\Zoom\Model\RecordingList';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingList::class;
         $request = $this->recordingsListRequest($user_id, $page_size, $next_page_token, $mc, $trash, $from, $to, $trash_type);
 
         try {
@@ -3664,12 +3624,12 @@ class CloudRecordingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3684,7 +3644,7 @@ class CloudRecordingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RecordingList',
+                        '\\' . \Weble\Zoom\Model\RecordingList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3715,9 +3675,7 @@ class CloudRecordingApi
     {
         return $this->recordingsListAsyncWithHttpInfo($user_id, $page_size, $next_page_token, $mc, $trash, $from, $to, $trash_type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3740,7 +3698,7 @@ class CloudRecordingApi
      */
     public function recordingsListAsyncWithHttpInfo($user_id, $page_size = '30', $next_page_token = null, $mc = 'false', $trash = 'false', $from = null, $to = null, $trash_type = 'meeting_recordings')
     {
-        $returnType = '\Weble\Zoom\Model\RecordingList';
+        $returnType = '\\' . \Weble\Zoom\Model\RecordingList::class;
         $request = $this->recordingsListRequest($user_id, $page_size, $next_page_token, $mc, $trash, $from, $to, $trash_type);
 
         return $this->client
@@ -3748,12 +3706,12 @@ class CloudRecordingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3899,7 +3857,7 @@ class CloudRecordingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3919,7 +3877,7 @@ class CloudRecordingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

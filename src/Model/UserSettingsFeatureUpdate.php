@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -203,12 +203,12 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['meeting_capacity'] = isset($data['meeting_capacity']) ? $data['meeting_capacity'] : null;
-        $this->container['large_meeting'] = isset($data['large_meeting']) ? $data['large_meeting'] : null;
-        $this->container['large_meeting_capacity'] = isset($data['large_meeting_capacity']) ? $data['large_meeting_capacity'] : null;
-        $this->container['webinar'] = isset($data['webinar']) ? $data['webinar'] : null;
-        $this->container['webinar_capacity'] = isset($data['webinar_capacity']) ? $data['webinar_capacity'] : null;
-        $this->container['zoom_phone'] = isset($data['zoom_phone']) ? $data['zoom_phone'] : null;
+        $this->container['meeting_capacity'] = $data['meeting_capacity'] ?? null;
+        $this->container['large_meeting'] = $data['large_meeting'] ?? null;
+        $this->container['large_meeting_capacity'] = $data['large_meeting_capacity'] ?? null;
+        $this->container['webinar'] = $data['webinar'] ?? null;
+        $this->container['webinar_capacity'] = $data['webinar_capacity'] ?? null;
+        $this->container['zoom_phone'] = $data['zoom_phone'] ?? null;
     }
 
     /**
@@ -385,7 +385,7 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -397,9 +397,9 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -410,7 +410,7 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -426,7 +426,7 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -445,7 +445,7 @@ class UserSettingsFeatureUpdate implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

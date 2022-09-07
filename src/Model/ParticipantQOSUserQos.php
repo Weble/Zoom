@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -57,14 +57,14 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'date_time' => '\DateTime',
-        'audio_input' => '\Weble\Zoom\Model\QOSObject',
-        'audio_output' => '\Weble\Zoom\Model\QOSObject',
+        'date_time' => '\\' . \DateTime::class,
+        'audio_input' => '\\' . \Weble\Zoom\Model\QOSObject::class,
+        'audio_output' => '\\' . \Weble\Zoom\Model\QOSObject::class,
         'video_input' => 'object',
         'video_output' => 'object',
         'as_input' => 'object',
         'as_output' => 'object',
-        'cpu_usage' => '\Weble\Zoom\Model\ParticipantQOSCpuUsage'
+        'cpu_usage' => '\\' . \Weble\Zoom\Model\ParticipantQOSCpuUsage::class
     ];
 
     /**
@@ -212,14 +212,14 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['date_time'] = isset($data['date_time']) ? $data['date_time'] : null;
-        $this->container['audio_input'] = isset($data['audio_input']) ? $data['audio_input'] : null;
-        $this->container['audio_output'] = isset($data['audio_output']) ? $data['audio_output'] : null;
-        $this->container['video_input'] = isset($data['video_input']) ? $data['video_input'] : null;
-        $this->container['video_output'] = isset($data['video_output']) ? $data['video_output'] : null;
-        $this->container['as_input'] = isset($data['as_input']) ? $data['as_input'] : null;
-        $this->container['as_output'] = isset($data['as_output']) ? $data['as_output'] : null;
-        $this->container['cpu_usage'] = isset($data['cpu_usage']) ? $data['cpu_usage'] : null;
+        $this->container['date_time'] = $data['date_time'] ?? null;
+        $this->container['audio_input'] = $data['audio_input'] ?? null;
+        $this->container['audio_output'] = $data['audio_output'] ?? null;
+        $this->container['video_input'] = $data['video_input'] ?? null;
+        $this->container['video_output'] = $data['video_output'] ?? null;
+        $this->container['as_input'] = $data['as_input'] ?? null;
+        $this->container['as_output'] = $data['as_output'] ?? null;
+        $this->container['cpu_usage'] = $data['cpu_usage'] ?? null;
     }
 
     /**
@@ -444,7 +444,7 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -456,9 +456,9 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -469,7 +469,7 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -485,7 +485,7 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -504,7 +504,7 @@ class ParticipantQOSUserQos implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

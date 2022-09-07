@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -242,20 +242,20 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
      */
     public function __construct(array $data = null)
     {
-        $this->container['host_video'] = isset($data['host_video']) ? $data['host_video'] : null;
-        $this->container['participant_video'] = isset($data['participant_video']) ? $data['participant_video'] : null;
-        $this->container['audio_type'] = isset($data['audio_type']) ? $data['audio_type'] : null;
-        $this->container['join_before_host'] = isset($data['join_before_host']) ? $data['join_before_host'] : null;
-        $this->container['force_pmi_jbh_password'] = isset($data['force_pmi_jbh_password']) ? $data['force_pmi_jbh_password'] : null;
-        $this->container['require_password_for_scheduling_new_meetings'] = isset($data['require_password_for_scheduling_new_meetings']) ? $data['require_password_for_scheduling_new_meetings'] : null;
-        $this->container['require_password_for_instant_meetings'] = isset($data['require_password_for_instant_meetings']) ? $data['require_password_for_instant_meetings'] : null;
-        $this->container['require_password_for_pmi_meetings'] = isset($data['require_password_for_pmi_meetings']) ? $data['require_password_for_pmi_meetings'] : null;
-        $this->container['pstn_password_protected'] = isset($data['pstn_password_protected']) ? $data['pstn_password_protected'] : null;
-        $this->container['mute_upon_entry'] = isset($data['mute_upon_entry']) ? $data['mute_upon_entry'] : null;
-        $this->container['upcoming_meeting_reminder'] = isset($data['upcoming_meeting_reminder']) ? $data['upcoming_meeting_reminder'] : null;
-        $this->container['meeting_authentication'] = isset($data['meeting_authentication']) ? $data['meeting_authentication'] : null;
-        $this->container['embed_password_in_join_link'] = isset($data['embed_password_in_join_link']) ? $data['embed_password_in_join_link'] : null;
-        $this->container['personal_meeting'] = isset($data['personal_meeting']) ? $data['personal_meeting'] : null;
+        $this->container['host_video'] = $data['host_video'] ?? null;
+        $this->container['participant_video'] = $data['participant_video'] ?? null;
+        $this->container['audio_type'] = $data['audio_type'] ?? null;
+        $this->container['join_before_host'] = $data['join_before_host'] ?? null;
+        $this->container['force_pmi_jbh_password'] = $data['force_pmi_jbh_password'] ?? null;
+        $this->container['require_password_for_scheduling_new_meetings'] = $data['require_password_for_scheduling_new_meetings'] ?? null;
+        $this->container['require_password_for_instant_meetings'] = $data['require_password_for_instant_meetings'] ?? null;
+        $this->container['require_password_for_pmi_meetings'] = $data['require_password_for_pmi_meetings'] ?? null;
+        $this->container['pstn_password_protected'] = $data['pstn_password_protected'] ?? null;
+        $this->container['mute_upon_entry'] = $data['mute_upon_entry'] ?? null;
+        $this->container['upcoming_meeting_reminder'] = $data['upcoming_meeting_reminder'] ?? null;
+        $this->container['meeting_authentication'] = $data['meeting_authentication'] ?? null;
+        $this->container['embed_password_in_join_link'] = $data['embed_password_in_join_link'] ?? null;
+        $this->container['personal_meeting'] = $data['personal_meeting'] ?? null;
     }
 
     /**
@@ -624,7 +624,7 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -636,9 +636,9 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -649,7 +649,7 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -665,7 +665,7 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -684,7 +684,7 @@ class GroupsgroupIdlockSettingsScheduleMeeting implements ModelInterface, ArrayA
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

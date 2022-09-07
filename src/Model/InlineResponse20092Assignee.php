@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -173,10 +173,10 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TYPE_USER = 'user';
-    const TYPE_CALL_QUEUE = 'callQueue';
-    const TYPE_AUTO_RECEPTIONIST = 'autoReceptionist';
-    const TYPE_COMMON_AREA_PHONE = 'commonAreaPhone';
+    public const TYPE_USER = 'user';
+    public const TYPE_CALL_QUEUE = 'callQueue';
+    public const TYPE_AUTO_RECEPTIONIST = 'autoReceptionist';
+    public const TYPE_COMMON_AREA_PHONE = 'commonAreaPhone';
 
 
 
@@ -211,10 +211,10 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['extension_number'] = isset($data['extension_number']) ? $data['extension_number'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['extension_number'] = $data['extension_number'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
     }
 
     /**
@@ -360,7 +360,7 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -372,9 +372,9 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -385,7 +385,7 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -401,7 +401,7 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -420,7 +420,7 @@ class InlineResponse20092Assignee implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

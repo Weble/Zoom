@@ -100,7 +100,7 @@ class CommonAreaPhonesApi
      */
     public function addCommonAreaPhone($body = null)
     {
-        list($response) = $this->addCommonAreaPhoneWithHttpInfo($body);
+        [$response] = $this->addCommonAreaPhoneWithHttpInfo($body);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class CommonAreaPhonesApi
      */
     public function addCommonAreaPhoneWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20124';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20124::class;
         $request = $this->addCommonAreaPhoneRequest($body);
 
         try {
@@ -149,12 +149,12 @@ class CommonAreaPhonesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class CommonAreaPhonesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20124',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20124::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class CommonAreaPhonesApi
     {
         return $this->addCommonAreaPhoneAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class CommonAreaPhonesApi
      */
     public function addCommonAreaPhoneAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20124';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20124::class;
         $request = $this->addCommonAreaPhoneRequest($body);
 
         return $this->client
@@ -219,12 +217,12 @@ class CommonAreaPhonesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -320,7 +318,7 @@ class CommonAreaPhonesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -340,7 +338,7 @@ class CommonAreaPhonesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -362,7 +360,7 @@ class CommonAreaPhonesApi
      */
     public function deleteCommonAreaPhone($common_area_phone_id)
     {
-        list($response) = $this->deleteCommonAreaPhoneWithHttpInfo($common_area_phone_id);
+        [$response] = $this->deleteCommonAreaPhoneWithHttpInfo($common_area_phone_id);
         return $response;
     }
 
@@ -411,12 +409,12 @@ class CommonAreaPhonesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -455,9 +453,7 @@ class CommonAreaPhonesApi
     {
         return $this->deleteCommonAreaPhoneAsyncWithHttpInfo($common_area_phone_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -481,12 +477,12 @@ class CommonAreaPhonesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -593,7 +589,7 @@ class CommonAreaPhonesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -613,7 +609,7 @@ class CommonAreaPhonesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -635,7 +631,7 @@ class CommonAreaPhonesApi
      */
     public function getACommonAreaPhone($common_area_phone_id)
     {
-        list($response) = $this->getACommonAreaPhoneWithHttpInfo($common_area_phone_id);
+        [$response] = $this->getACommonAreaPhoneWithHttpInfo($common_area_phone_id);
         return $response;
     }
 
@@ -652,7 +648,7 @@ class CommonAreaPhonesApi
      */
     public function getACommonAreaPhoneWithHttpInfo($common_area_phone_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20096';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20096::class;
         $request = $this->getACommonAreaPhoneRequest($common_area_phone_id);
 
         try {
@@ -684,12 +680,12 @@ class CommonAreaPhonesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -704,7 +700,7 @@ class CommonAreaPhonesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20096',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20096::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -728,9 +724,7 @@ class CommonAreaPhonesApi
     {
         return $this->getACommonAreaPhoneAsyncWithHttpInfo($common_area_phone_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -746,7 +740,7 @@ class CommonAreaPhonesApi
      */
     public function getACommonAreaPhoneAsyncWithHttpInfo($common_area_phone_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20096';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20096::class;
         $request = $this->getACommonAreaPhoneRequest($common_area_phone_id);
 
         return $this->client
@@ -754,12 +748,12 @@ class CommonAreaPhonesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -866,7 +860,7 @@ class CommonAreaPhonesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -886,7 +880,7 @@ class CommonAreaPhonesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -909,7 +903,7 @@ class CommonAreaPhonesApi
      */
     public function listCommonAreaPhones($page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->listCommonAreaPhonesWithHttpInfo($page_size, $next_page_token);
+        [$response] = $this->listCommonAreaPhonesWithHttpInfo($page_size, $next_page_token);
         return $response;
     }
 
@@ -927,7 +921,7 @@ class CommonAreaPhonesApi
      */
     public function listCommonAreaPhonesWithHttpInfo($page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20095';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20095::class;
         $request = $this->listCommonAreaPhonesRequest($page_size, $next_page_token);
 
         try {
@@ -959,12 +953,12 @@ class CommonAreaPhonesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -979,7 +973,7 @@ class CommonAreaPhonesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20095',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20095::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1004,9 +998,7 @@ class CommonAreaPhonesApi
     {
         return $this->listCommonAreaPhonesAsyncWithHttpInfo($page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1023,7 +1015,7 @@ class CommonAreaPhonesApi
      */
     public function listCommonAreaPhonesAsyncWithHttpInfo($page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20095';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20095::class;
         $request = $this->listCommonAreaPhonesRequest($page_size, $next_page_token);
 
         return $this->client
@@ -1031,12 +1023,12 @@ class CommonAreaPhonesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1142,7 +1134,7 @@ class CommonAreaPhonesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1162,7 +1154,7 @@ class CommonAreaPhonesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1185,7 +1177,7 @@ class CommonAreaPhonesApi
      */
     public function updateCommonAreaPhone($common_area_phone_id, $body = null)
     {
-        list($response) = $this->updateCommonAreaPhoneWithHttpInfo($common_area_phone_id, $body);
+        [$response] = $this->updateCommonAreaPhoneWithHttpInfo($common_area_phone_id, $body);
         return $response;
     }
 
@@ -1235,12 +1227,12 @@ class CommonAreaPhonesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1280,9 +1272,7 @@ class CommonAreaPhonesApi
     {
         return $this->updateCommonAreaPhoneAsyncWithHttpInfo($common_area_phone_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1307,12 +1297,12 @@ class CommonAreaPhonesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1423,7 +1413,7 @@ class CommonAreaPhonesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1443,7 +1433,7 @@ class CommonAreaPhonesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

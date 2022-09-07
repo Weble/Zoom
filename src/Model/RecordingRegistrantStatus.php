@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -164,8 +164,8 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const ACTION_APPROVE = 'approve';
-    const ACTION_DENY = 'deny';
+    public const ACTION_APPROVE = 'approve';
+    public const ACTION_DENY = 'deny';
 
 
 
@@ -198,8 +198,8 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['action'] = isset($data['action']) ? $data['action'] : null;
-        $this->container['registrants'] = isset($data['registrants']) ? $data['registrants'] : null;
+        $this->container['action'] = $data['action'] ?? null;
+        $this->container['registrants'] = $data['registrants'] ?? null;
     }
 
     /**
@@ -300,7 +300,7 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -312,9 +312,9 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -325,7 +325,7 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -341,7 +341,7 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -360,7 +360,7 @@ class RecordingRegistrantStatus implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

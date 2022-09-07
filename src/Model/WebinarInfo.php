@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class WebinarInfo implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -60,17 +60,17 @@ class WebinarInfo implements ModelInterface, ArrayAccess
     protected static $swaggerTypes = [
         'topic' => 'string',
         'type' => 'int',
-        'start_time' => '\DateTime',
+        'start_time' => '\\' . \DateTime::class,
         'duration' => 'int',
         'timezone' => 'string',
         'agenda' => 'string',
-        'created_at' => '\DateTime',
+        'created_at' => '\\' . \DateTime::class,
         'start_url' => 'string',
         'join_url' => 'string',
         'tracking_fields' => '\Weble\Zoom\Model\InlineResponse20110TrackingFields[]',
         'occurrences' => '\Weble\Zoom\Model\InlineResponse20110Occurrences[]',
-        'settings' => '\Weble\Zoom\Model\InlineResponse20118Settings',
-        'recurrence' => '\Weble\Zoom\Model\RecurrenceWebinar',
+        'settings' => '\\' . \Weble\Zoom\Model\InlineResponse20118Settings::class,
+        'recurrence' => '\\' . \Weble\Zoom\Model\RecurrenceWebinar::class,
         'password' => 'string'
     ];
 
@@ -243,20 +243,20 @@ class WebinarInfo implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['topic'] = isset($data['topic']) ? $data['topic'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['start_time'] = isset($data['start_time']) ? $data['start_time'] : null;
-        $this->container['duration'] = isset($data['duration']) ? $data['duration'] : null;
-        $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
-        $this->container['agenda'] = isset($data['agenda']) ? $data['agenda'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['start_url'] = isset($data['start_url']) ? $data['start_url'] : null;
-        $this->container['join_url'] = isset($data['join_url']) ? $data['join_url'] : null;
-        $this->container['tracking_fields'] = isset($data['tracking_fields']) ? $data['tracking_fields'] : null;
-        $this->container['occurrences'] = isset($data['occurrences']) ? $data['occurrences'] : null;
-        $this->container['settings'] = isset($data['settings']) ? $data['settings'] : null;
-        $this->container['recurrence'] = isset($data['recurrence']) ? $data['recurrence'] : null;
-        $this->container['password'] = isset($data['password']) ? $data['password'] : null;
+        $this->container['topic'] = $data['topic'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['start_time'] = $data['start_time'] ?? null;
+        $this->container['duration'] = $data['duration'] ?? null;
+        $this->container['timezone'] = $data['timezone'] ?? null;
+        $this->container['agenda'] = $data['agenda'] ?? null;
+        $this->container['created_at'] = $data['created_at'] ?? null;
+        $this->container['start_url'] = $data['start_url'] ?? null;
+        $this->container['join_url'] = $data['join_url'] ?? null;
+        $this->container['tracking_fields'] = $data['tracking_fields'] ?? null;
+        $this->container['occurrences'] = $data['occurrences'] ?? null;
+        $this->container['settings'] = $data['settings'] ?? null;
+        $this->container['recurrence'] = $data['recurrence'] ?? null;
+        $this->container['password'] = $data['password'] ?? null;
     }
 
     /**
@@ -633,7 +633,7 @@ class WebinarInfo implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -645,9 +645,9 @@ class WebinarInfo implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -658,7 +658,7 @@ class WebinarInfo implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -674,7 +674,7 @@ class WebinarInfo implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -693,7 +693,7 @@ class WebinarInfo implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

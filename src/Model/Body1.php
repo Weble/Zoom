@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Body1 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -228,18 +228,18 @@ class Body1 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TRANSPORT_PROTOCOL_UDP = 'UDP';
-    const TRANSPORT_PROTOCOL_TCP = 'TCP';
-    const TRANSPORT_PROTOCOL_TLS = 'TLS';
-    const TRANSPORT_PROTOCOL_AUTO = 'AUTO';
-    const TRANSPORT_PROTOCOL2_UDP = 'UDP';
-    const TRANSPORT_PROTOCOL2_TCP = 'TCP';
-    const TRANSPORT_PROTOCOL2_TLS = 'TLS';
-    const TRANSPORT_PROTOCOL2_AUTO = 'AUTO';
-    const TRANSPORT_PROTOCOL3_UDP = 'UDP';
-    const TRANSPORT_PROTOCOL3_TCP = 'TCP';
-    const TRANSPORT_PROTOCOL3_TLS = 'TLS';
-    const TRANSPORT_PROTOCOL3_AUTO = 'AUTO';
+    public const TRANSPORT_PROTOCOL_UDP = 'UDP';
+    public const TRANSPORT_PROTOCOL_TCP = 'TCP';
+    public const TRANSPORT_PROTOCOL_TLS = 'TLS';
+    public const TRANSPORT_PROTOCOL_AUTO = 'AUTO';
+    public const TRANSPORT_PROTOCOL2_UDP = 'UDP';
+    public const TRANSPORT_PROTOCOL2_TCP = 'TCP';
+    public const TRANSPORT_PROTOCOL2_TLS = 'TLS';
+    public const TRANSPORT_PROTOCOL2_AUTO = 'AUTO';
+    public const TRANSPORT_PROTOCOL3_UDP = 'UDP';
+    public const TRANSPORT_PROTOCOL3_TCP = 'TCP';
+    public const TRANSPORT_PROTOCOL3_TLS = 'TLS';
+    public const TRANSPORT_PROTOCOL3_AUTO = 'AUTO';
 
 
 
@@ -304,21 +304,21 @@ class Body1 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
-        $this->container['register_server'] = isset($data['register_server']) ? $data['register_server'] : null;
-        $this->container['transport_protocol'] = isset($data['transport_protocol']) ? $data['transport_protocol'] : null;
-        $this->container['proxy_server'] = isset($data['proxy_server']) ? $data['proxy_server'] : null;
-        $this->container['register_server2'] = isset($data['register_server2']) ? $data['register_server2'] : null;
-        $this->container['transport_protocol2'] = isset($data['transport_protocol2']) ? $data['transport_protocol2'] : null;
-        $this->container['proxy_server2'] = isset($data['proxy_server2']) ? $data['proxy_server2'] : null;
-        $this->container['register_server3'] = isset($data['register_server3']) ? $data['register_server3'] : null;
-        $this->container['transport_protocol3'] = isset($data['transport_protocol3']) ? $data['transport_protocol3'] : null;
-        $this->container['proxy_server3'] = isset($data['proxy_server3']) ? $data['proxy_server3'] : null;
-        $this->container['registration_expire_time'] = isset($data['registration_expire_time']) ? $data['registration_expire_time'] : null;
-        $this->container['user_name'] = isset($data['user_name']) ? $data['user_name'] : null;
-        $this->container['password'] = isset($data['password']) ? $data['password'] : null;
-        $this->container['authorization_name'] = isset($data['authorization_name']) ? $data['authorization_name'] : null;
-        $this->container['voice_mail'] = isset($data['voice_mail']) ? $data['voice_mail'] : null;
+        $this->container['domain'] = $data['domain'] ?? null;
+        $this->container['register_server'] = $data['register_server'] ?? null;
+        $this->container['transport_protocol'] = $data['transport_protocol'] ?? null;
+        $this->container['proxy_server'] = $data['proxy_server'] ?? null;
+        $this->container['register_server2'] = $data['register_server2'] ?? null;
+        $this->container['transport_protocol2'] = $data['transport_protocol2'] ?? null;
+        $this->container['proxy_server2'] = $data['proxy_server2'] ?? null;
+        $this->container['register_server3'] = $data['register_server3'] ?? null;
+        $this->container['transport_protocol3'] = $data['transport_protocol3'] ?? null;
+        $this->container['proxy_server3'] = $data['proxy_server3'] ?? null;
+        $this->container['registration_expire_time'] = $data['registration_expire_time'] ?? null;
+        $this->container['user_name'] = $data['user_name'] ?? null;
+        $this->container['password'] = $data['password'] ?? null;
+        $this->container['authorization_name'] = $data['authorization_name'] ?? null;
+        $this->container['voice_mail'] = $data['voice_mail'] ?? null;
     }
 
     /**
@@ -843,7 +843,7 @@ class Body1 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -855,9 +855,9 @@ class Body1 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -868,7 +868,7 @@ class Body1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -884,7 +884,7 @@ class Body1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -903,7 +903,7 @@ class Body1 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

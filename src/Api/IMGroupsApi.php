@@ -100,7 +100,7 @@ class IMGroupsApi
      */
     public function imGroup($group_id)
     {
-        list($response) = $this->imGroupWithHttpInfo($group_id);
+        [$response] = $this->imGroupWithHttpInfo($group_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class IMGroupsApi
      */
     public function imGroupWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20019';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20019::class;
         $request = $this->imGroupRequest($group_id);
 
         try {
@@ -149,12 +149,12 @@ class IMGroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class IMGroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20019',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20019::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class IMGroupsApi
     {
         return $this->imGroupAsyncWithHttpInfo($group_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class IMGroupsApi
      */
     public function imGroupAsyncWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20019';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20019::class;
         $request = $this->imGroupRequest($group_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class IMGroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -427,7 +425,7 @@ class IMGroupsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2019',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2019::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -451,9 +449,7 @@ class IMGroupsApi
     {
         return $this->imGroupCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -475,9 +471,7 @@ class IMGroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -570,7 +564,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -590,7 +584,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -682,9 +676,7 @@ class IMGroupsApi
     {
         return $this->imGroupDeleteAsyncWithHttpInfo($group_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -706,9 +698,7 @@ class IMGroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -806,7 +796,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -826,7 +816,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -850,7 +840,7 @@ class IMGroupsApi
      */
     public function imGroupMembers($group_id, $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->imGroupMembersWithHttpInfo($group_id, $page_size, $page_number);
+        [$response] = $this->imGroupMembersWithHttpInfo($group_id, $page_size, $page_number);
         return $response;
     }
 
@@ -869,7 +859,7 @@ class IMGroupsApi
      */
     public function imGroupMembersWithHttpInfo($group_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\GroupMemberList';
+        $returnType = '\\' . \Weble\Zoom\Model\GroupMemberList::class;
         $request = $this->imGroupMembersRequest($group_id, $page_size, $page_number);
 
         try {
@@ -901,12 +891,12 @@ class IMGroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -921,7 +911,7 @@ class IMGroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\GroupMemberList',
+                        '\\' . \Weble\Zoom\Model\GroupMemberList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -947,9 +937,7 @@ class IMGroupsApi
     {
         return $this->imGroupMembersAsyncWithHttpInfo($group_id, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -967,7 +955,7 @@ class IMGroupsApi
      */
     public function imGroupMembersAsyncWithHttpInfo($group_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\GroupMemberList';
+        $returnType = '\\' . \Weble\Zoom\Model\GroupMemberList::class;
         $request = $this->imGroupMembersRequest($group_id, $page_size, $page_number);
 
         return $this->client
@@ -975,12 +963,12 @@ class IMGroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1101,7 +1089,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1121,7 +1109,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1224,9 +1212,7 @@ class IMGroupsApi
     {
         return $this->imGroupMembersCreateAsyncWithHttpInfo($group_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1249,9 +1235,7 @@ class IMGroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1359,7 +1343,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1379,7 +1363,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1474,9 +1458,7 @@ class IMGroupsApi
     {
         return $this->imGroupMembersDeleteAsyncWithHttpInfo($group_id, $member_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1499,9 +1481,7 @@ class IMGroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1614,7 +1594,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1634,7 +1614,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1729,9 +1709,7 @@ class IMGroupsApi
     {
         return $this->imGroupUpdateAsyncWithHttpInfo($group_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1754,9 +1732,7 @@ class IMGroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1864,7 +1840,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1884,7 +1860,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1905,7 +1881,7 @@ class IMGroupsApi
      */
     public function imGroups()
     {
-        list($response) = $this->imGroupsWithHttpInfo();
+        [$response] = $this->imGroupsWithHttpInfo();
         return $response;
     }
 
@@ -1921,7 +1897,7 @@ class IMGroupsApi
      */
     public function imGroupsWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\IMGroupList';
+        $returnType = '\\' . \Weble\Zoom\Model\IMGroupList::class;
         $request = $this->imGroupsRequest();
 
         try {
@@ -1953,12 +1929,12 @@ class IMGroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1973,7 +1949,7 @@ class IMGroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\IMGroupList',
+                        '\\' . \Weble\Zoom\Model\IMGroupList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1996,9 +1972,7 @@ class IMGroupsApi
     {
         return $this->imGroupsAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2013,7 +1987,7 @@ class IMGroupsApi
      */
     public function imGroupsAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\IMGroupList';
+        $returnType = '\\' . \Weble\Zoom\Model\IMGroupList::class;
         $request = $this->imGroupsRequest();
 
         return $this->client
@@ -2021,12 +1995,12 @@ class IMGroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2118,7 +2092,7 @@ class IMGroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2138,7 +2112,7 @@ class IMGroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

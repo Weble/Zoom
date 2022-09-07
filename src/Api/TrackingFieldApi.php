@@ -100,7 +100,7 @@ class TrackingFieldApi
      */
     public function trackingfieldCreate($body)
     {
-        list($response) = $this->trackingfieldCreateWithHttpInfo($body);
+        [$response] = $this->trackingfieldCreateWithHttpInfo($body);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class TrackingFieldApi
      */
     public function trackingfieldCreateWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2018::class;
         $request = $this->trackingfieldCreateRequest($body);
 
         try {
@@ -149,12 +149,12 @@ class TrackingFieldApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class TrackingFieldApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2018',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2018::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class TrackingFieldApi
     {
         return $this->trackingfieldCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class TrackingFieldApi
      */
     public function trackingfieldCreateAsyncWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2018::class;
         $request = $this->trackingfieldCreateRequest($body);
 
         return $this->client
@@ -219,12 +217,12 @@ class TrackingFieldApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -326,7 +324,7 @@ class TrackingFieldApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -346,7 +344,7 @@ class TrackingFieldApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -438,9 +436,7 @@ class TrackingFieldApi
     {
         return $this->trackingfieldDeleteAsyncWithHttpInfo($field_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -462,9 +458,7 @@ class TrackingFieldApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -562,7 +556,7 @@ class TrackingFieldApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -582,7 +576,7 @@ class TrackingFieldApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -604,7 +598,7 @@ class TrackingFieldApi
      */
     public function trackingfieldGet($field_id)
     {
-        list($response) = $this->trackingfieldGetWithHttpInfo($field_id);
+        [$response] = $this->trackingfieldGetWithHttpInfo($field_id);
         return $response;
     }
 
@@ -621,7 +615,7 @@ class TrackingFieldApi
      */
     public function trackingfieldGetWithHttpInfo($field_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2018::class;
         $request = $this->trackingfieldGetRequest($field_id);
 
         try {
@@ -653,12 +647,12 @@ class TrackingFieldApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -673,7 +667,7 @@ class TrackingFieldApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2018',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2018::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -697,9 +691,7 @@ class TrackingFieldApi
     {
         return $this->trackingfieldGetAsyncWithHttpInfo($field_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -715,7 +707,7 @@ class TrackingFieldApi
      */
     public function trackingfieldGetAsyncWithHttpInfo($field_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2018::class;
         $request = $this->trackingfieldGetRequest($field_id);
 
         return $this->client
@@ -723,12 +715,12 @@ class TrackingFieldApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -835,7 +827,7 @@ class TrackingFieldApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -855,7 +847,7 @@ class TrackingFieldApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -876,7 +868,7 @@ class TrackingFieldApi
      */
     public function trackingfieldList()
     {
-        list($response) = $this->trackingfieldListWithHttpInfo();
+        [$response] = $this->trackingfieldListWithHttpInfo();
         return $response;
     }
 
@@ -924,12 +916,12 @@ class TrackingFieldApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -967,9 +959,7 @@ class TrackingFieldApi
     {
         return $this->trackingfieldListAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -992,12 +982,12 @@ class TrackingFieldApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1089,7 +1079,7 @@ class TrackingFieldApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1109,7 +1099,7 @@ class TrackingFieldApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1204,9 +1194,7 @@ class TrackingFieldApi
     {
         return $this->trackingfieldUpdateAsyncWithHttpInfo($field_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1229,9 +1217,7 @@ class TrackingFieldApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1339,7 +1325,7 @@ class TrackingFieldApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1359,7 +1345,7 @@ class TrackingFieldApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

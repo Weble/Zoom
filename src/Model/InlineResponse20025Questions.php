@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20025Questions implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -163,19 +163,19 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const FIELD_NAME_ADDRESS = 'address';
-    const FIELD_NAME_CITY = 'city';
-    const FIELD_NAME_COUNTRY = 'country';
-    const FIELD_NAME_ZIP = 'zip';
-    const FIELD_NAME_STATE = 'state';
-    const FIELD_NAME_PHONE = 'phone';
-    const FIELD_NAME_INDUSTRY = 'industry';
-    const FIELD_NAME_ORG = 'org';
-    const FIELD_NAME_JOB_TITLE = 'job_title';
-    const FIELD_NAME_PURCHASING_TIME_FRAME = 'purchasing_time_frame';
-    const FIELD_NAME_ROLE_IN_PURCHASE_PROCESS = 'role_in_purchase_process';
-    const FIELD_NAME_NO_OF_EMPLOYEES = 'no_of_employees';
-    const FIELD_NAME_COMMENTS = 'comments';
+    public const FIELD_NAME_ADDRESS = 'address';
+    public const FIELD_NAME_CITY = 'city';
+    public const FIELD_NAME_COUNTRY = 'country';
+    public const FIELD_NAME_ZIP = 'zip';
+    public const FIELD_NAME_STATE = 'state';
+    public const FIELD_NAME_PHONE = 'phone';
+    public const FIELD_NAME_INDUSTRY = 'industry';
+    public const FIELD_NAME_ORG = 'org';
+    public const FIELD_NAME_JOB_TITLE = 'job_title';
+    public const FIELD_NAME_PURCHASING_TIME_FRAME = 'purchasing_time_frame';
+    public const FIELD_NAME_ROLE_IN_PURCHASE_PROCESS = 'role_in_purchase_process';
+    public const FIELD_NAME_NO_OF_EMPLOYEES = 'no_of_employees';
+    public const FIELD_NAME_COMMENTS = 'comments';
 
 
 
@@ -219,8 +219,8 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['field_name'] = isset($data['field_name']) ? $data['field_name'] : null;
-        $this->container['required'] = isset($data['required']) ? $data['required'] : null;
+        $this->container['field_name'] = $data['field_name'] ?? null;
+        $this->container['required'] = $data['required'] ?? null;
     }
 
     /**
@@ -318,7 +318,7 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -330,9 +330,9 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -343,7 +343,7 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -359,7 +359,7 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -378,7 +378,7 @@ class InlineResponse20025Questions implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

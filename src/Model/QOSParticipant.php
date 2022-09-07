@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class QOSParticipant implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -63,8 +63,8 @@ class QOSParticipant implements ModelInterface, ArrayAccess
         'device' => 'string',
         'ip_address' => 'string',
         'location' => 'string',
-        'join_time' => '\DateTime',
-        'leave_time' => '\DateTime',
+        'join_time' => '\\' . \DateTime::class,
+        'leave_time' => '\\' . \DateTime::class,
         'pc_name' => 'string',
         'domain' => 'string',
         'mac_addr' => 'string',
@@ -238,19 +238,19 @@ class QOSParticipant implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['user_id'] = isset($data['user_id']) ? $data['user_id'] : null;
-        $this->container['user_name'] = isset($data['user_name']) ? $data['user_name'] : null;
-        $this->container['device'] = isset($data['device']) ? $data['device'] : null;
-        $this->container['ip_address'] = isset($data['ip_address']) ? $data['ip_address'] : null;
-        $this->container['location'] = isset($data['location']) ? $data['location'] : null;
-        $this->container['join_time'] = isset($data['join_time']) ? $data['join_time'] : null;
-        $this->container['leave_time'] = isset($data['leave_time']) ? $data['leave_time'] : null;
-        $this->container['pc_name'] = isset($data['pc_name']) ? $data['pc_name'] : null;
-        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
-        $this->container['mac_addr'] = isset($data['mac_addr']) ? $data['mac_addr'] : null;
-        $this->container['harddisk_id'] = isset($data['harddisk_id']) ? $data['harddisk_id'] : null;
-        $this->container['version'] = isset($data['version']) ? $data['version'] : null;
-        $this->container['user_qos'] = isset($data['user_qos']) ? $data['user_qos'] : null;
+        $this->container['user_id'] = $data['user_id'] ?? null;
+        $this->container['user_name'] = $data['user_name'] ?? null;
+        $this->container['device'] = $data['device'] ?? null;
+        $this->container['ip_address'] = $data['ip_address'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+        $this->container['join_time'] = $data['join_time'] ?? null;
+        $this->container['leave_time'] = $data['leave_time'] ?? null;
+        $this->container['pc_name'] = $data['pc_name'] ?? null;
+        $this->container['domain'] = $data['domain'] ?? null;
+        $this->container['mac_addr'] = $data['mac_addr'] ?? null;
+        $this->container['harddisk_id'] = $data['harddisk_id'] ?? null;
+        $this->container['version'] = $data['version'] ?? null;
+        $this->container['user_qos'] = $data['user_qos'] ?? null;
     }
 
     /**
@@ -595,7 +595,7 @@ class QOSParticipant implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -607,9 +607,9 @@ class QOSParticipant implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -620,7 +620,7 @@ class QOSParticipant implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -636,7 +636,7 @@ class QOSParticipant implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -655,7 +655,7 @@ class QOSParticipant implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

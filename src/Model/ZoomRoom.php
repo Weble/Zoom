@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class ZoomRoom implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -243,20 +243,20 @@ class ZoomRoom implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['room_name'] = isset($data['room_name']) ? $data['room_name'] : null;
-        $this->container['calender_name'] = isset($data['calender_name']) ? $data['calender_name'] : null;
-        $this->container['email'] = isset($data['email']) ? $data['email'] : null;
-        $this->container['account_type'] = isset($data['account_type']) ? $data['account_type'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['device_ip'] = isset($data['device_ip']) ? $data['device_ip'] : null;
-        $this->container['camera'] = isset($data['camera']) ? $data['camera'] : null;
-        $this->container['microphone'] = isset($data['microphone']) ? $data['microphone'] : null;
-        $this->container['speaker'] = isset($data['speaker']) ? $data['speaker'] : null;
-        $this->container['last_start_time'] = isset($data['last_start_time']) ? $data['last_start_time'] : null;
-        $this->container['location'] = isset($data['location']) ? $data['location'] : null;
-        $this->container['health'] = isset($data['health']) ? $data['health'] : null;
-        $this->container['issues'] = isset($data['issues']) ? $data['issues'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['room_name'] = $data['room_name'] ?? null;
+        $this->container['calender_name'] = $data['calender_name'] ?? null;
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['account_type'] = $data['account_type'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['device_ip'] = $data['device_ip'] ?? null;
+        $this->container['camera'] = $data['camera'] ?? null;
+        $this->container['microphone'] = $data['microphone'] ?? null;
+        $this->container['speaker'] = $data['speaker'] ?? null;
+        $this->container['last_start_time'] = $data['last_start_time'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+        $this->container['health'] = $data['health'] ?? null;
+        $this->container['issues'] = $data['issues'] ?? null;
     }
 
     /**
@@ -625,7 +625,7 @@ class ZoomRoom implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -637,9 +637,9 @@ class ZoomRoom implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -650,7 +650,7 @@ class ZoomRoom implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -666,7 +666,7 @@ class ZoomRoom implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -685,7 +685,7 @@ class ZoomRoom implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

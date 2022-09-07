@@ -101,7 +101,7 @@ class RolesApi
      */
     public function addRoleMembers($role_id, $body)
     {
-        list($response) = $this->addRoleMembersWithHttpInfo($role_id, $body);
+        [$response] = $this->addRoleMembersWithHttpInfo($role_id, $body);
         return $response;
     }
 
@@ -119,7 +119,7 @@ class RolesApi
      */
     public function addRoleMembersWithHttpInfo($role_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20115';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20115::class;
         $request = $this->addRoleMembersRequest($role_id, $body);
 
         try {
@@ -151,12 +151,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -171,7 +171,7 @@ class RolesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20115',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20115::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -196,9 +196,7 @@ class RolesApi
     {
         return $this->addRoleMembersAsyncWithHttpInfo($role_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -215,7 +213,7 @@ class RolesApi
      */
     public function addRoleMembersAsyncWithHttpInfo($role_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20115';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20115::class;
         $request = $this->addRoleMembersRequest($role_id, $body);
 
         return $this->client
@@ -223,12 +221,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -345,7 +343,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -365,7 +363,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -387,7 +385,7 @@ class RolesApi
      */
     public function createRole($body = null)
     {
-        list($response) = $this->createRoleWithHttpInfo($body);
+        [$response] = $this->createRoleWithHttpInfo($body);
         return $response;
     }
 
@@ -436,12 +434,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -464,7 +462,7 @@ class RolesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20114',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20114::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -488,9 +486,7 @@ class RolesApi
     {
         return $this->createRoleAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -514,12 +510,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -615,7 +611,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -635,7 +631,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -735,9 +731,7 @@ class RolesApi
     {
         return $this->deleteRoleAsyncWithHttpInfo($role_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -759,9 +753,7 @@ class RolesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -859,7 +851,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -879,7 +871,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -901,7 +893,7 @@ class RolesApi
      */
     public function getRoleInformation($role_id)
     {
-        list($response) = $this->getRoleInformationWithHttpInfo($role_id);
+        [$response] = $this->getRoleInformationWithHttpInfo($role_id);
         return $response;
     }
 
@@ -918,7 +910,7 @@ class RolesApi
      */
     public function getRoleInformationWithHttpInfo($role_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20071';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20071::class;
         $request = $this->getRoleInformationRequest($role_id);
 
         try {
@@ -950,12 +942,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -970,7 +962,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20071',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20071::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -994,9 +986,7 @@ class RolesApi
     {
         return $this->getRoleInformationAsyncWithHttpInfo($role_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1012,7 +1002,7 @@ class RolesApi
      */
     public function getRoleInformationAsyncWithHttpInfo($role_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20071';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20071::class;
         $request = $this->getRoleInformationRequest($role_id);
 
         return $this->client
@@ -1020,12 +1010,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1132,7 +1122,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1152,7 +1142,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1247,9 +1237,7 @@ class RolesApi
     {
         return $this->roleMemberDeleteAsyncWithHttpInfo($role_id, $member_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1272,9 +1260,7 @@ class RolesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1387,7 +1373,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1407,7 +1393,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1429,7 +1415,7 @@ class RolesApi
      */
     public function roleMembers($role_id)
     {
-        list($response) = $this->roleMembersWithHttpInfo($role_id);
+        [$response] = $this->roleMembersWithHttpInfo($role_id);
         return $response;
     }
 
@@ -1446,7 +1432,7 @@ class RolesApi
      */
     public function roleMembersWithHttpInfo($role_id)
     {
-        $returnType = '\Weble\Zoom\Model\RoleMembersList';
+        $returnType = '\\' . \Weble\Zoom\Model\RoleMembersList::class;
         $request = $this->roleMembersRequest($role_id);
 
         try {
@@ -1478,12 +1464,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1498,7 +1484,7 @@ class RolesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RoleMembersList',
+                        '\\' . \Weble\Zoom\Model\RoleMembersList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1522,9 +1508,7 @@ class RolesApi
     {
         return $this->roleMembersAsyncWithHttpInfo($role_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1540,7 +1524,7 @@ class RolesApi
      */
     public function roleMembersAsyncWithHttpInfo($role_id)
     {
-        $returnType = '\Weble\Zoom\Model\RoleMembersList';
+        $returnType = '\\' . \Weble\Zoom\Model\RoleMembersList::class;
         $request = $this->roleMembersRequest($role_id);
 
         return $this->client
@@ -1548,12 +1532,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1660,7 +1644,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1680,7 +1664,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1701,7 +1685,7 @@ class RolesApi
      */
     public function roles()
     {
-        list($response) = $this->rolesWithHttpInfo();
+        [$response] = $this->rolesWithHttpInfo();
         return $response;
     }
 
@@ -1749,12 +1733,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1792,9 +1776,7 @@ class RolesApi
     {
         return $this->rolesAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1817,12 +1799,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1914,7 +1896,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1934,7 +1916,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1957,7 +1939,7 @@ class RolesApi
      */
     public function updateRole($role_id, $body = null)
     {
-        list($response) = $this->updateRoleWithHttpInfo($role_id, $body);
+        [$response] = $this->updateRoleWithHttpInfo($role_id, $body);
         return $response;
     }
 
@@ -2007,12 +1989,12 @@ class RolesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2052,9 +2034,7 @@ class RolesApi
     {
         return $this->updateRoleAsyncWithHttpInfo($role_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2079,12 +2059,12 @@ class RolesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2195,7 +2175,7 @@ class RolesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2215,7 +2195,7 @@ class RolesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

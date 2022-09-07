@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20031Users implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -267,25 +267,25 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['user_id'] = isset($data['user_id']) ? $data['user_id'] : null;
-        $this->container['user_name'] = isset($data['user_name']) ? $data['user_name'] : null;
-        $this->container['email'] = isset($data['email']) ? $data['email'] : null;
-        $this->container['total_send'] = isset($data['total_send']) ? $data['total_send'] : null;
-        $this->container['total_receive'] = isset($data['total_receive']) ? $data['total_receive'] : null;
-        $this->container['group_send'] = isset($data['group_send']) ? $data['group_send'] : null;
-        $this->container['group_receive'] = isset($data['group_receive']) ? $data['group_receive'] : null;
-        $this->container['calls_send'] = isset($data['calls_send']) ? $data['calls_send'] : null;
-        $this->container['calls_receive'] = isset($data['calls_receive']) ? $data['calls_receive'] : null;
-        $this->container['files_send'] = isset($data['files_send']) ? $data['files_send'] : null;
-        $this->container['files_receive'] = isset($data['files_receive']) ? $data['files_receive'] : null;
-        $this->container['images_send'] = isset($data['images_send']) ? $data['images_send'] : null;
-        $this->container['images_receive'] = isset($data['images_receive']) ? $data['images_receive'] : null;
-        $this->container['voice_send'] = isset($data['voice_send']) ? $data['voice_send'] : null;
-        $this->container['voice_receive'] = isset($data['voice_receive']) ? $data['voice_receive'] : null;
-        $this->container['videos_send'] = isset($data['videos_send']) ? $data['videos_send'] : null;
-        $this->container['videos_receive'] = isset($data['videos_receive']) ? $data['videos_receive'] : null;
-        $this->container['emoji_send'] = isset($data['emoji_send']) ? $data['emoji_send'] : null;
-        $this->container['emoji_receive'] = isset($data['emoji_receive']) ? $data['emoji_receive'] : null;
+        $this->container['user_id'] = $data['user_id'] ?? null;
+        $this->container['user_name'] = $data['user_name'] ?? null;
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['total_send'] = $data['total_send'] ?? null;
+        $this->container['total_receive'] = $data['total_receive'] ?? null;
+        $this->container['group_send'] = $data['group_send'] ?? null;
+        $this->container['group_receive'] = $data['group_receive'] ?? null;
+        $this->container['calls_send'] = $data['calls_send'] ?? null;
+        $this->container['calls_receive'] = $data['calls_receive'] ?? null;
+        $this->container['files_send'] = $data['files_send'] ?? null;
+        $this->container['files_receive'] = $data['files_receive'] ?? null;
+        $this->container['images_send'] = $data['images_send'] ?? null;
+        $this->container['images_receive'] = $data['images_receive'] ?? null;
+        $this->container['voice_send'] = $data['voice_send'] ?? null;
+        $this->container['voice_receive'] = $data['voice_receive'] ?? null;
+        $this->container['videos_send'] = $data['videos_send'] ?? null;
+        $this->container['videos_receive'] = $data['videos_receive'] ?? null;
+        $this->container['emoji_send'] = $data['emoji_send'] ?? null;
+        $this->container['emoji_receive'] = $data['emoji_receive'] ?? null;
     }
 
     /**
@@ -774,7 +774,7 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -786,9 +786,9 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -799,7 +799,7 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -815,7 +815,7 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -834,7 +834,7 @@ class InlineResponse20031Users implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

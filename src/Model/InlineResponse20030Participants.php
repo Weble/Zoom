@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20030Participants implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -68,8 +68,8 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
         'speaker' => 'string',
         'data_center' => 'string',
         'connection_type' => 'string',
-        'join_time' => '\DateTime',
-        'leave_time' => '\DateTime',
+        'join_time' => '\\' . \DateTime::class,
+        'leave_time' => '\\' . \DateTime::class,
         'share_application' => 'bool',
         'share_desktop' => 'bool',
         'share_whiteboard' => 'bool',
@@ -287,29 +287,29 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['user_id'] = isset($data['user_id']) ? $data['user_id'] : null;
-        $this->container['user_name'] = isset($data['user_name']) ? $data['user_name'] : null;
-        $this->container['device'] = isset($data['device']) ? $data['device'] : null;
-        $this->container['ip_address'] = isset($data['ip_address']) ? $data['ip_address'] : null;
-        $this->container['location'] = isset($data['location']) ? $data['location'] : null;
-        $this->container['network_type'] = isset($data['network_type']) ? $data['network_type'] : null;
-        $this->container['microphone'] = isset($data['microphone']) ? $data['microphone'] : null;
-        $this->container['speaker'] = isset($data['speaker']) ? $data['speaker'] : null;
-        $this->container['data_center'] = isset($data['data_center']) ? $data['data_center'] : null;
-        $this->container['connection_type'] = isset($data['connection_type']) ? $data['connection_type'] : null;
-        $this->container['join_time'] = isset($data['join_time']) ? $data['join_time'] : null;
-        $this->container['leave_time'] = isset($data['leave_time']) ? $data['leave_time'] : null;
-        $this->container['share_application'] = isset($data['share_application']) ? $data['share_application'] : null;
-        $this->container['share_desktop'] = isset($data['share_desktop']) ? $data['share_desktop'] : null;
-        $this->container['share_whiteboard'] = isset($data['share_whiteboard']) ? $data['share_whiteboard'] : null;
-        $this->container['recording'] = isset($data['recording']) ? $data['recording'] : null;
-        $this->container['pc_name'] = isset($data['pc_name']) ? $data['pc_name'] : null;
-        $this->container['domain'] = isset($data['domain']) ? $data['domain'] : null;
-        $this->container['mac_addr'] = isset($data['mac_addr']) ? $data['mac_addr'] : null;
-        $this->container['harddisk_id'] = isset($data['harddisk_id']) ? $data['harddisk_id'] : null;
-        $this->container['version'] = isset($data['version']) ? $data['version'] : null;
-        $this->container['leave_reason'] = isset($data['leave_reason']) ? $data['leave_reason'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['user_id'] = $data['user_id'] ?? null;
+        $this->container['user_name'] = $data['user_name'] ?? null;
+        $this->container['device'] = $data['device'] ?? null;
+        $this->container['ip_address'] = $data['ip_address'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+        $this->container['network_type'] = $data['network_type'] ?? null;
+        $this->container['microphone'] = $data['microphone'] ?? null;
+        $this->container['speaker'] = $data['speaker'] ?? null;
+        $this->container['data_center'] = $data['data_center'] ?? null;
+        $this->container['connection_type'] = $data['connection_type'] ?? null;
+        $this->container['join_time'] = $data['join_time'] ?? null;
+        $this->container['leave_time'] = $data['leave_time'] ?? null;
+        $this->container['share_application'] = $data['share_application'] ?? null;
+        $this->container['share_desktop'] = $data['share_desktop'] ?? null;
+        $this->container['share_whiteboard'] = $data['share_whiteboard'] ?? null;
+        $this->container['recording'] = $data['recording'] ?? null;
+        $this->container['pc_name'] = $data['pc_name'] ?? null;
+        $this->container['domain'] = $data['domain'] ?? null;
+        $this->container['mac_addr'] = $data['mac_addr'] ?? null;
+        $this->container['harddisk_id'] = $data['harddisk_id'] ?? null;
+        $this->container['version'] = $data['version'] ?? null;
+        $this->container['leave_reason'] = $data['leave_reason'] ?? null;
     }
 
     /**
@@ -894,7 +894,7 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -906,9 +906,9 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -919,7 +919,7 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -935,7 +935,7 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -954,7 +954,7 @@ class InlineResponse20030Participants implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

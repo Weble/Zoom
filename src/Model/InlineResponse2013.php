@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse2013 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -58,7 +58,7 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'ids' => 'string[]',
-        'added_at' => '\DateTime'
+        'added_at' => '\\' . \DateTime::class
     ];
 
     /**
@@ -182,8 +182,8 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['ids'] = isset($data['ids']) ? $data['ids'] : null;
-        $this->container['added_at'] = isset($data['added_at']) ? $data['added_at'] : null;
+        $this->container['ids'] = $data['ids'] ?? null;
+        $this->container['added_at'] = $data['added_at'] ?? null;
     }
 
     /**
@@ -264,7 +264,7 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -276,9 +276,9 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -289,7 +289,7 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -305,7 +305,7 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -324,7 +324,7 @@ class InlineResponse2013 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

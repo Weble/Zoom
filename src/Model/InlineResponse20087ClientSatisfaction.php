@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -57,7 +57,7 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'date' => '\DateTime',
+        'date' => '\\' . \DateTime::class,
         'satisfaction_percent' => 'int',
         'good_count' => 'int',
         'not_good_count' => 'int',
@@ -197,11 +197,11 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
      */
     public function __construct(array $data = null)
     {
-        $this->container['date'] = isset($data['date']) ? $data['date'] : null;
-        $this->container['satisfaction_percent'] = isset($data['satisfaction_percent']) ? $data['satisfaction_percent'] : null;
-        $this->container['good_count'] = isset($data['good_count']) ? $data['good_count'] : null;
-        $this->container['not_good_count'] = isset($data['not_good_count']) ? $data['not_good_count'] : null;
-        $this->container['none_count'] = isset($data['none_count']) ? $data['none_count'] : null;
+        $this->container['date'] = $data['date'] ?? null;
+        $this->container['satisfaction_percent'] = $data['satisfaction_percent'] ?? null;
+        $this->container['good_count'] = $data['good_count'] ?? null;
+        $this->container['not_good_count'] = $data['not_good_count'] ?? null;
+        $this->container['none_count'] = $data['none_count'] ?? null;
     }
 
     /**
@@ -354,7 +354,7 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -366,9 +366,9 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -379,7 +379,7 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -395,7 +395,7 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -414,7 +414,7 @@ class InlineResponse20087ClientSatisfaction implements ModelInterface, ArrayAcce
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

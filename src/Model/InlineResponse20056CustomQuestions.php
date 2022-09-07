@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -173,10 +173,10 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TYPE_SHORT = 'short';
-    const TYPE_SINGLE_RADIO = 'single_radio';
-    const TYPE_SINGLE_DROPDOWN = 'single_dropdown';
-    const TYPE_MULTIPLE = 'multiple';
+    public const TYPE_SHORT = 'short';
+    public const TYPE_SINGLE_RADIO = 'single_radio';
+    public const TYPE_SINGLE_DROPDOWN = 'single_dropdown';
+    public const TYPE_MULTIPLE = 'multiple';
 
 
 
@@ -211,10 +211,10 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['required'] = isset($data['required']) ? $data['required'] : null;
-        $this->container['answers'] = isset($data['answers']) ? $data['answers'] : null;
+        $this->container['title'] = $data['title'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['required'] = $data['required'] ?? null;
+        $this->container['answers'] = $data['answers'] ?? null;
     }
 
     /**
@@ -360,7 +360,7 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -372,9 +372,9 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -385,7 +385,7 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -401,7 +401,7 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -420,7 +420,7 @@ class InlineResponse20056CustomQuestions implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

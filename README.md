@@ -1,5 +1,3 @@
-# WARNING: STILL IN DEVELOPMENT. DO NOT USE IN PRODUCTION.
-
 # ZOOM PHP SDK
 The Zoom API allows developers to safely and securely access information from Zoom. You can use this API to build private services or public applications on the [Zoom App Marketplace](http://marketplace.zoom.us). To learn how to get your credentials and create private/public applications, read our [Authorization Guide](https://marketplace.zoom.us/docs/guides/authorization/credentials). All endpoints are available via `https` and are located at `api.zoom.us/v2/`.  For instance you can list all users on an account via `https://api.zoom.us/v2/users/`.
 
@@ -16,20 +14,15 @@ PHP 7.2 and later
 ## Installation & Usage
 
 ```php
+// @see https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
 $apiKey = "[YOUR_API_KEY]";
 $apiSecret = "[YOUR_API_SECRET]";
+$accountId = "[YOUR_ACCOUNT_ID]";
 
-$payload = array(
-    "iss" => $apiKey,
-    // How much time the jtw token should last
-    "exp" => (int) (new DateTime())->add(new DateInterval('PT60M'))->format('U'),
-);
+// Valid for 1 hour.
+$oauth_token = \Weble\Zoom\OAuth::generateToken($apiKey, $apiSecret, $accountId);
 
-// This is the JWT token. It will last for the time you expressed above.
-// We suggest you cache it for the same duration, to avoid generating a new one each time
-$jwt = \Firebase\JWT\JWT::encode($payload, $apiSecret);
-
-$this->config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($jwt);
+$config = \Weble\Zoom\Configuration::getDefaultConfiguration()->setAccessToken($oauth_token);
 $apiInstance = new \Weble\Zoom\Api\UsersApi(
     new \GuzzleHttp\Client(),
     $config

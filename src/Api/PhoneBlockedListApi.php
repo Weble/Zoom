@@ -100,7 +100,7 @@ class PhoneBlockedListApi
      */
     public function addAnumberToBlockedList($body = null)
     {
-        list($response) = $this->addAnumberToBlockedListWithHttpInfo($body);
+        [$response] = $this->addAnumberToBlockedListWithHttpInfo($body);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class PhoneBlockedListApi
      */
     public function addAnumberToBlockedListWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20125';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20125::class;
         $request = $this->addAnumberToBlockedListRequest($body);
 
         try {
@@ -149,12 +149,12 @@ class PhoneBlockedListApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class PhoneBlockedListApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20125',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20125::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class PhoneBlockedListApi
     {
         return $this->addAnumberToBlockedListAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class PhoneBlockedListApi
      */
     public function addAnumberToBlockedListAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20125';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20125::class;
         $request = $this->addAnumberToBlockedListRequest($body);
 
         return $this->client
@@ -219,12 +217,12 @@ class PhoneBlockedListApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -320,7 +318,7 @@ class PhoneBlockedListApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -340,7 +338,7 @@ class PhoneBlockedListApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -362,7 +360,7 @@ class PhoneBlockedListApi
      */
     public function deleteABlockedList($blocked_list_id)
     {
-        list($response) = $this->deleteABlockedListWithHttpInfo($blocked_list_id);
+        [$response] = $this->deleteABlockedListWithHttpInfo($blocked_list_id);
         return $response;
     }
 
@@ -411,12 +409,12 @@ class PhoneBlockedListApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -455,9 +453,7 @@ class PhoneBlockedListApi
     {
         return $this->deleteABlockedListAsyncWithHttpInfo($blocked_list_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -481,12 +477,12 @@ class PhoneBlockedListApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -593,7 +589,7 @@ class PhoneBlockedListApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -613,7 +609,7 @@ class PhoneBlockedListApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -635,7 +631,7 @@ class PhoneBlockedListApi
      */
     public function getABlockedList($blocked_list_id)
     {
-        list($response) = $this->getABlockedListWithHttpInfo($blocked_list_id);
+        [$response] = $this->getABlockedListWithHttpInfo($blocked_list_id);
         return $response;
     }
 
@@ -652,7 +648,7 @@ class PhoneBlockedListApi
      */
     public function getABlockedListWithHttpInfo($blocked_list_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20098';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20098::class;
         $request = $this->getABlockedListRequest($blocked_list_id);
 
         try {
@@ -684,12 +680,12 @@ class PhoneBlockedListApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -704,7 +700,7 @@ class PhoneBlockedListApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20098',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20098::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -728,9 +724,7 @@ class PhoneBlockedListApi
     {
         return $this->getABlockedListAsyncWithHttpInfo($blocked_list_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -746,7 +740,7 @@ class PhoneBlockedListApi
      */
     public function getABlockedListAsyncWithHttpInfo($blocked_list_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20098';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20098::class;
         $request = $this->getABlockedListRequest($blocked_list_id);
 
         return $this->client
@@ -754,12 +748,12 @@ class PhoneBlockedListApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -866,7 +860,7 @@ class PhoneBlockedListApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -886,7 +880,7 @@ class PhoneBlockedListApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -909,7 +903,7 @@ class PhoneBlockedListApi
      */
     public function listBlockedList($next_page_token = null, $page_size = '30')
     {
-        list($response) = $this->listBlockedListWithHttpInfo($next_page_token, $page_size);
+        [$response] = $this->listBlockedListWithHttpInfo($next_page_token, $page_size);
         return $response;
     }
 
@@ -927,7 +921,7 @@ class PhoneBlockedListApi
      */
     public function listBlockedListWithHttpInfo($next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20097';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20097::class;
         $request = $this->listBlockedListRequest($next_page_token, $page_size);
 
         try {
@@ -959,12 +953,12 @@ class PhoneBlockedListApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -979,7 +973,7 @@ class PhoneBlockedListApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20097',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20097::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1004,9 +998,7 @@ class PhoneBlockedListApi
     {
         return $this->listBlockedListAsyncWithHttpInfo($next_page_token, $page_size)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1023,7 +1015,7 @@ class PhoneBlockedListApi
      */
     public function listBlockedListAsyncWithHttpInfo($next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20097';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20097::class;
         $request = $this->listBlockedListRequest($next_page_token, $page_size);
 
         return $this->client
@@ -1031,12 +1023,12 @@ class PhoneBlockedListApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1142,7 +1134,7 @@ class PhoneBlockedListApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1162,7 +1154,7 @@ class PhoneBlockedListApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1185,7 +1177,7 @@ class PhoneBlockedListApi
      */
     public function updateBlockedList($blocked_list_id, $body = null)
     {
-        list($response) = $this->updateBlockedListWithHttpInfo($blocked_list_id, $body);
+        [$response] = $this->updateBlockedListWithHttpInfo($blocked_list_id, $body);
         return $response;
     }
 
@@ -1235,12 +1227,12 @@ class PhoneBlockedListApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1280,9 +1272,7 @@ class PhoneBlockedListApi
     {
         return $this->updateBlockedListAsyncWithHttpInfo($blocked_list_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1307,12 +1297,12 @@ class PhoneBlockedListApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1423,7 +1413,7 @@ class PhoneBlockedListApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1443,7 +1433,7 @@ class PhoneBlockedListApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

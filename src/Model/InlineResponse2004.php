@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse2004 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -60,8 +60,8 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
         'id' => 'string',
         'name' => 'string',
         'site_code' => 'int',
-        'country' => '\Weble\Zoom\Model\InlineResponse2003Country',
-        'main_auto_receptionist' => '\Weble\Zoom\Model\InlineResponse2004MainAutoReceptionist'
+        'country' => '\\' . \Weble\Zoom\Model\InlineResponse2003Country::class,
+        'main_auto_receptionist' => '\\' . \Weble\Zoom\Model\InlineResponse2004MainAutoReceptionist::class
     ];
 
     /**
@@ -178,9 +178,9 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
 
-    
+
+
 
     /**
      * Associative array for storing property values
@@ -197,11 +197,11 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['site_code'] = isset($data['site_code']) ? $data['site_code'] : null;
-        $this->container['country'] = isset($data['country']) ? $data['country'] : null;
-        $this->container['main_auto_receptionist'] = isset($data['main_auto_receptionist']) ? $data['main_auto_receptionist'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['site_code'] = $data['site_code'] ?? null;
+        $this->container['country'] = $data['country'] ?? null;
+        $this->container['main_auto_receptionist'] = $data['main_auto_receptionist'] ?? null;
     }
 
     /**
@@ -354,7 +354,7 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -366,9 +366,9 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -379,7 +379,7 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -395,7 +395,7 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -414,7 +414,7 @@ class InlineResponse2004 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

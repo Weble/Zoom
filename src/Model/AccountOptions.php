@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountOptions implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -179,8 +179,8 @@ class AccountOptions implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const PAY_MODE_MASTER = 'master';
-    const PAY_MODE_SUB = 'sub';
+    public const PAY_MODE_MASTER = 'master';
+    public const PAY_MODE_SUB = 'sub';
 
 
 
@@ -213,11 +213,11 @@ class AccountOptions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['share_rc'] = isset($data['share_rc']) ? $data['share_rc'] : false;
-        $this->container['room_connector_list'] = isset($data['room_connector_list']) ? $data['room_connector_list'] : null;
-        $this->container['share_mc'] = isset($data['share_mc']) ? $data['share_mc'] : false;
-        $this->container['meeting_connector_list'] = isset($data['meeting_connector_list']) ? $data['meeting_connector_list'] : null;
-        $this->container['pay_mode'] = isset($data['pay_mode']) ? $data['pay_mode'] : 'master';
+        $this->container['share_rc'] = $data['share_rc'] ?? false;
+        $this->container['room_connector_list'] = $data['room_connector_list'] ?? null;
+        $this->container['share_mc'] = $data['share_mc'] ?? false;
+        $this->container['meeting_connector_list'] = $data['meeting_connector_list'] ?? null;
+        $this->container['pay_mode'] = $data['pay_mode'] ?? 'master';
     }
 
     /**
@@ -387,7 +387,7 @@ class AccountOptions implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -399,9 +399,9 @@ class AccountOptions implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -412,7 +412,7 @@ class AccountOptions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -428,7 +428,7 @@ class AccountOptions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -447,7 +447,7 @@ class AccountOptions implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

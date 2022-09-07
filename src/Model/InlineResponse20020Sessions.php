@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -60,7 +60,7 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
         'session_id' => 'string',
         'type' => 'string',
         'name' => 'string',
-        'last_message_sent_time' => '\DateTime'
+        'last_message_sent_time' => '\\' . \DateTime::class
     ];
 
     /**
@@ -173,8 +173,8 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TYPE_GROUP = 'Group';
-    const TYPE__11 = '1:1';
+    public const TYPE_GROUP = 'Group';
+    public const TYPE__11 = '1:1';
 
 
 
@@ -207,10 +207,10 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['session_id'] = isset($data['session_id']) ? $data['session_id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['last_message_sent_time'] = isset($data['last_message_sent_time']) ? $data['last_message_sent_time'] : null;
+        $this->container['session_id'] = $data['session_id'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['last_message_sent_time'] = $data['last_message_sent_time'] ?? null;
     }
 
     /**
@@ -356,7 +356,7 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -368,9 +368,9 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -381,7 +381,7 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -397,7 +397,7 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -416,7 +416,7 @@ class InlineResponse20020Sessions implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

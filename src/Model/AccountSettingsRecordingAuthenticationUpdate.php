@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -59,7 +59,7 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
       */
     protected static $swaggerTypes = [
         'recording_authentication' => 'bool',
-        'authentication_option' => '\Weble\Zoom\Model\AccountSettingsRecordingAuthenticationUpdateAuthenticationOption'
+        'authentication_option' => '\\' . \Weble\Zoom\Model\AccountSettingsRecordingAuthenticationUpdateAuthenticationOption::class
     ];
 
     /**
@@ -183,8 +183,8 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
      */
     public function __construct(array $data = null)
     {
-        $this->container['recording_authentication'] = isset($data['recording_authentication']) ? $data['recording_authentication'] : null;
-        $this->container['authentication_option'] = isset($data['authentication_option']) ? $data['authentication_option'] : null;
+        $this->container['recording_authentication'] = $data['recording_authentication'] ?? null;
+        $this->container['authentication_option'] = $data['authentication_option'] ?? null;
     }
 
     /**
@@ -265,7 +265,7 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -277,9 +277,9 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -290,7 +290,7 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -306,7 +306,7 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -325,7 +325,7 @@ class AccountSettingsRecordingAuthenticationUpdate implements ModelInterface, Ar
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

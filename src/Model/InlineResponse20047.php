@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20047 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -60,7 +60,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
         'account_id' => 'string',
         'cms_user_id' => 'string',
         'company' => 'string',
-        'created_at' => '\DateTime',
+        'created_at' => '\\' . \DateTime::class,
         'dept' => 'string',
         'email' => 'string',
         'first_name' => 'string',
@@ -72,7 +72,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
         'job_title' => 'string',
         'language' => 'string',
         'last_client_version' => 'string',
-        'last_login_time' => '\DateTime',
+        'last_login_time' => '\\' . \DateTime::class,
         'last_name' => 'string',
         'location' => 'string',
         'personal_meeting_url' => 'string',
@@ -303,9 +303,9 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_ACTIVE = 'active';
-    const STATUS_INACTIVE = 'inactive';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_INACTIVE = 'inactive';
 
 
 
@@ -339,36 +339,36 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['cms_user_id'] = isset($data['cms_user_id']) ? $data['cms_user_id'] : null;
-        $this->container['company'] = isset($data['company']) ? $data['company'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['dept'] = isset($data['dept']) ? $data['dept'] : null;
-        $this->container['email'] = isset($data['email']) ? $data['email'] : 'john.doe@email.com';
-        $this->container['first_name'] = isset($data['first_name']) ? $data['first_name'] : null;
-        $this->container['group_ids'] = isset($data['group_ids']) ? $data['group_ids'] : null;
-        $this->container['host_key'] = isset($data['host_key']) ? $data['host_key'] : null;
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['im_group_ids'] = isset($data['im_group_ids']) ? $data['im_group_ids'] : null;
-        $this->container['jid'] = isset($data['jid']) ? $data['jid'] : null;
-        $this->container['job_title'] = isset($data['job_title']) ? $data['job_title'] : null;
-        $this->container['language'] = isset($data['language']) ? $data['language'] : null;
-        $this->container['last_client_version'] = isset($data['last_client_version']) ? $data['last_client_version'] : null;
-        $this->container['last_login_time'] = isset($data['last_login_time']) ? $data['last_login_time'] : null;
-        $this->container['last_name'] = isset($data['last_name']) ? $data['last_name'] : null;
-        $this->container['location'] = isset($data['location']) ? $data['location'] : null;
-        $this->container['personal_meeting_url'] = isset($data['personal_meeting_url']) ? $data['personal_meeting_url'] : null;
-        $this->container['phone_country'] = isset($data['phone_country']) ? $data['phone_country'] : null;
-        $this->container['phone_number'] = isset($data['phone_number']) ? $data['phone_number'] : null;
-        $this->container['pic_url'] = isset($data['pic_url']) ? $data['pic_url'] : null;
-        $this->container['pmi'] = isset($data['pmi']) ? $data['pmi'] : null;
-        $this->container['role_name'] = isset($data['role_name']) ? $data['role_name'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['use_pmi'] = isset($data['use_pmi']) ? $data['use_pmi'] : false;
-        $this->container['vanity_url'] = isset($data['vanity_url']) ? $data['vanity_url'] : null;
-        $this->container['verified'] = isset($data['verified']) ? $data['verified'] : null;
+        $this->container['account_id'] = $data['account_id'] ?? null;
+        $this->container['cms_user_id'] = $data['cms_user_id'] ?? null;
+        $this->container['company'] = $data['company'] ?? null;
+        $this->container['created_at'] = $data['created_at'] ?? null;
+        $this->container['dept'] = $data['dept'] ?? null;
+        $this->container['email'] = $data['email'] ?? 'john.doe@email.com';
+        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['group_ids'] = $data['group_ids'] ?? null;
+        $this->container['host_key'] = $data['host_key'] ?? null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['im_group_ids'] = $data['im_group_ids'] ?? null;
+        $this->container['jid'] = $data['jid'] ?? null;
+        $this->container['job_title'] = $data['job_title'] ?? null;
+        $this->container['language'] = $data['language'] ?? null;
+        $this->container['last_client_version'] = $data['last_client_version'] ?? null;
+        $this->container['last_login_time'] = $data['last_login_time'] ?? null;
+        $this->container['last_name'] = $data['last_name'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+        $this->container['personal_meeting_url'] = $data['personal_meeting_url'] ?? null;
+        $this->container['phone_country'] = $data['phone_country'] ?? null;
+        $this->container['phone_number'] = $data['phone_number'] ?? null;
+        $this->container['pic_url'] = $data['pic_url'] ?? null;
+        $this->container['pmi'] = $data['pmi'] ?? null;
+        $this->container['role_name'] = $data['role_name'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['timezone'] = $data['timezone'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['use_pmi'] = $data['use_pmi'] ?? false;
+        $this->container['vanity_url'] = $data['vanity_url'] ?? null;
+        $this->container['verified'] = $data['verified'] ?? null;
     }
 
     /**
@@ -1160,7 +1160,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -1172,9 +1172,9 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -1185,7 +1185,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -1201,7 +1201,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -1220,7 +1220,7 @@ class InlineResponse20047 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

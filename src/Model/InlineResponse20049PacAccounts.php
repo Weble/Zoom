@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -197,11 +197,11 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['dedicated_dial_in_number'] = isset($data['dedicated_dial_in_number']) ? $data['dedicated_dial_in_number'] : null;
-        $this->container['global_dial_in_numbers'] = isset($data['global_dial_in_numbers']) ? $data['global_dial_in_numbers'] : null;
-        $this->container['conference_id'] = isset($data['conference_id']) ? $data['conference_id'] : null;
-        $this->container['participant_password'] = isset($data['participant_password']) ? $data['participant_password'] : null;
-        $this->container['listen_only_password'] = isset($data['listen_only_password']) ? $data['listen_only_password'] : null;
+        $this->container['dedicated_dial_in_number'] = $data['dedicated_dial_in_number'] ?? null;
+        $this->container['global_dial_in_numbers'] = $data['global_dial_in_numbers'] ?? null;
+        $this->container['conference_id'] = $data['conference_id'] ?? null;
+        $this->container['participant_password'] = $data['participant_password'] ?? null;
+        $this->container['listen_only_password'] = $data['listen_only_password'] ?? null;
     }
 
     /**
@@ -377,7 +377,7 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -389,9 +389,9 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -402,7 +402,7 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -418,7 +418,7 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -437,7 +437,7 @@ class InlineResponse20049PacAccounts implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

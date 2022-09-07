@@ -71,7 +71,7 @@ class ObjectSerializer
                 $getter = $data::getters()[$property];
                 $value = $data->$getter();
                 if ($value !== null
-                    && !in_array($swaggerType, ['DateTime', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)
+                    && !in_array($swaggerType, [\DateTime::class, 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)
                     && method_exists($swaggerType, 'getAllowableEnumValues')
                     && !in_array($value, $swaggerType::getAllowableEnumValues(), true)) {
                     $imploded = implode("', '", $swaggerType::getAllowableEnumValues());
@@ -255,7 +255,7 @@ class ObjectSerializer
         } elseif ($class === 'object') {
             settype($data, 'array');
             return $data;
-        } elseif ($class === '\DateTime') {
+        } elseif ($class === '\\' . \DateTime::class) {
             // Some API's return an invalid, empty string as a
             // date-time property. DateTime::__construct() will return
             // the current time for empty input which is probably not
@@ -267,10 +267,10 @@ class ObjectSerializer
             } else {
                 return null;
             }
-        } elseif (in_array($class, ['DateTime', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
+        } elseif (in_array($class, [\DateTime::class, 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
             settype($data, $class);
             return $data;
-        } elseif ($class === '\SplFileObject') {
+        } elseif ($class === '\\' . \SplFileObject::class) {
             /** @var \Psr\Http\Message\StreamInterface $data */
 
             // determine file name

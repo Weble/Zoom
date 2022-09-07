@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -58,7 +58,7 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'email' => 'string',
-        'time' => '\DateTime',
+        'time' => '\\' . \DateTime::class,
         'type' => 'string',
         'ip_address' => 'string',
         'client_type' => 'string',
@@ -202,12 +202,12 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['email'] = isset($data['email']) ? $data['email'] : null;
-        $this->container['time'] = isset($data['time']) ? $data['time'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['ip_address'] = isset($data['ip_address']) ? $data['ip_address'] : null;
-        $this->container['client_type'] = isset($data['client_type']) ? $data['client_type'] : null;
-        $this->container['version'] = isset($data['version']) ? $data['version'] : null;
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['time'] = $data['time'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['ip_address'] = $data['ip_address'] ?? null;
+        $this->container['client_type'] = $data['client_type'] ?? null;
+        $this->container['version'] = $data['version'] ?? null;
     }
 
     /**
@@ -384,7 +384,7 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -396,9 +396,9 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -409,7 +409,7 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -425,7 +425,7 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -444,7 +444,7 @@ class InlineResponse20068ActivityLogs implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

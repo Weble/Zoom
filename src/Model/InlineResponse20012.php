@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20012 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -60,8 +60,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
         'id' => 'string',
         'owner_id' => 'string',
         'owner_email' => 'string',
-        'created_at' => '\DateTime',
-        'options' => '\Weble\Zoom\Model\AccountsOptions',
+        'created_at' => '\\' . \DateTime::class,
+        'options' => '\\' . \Weble\Zoom\Model\AccountsOptions::class,
         'vanity_url' => 'string'
     ];
 
@@ -202,12 +202,12 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['owner_id'] = isset($data['owner_id']) ? $data['owner_id'] : null;
-        $this->container['owner_email'] = isset($data['owner_email']) ? $data['owner_email'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['options'] = isset($data['options']) ? $data['options'] : null;
-        $this->container['vanity_url'] = isset($data['vanity_url']) ? $data['vanity_url'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['owner_id'] = $data['owner_id'] ?? null;
+        $this->container['owner_email'] = $data['owner_email'] ?? null;
+        $this->container['created_at'] = $data['created_at'] ?? null;
+        $this->container['options'] = $data['options'] ?? null;
+        $this->container['vanity_url'] = $data['vanity_url'] ?? null;
     }
 
     /**
@@ -384,7 +384,7 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -396,9 +396,9 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -409,7 +409,7 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -425,7 +425,7 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -444,7 +444,7 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

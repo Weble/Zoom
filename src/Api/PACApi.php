@@ -100,7 +100,7 @@ class PACApi
      */
     public function userPACs($user_id)
     {
-        list($response) = $this->userPACsWithHttpInfo($user_id);
+        [$response] = $this->userPACsWithHttpInfo($user_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class PACApi
      */
     public function userPACsWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20049';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20049::class;
         $request = $this->userPACsRequest($user_id);
 
         try {
@@ -149,12 +149,12 @@ class PACApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class PACApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20049',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20049::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class PACApi
     {
         return $this->userPACsAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class PACApi
      */
     public function userPACsAsyncWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20049';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20049::class;
         $request = $this->userPACsRequest($user_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class PACApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class PACApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class PACApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

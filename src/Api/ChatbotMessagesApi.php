@@ -101,7 +101,7 @@ class ChatbotMessagesApi
      */
     public function deleteAChatbotMessage($message_id, $body = null)
     {
-        list($response) = $this->deleteAChatbotMessageWithHttpInfo($message_id, $body);
+        [$response] = $this->deleteAChatbotMessageWithHttpInfo($message_id, $body);
         return $response;
     }
 
@@ -119,7 +119,7 @@ class ChatbotMessagesApi
      */
     public function deleteAChatbotMessageWithHttpInfo($message_id, $body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20058';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20058::class;
         $request = $this->deleteAChatbotMessageRequest($message_id, $body);
 
         try {
@@ -151,12 +151,12 @@ class ChatbotMessagesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -171,7 +171,7 @@ class ChatbotMessagesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20058',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20058::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -196,9 +196,7 @@ class ChatbotMessagesApi
     {
         return $this->deleteAChatbotMessageAsyncWithHttpInfo($message_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -215,7 +213,7 @@ class ChatbotMessagesApi
      */
     public function deleteAChatbotMessageAsyncWithHttpInfo($message_id, $body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20058';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20058::class;
         $request = $this->deleteAChatbotMessageRequest($message_id, $body);
 
         return $this->client
@@ -223,12 +221,12 @@ class ChatbotMessagesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -339,7 +337,7 @@ class ChatbotMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -359,7 +357,7 @@ class ChatbotMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -382,7 +380,7 @@ class ChatbotMessagesApi
      */
     public function editChatbotMessage($message_id, $body = null)
     {
-        list($response) = $this->editChatbotMessageWithHttpInfo($message_id, $body);
+        [$response] = $this->editChatbotMessageWithHttpInfo($message_id, $body);
         return $response;
     }
 
@@ -400,7 +398,7 @@ class ChatbotMessagesApi
      */
     public function editChatbotMessageWithHttpInfo($message_id, $body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20057';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20057::class;
         $request = $this->editChatbotMessageRequest($message_id, $body);
 
         try {
@@ -432,12 +430,12 @@ class ChatbotMessagesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -452,7 +450,7 @@ class ChatbotMessagesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20057',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20057::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -477,9 +475,7 @@ class ChatbotMessagesApi
     {
         return $this->editChatbotMessageAsyncWithHttpInfo($message_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -496,7 +492,7 @@ class ChatbotMessagesApi
      */
     public function editChatbotMessageAsyncWithHttpInfo($message_id, $body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20057';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20057::class;
         $request = $this->editChatbotMessageRequest($message_id, $body);
 
         return $this->client
@@ -504,12 +500,12 @@ class ChatbotMessagesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -620,7 +616,7 @@ class ChatbotMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -640,7 +636,7 @@ class ChatbotMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -732,9 +728,7 @@ class ChatbotMessagesApi
     {
         return $this->sendchatbotAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -756,9 +750,7 @@ class ChatbotMessagesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -845,7 +837,7 @@ class ChatbotMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -865,7 +857,7 @@ class ChatbotMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

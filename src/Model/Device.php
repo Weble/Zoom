@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Device implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -174,11 +174,11 @@ class Device implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const PROTOCOL_H323 = 'H.323';
-    const PROTOCOL_SIP = 'SIP';
-    const ENCRYPTION_AUTO = 'auto';
-    const ENCRYPTION_YES = 'yes';
-    const ENCRYPTION_NO = 'no';
+    public const PROTOCOL_H323 = 'H.323';
+    public const PROTOCOL_SIP = 'SIP';
+    public const ENCRYPTION_AUTO = 'auto';
+    public const ENCRYPTION_YES = 'yes';
+    public const ENCRYPTION_NO = 'no';
 
 
 
@@ -225,10 +225,10 @@ class Device implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['protocol'] = isset($data['protocol']) ? $data['protocol'] : null;
-        $this->container['ip'] = isset($data['ip']) ? $data['ip'] : null;
-        $this->container['encryption'] = isset($data['encryption']) ? $data['encryption'] : null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['protocol'] = $data['protocol'] ?? null;
+        $this->container['ip'] = $data['ip'] ?? null;
+        $this->container['encryption'] = $data['encryption'] ?? null;
     }
 
     /**
@@ -411,7 +411,7 @@ class Device implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -423,9 +423,9 @@ class Device implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -436,7 +436,7 @@ class Device implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -452,7 +452,7 @@ class Device implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -471,7 +471,7 @@ class Device implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

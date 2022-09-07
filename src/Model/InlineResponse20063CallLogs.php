@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -227,17 +227,17 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['caller_number'] = isset($data['caller_number']) ? $data['caller_number'] : null;
-        $this->container['caller_number_type'] = isset($data['caller_number_type']) ? $data['caller_number_type'] : null;
-        $this->container['caller_name'] = isset($data['caller_name']) ? $data['caller_name'] : null;
-        $this->container['callee_number'] = isset($data['callee_number']) ? $data['callee_number'] : null;
-        $this->container['callee_number_type'] = isset($data['callee_number_type']) ? $data['callee_number_type'] : null;
-        $this->container['callee_name'] = isset($data['callee_name']) ? $data['callee_name'] : null;
-        $this->container['direction'] = isset($data['direction']) ? $data['direction'] : null;
-        $this->container['duration'] = isset($data['duration']) ? $data['duration'] : null;
-        $this->container['result'] = isset($data['result']) ? $data['result'] : null;
-        $this->container['date_time'] = isset($data['date_time']) ? $data['date_time'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['caller_number'] = $data['caller_number'] ?? null;
+        $this->container['caller_number_type'] = $data['caller_number_type'] ?? null;
+        $this->container['caller_name'] = $data['caller_name'] ?? null;
+        $this->container['callee_number'] = $data['callee_number'] ?? null;
+        $this->container['callee_number_type'] = $data['callee_number_type'] ?? null;
+        $this->container['callee_name'] = $data['callee_name'] ?? null;
+        $this->container['direction'] = $data['direction'] ?? null;
+        $this->container['duration'] = $data['duration'] ?? null;
+        $this->container['result'] = $data['result'] ?? null;
+        $this->container['date_time'] = $data['date_time'] ?? null;
     }
 
     /**
@@ -534,7 +534,7 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -546,9 +546,9 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -559,7 +559,7 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -575,7 +575,7 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -594,7 +594,7 @@ class InlineResponse20063CallLogs implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

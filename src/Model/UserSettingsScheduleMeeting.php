@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -73,7 +73,7 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
         'require_password_for_pmi_meetings' => 'string',
         'pmi_password' => 'string',
         'embed_password_in_join_link' => 'bool',
-        'meeting_password_requirement' => '\Weble\Zoom\Model\AccountSettingsScheduleMeetingMeetingPasswordRequirement',
+        'meeting_password_requirement' => '\\' . \Weble\Zoom\Model\AccountSettingsScheduleMeetingMeetingPasswordRequirement::class,
         'personal_meeting' => 'bool'
     ];
 
@@ -239,13 +239,13 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const AUDIO_TYPE_BOTH = 'both';
-    const AUDIO_TYPE_TELEPHONY = 'telephony';
-    const AUDIO_TYPE_VOIP = 'voip';
-    const AUDIO_TYPE_THIRD_PARTY = 'thirdParty';
-    const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_JBH_ONLY = 'jbh_only';
-    const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_ALL = 'all';
-    const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_NONE = 'none';
+    public const AUDIO_TYPE_BOTH = 'both';
+    public const AUDIO_TYPE_TELEPHONY = 'telephony';
+    public const AUDIO_TYPE_VOIP = 'voip';
+    public const AUDIO_TYPE_THIRD_PARTY = 'thirdParty';
+    public const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_JBH_ONLY = 'jbh_only';
+    public const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_ALL = 'all';
+    public const REQUIRE_PASSWORD_FOR_PMI_MEETINGS_NONE = 'none';
 
 
 
@@ -294,23 +294,23 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['host_video'] = isset($data['host_video']) ? $data['host_video'] : null;
-        $this->container['participants_video'] = isset($data['participants_video']) ? $data['participants_video'] : null;
-        $this->container['audio_type'] = isset($data['audio_type']) ? $data['audio_type'] : 'voip';
-        $this->container['join_before_host'] = isset($data['join_before_host']) ? $data['join_before_host'] : null;
-        $this->container['force_pmi_jbh_password'] = isset($data['force_pmi_jbh_password']) ? $data['force_pmi_jbh_password'] : null;
-        $this->container['pstn_password_protected'] = isset($data['pstn_password_protected']) ? $data['pstn_password_protected'] : null;
-        $this->container['use_pmi_for_scheduled_meetings'] = isset($data['use_pmi_for_scheduled_meetings']) ? $data['use_pmi_for_scheduled_meetings'] : null;
-        $this->container['use_pmi_for_instant_meetings'] = isset($data['use_pmi_for_instant_meetings']) ? $data['use_pmi_for_instant_meetings'] : null;
-        $this->container['require_password_for_scheduling_new_meetings'] = isset($data['require_password_for_scheduling_new_meetings']) ? $data['require_password_for_scheduling_new_meetings'] : null;
-        $this->container['require_password_for_scheduled_meetings'] = isset($data['require_password_for_scheduled_meetings']) ? $data['require_password_for_scheduled_meetings'] : null;
-        $this->container['default_password_for_scheduled_meetings'] = isset($data['default_password_for_scheduled_meetings']) ? $data['default_password_for_scheduled_meetings'] : null;
-        $this->container['require_password_for_instant_meetings'] = isset($data['require_password_for_instant_meetings']) ? $data['require_password_for_instant_meetings'] : null;
-        $this->container['require_password_for_pmi_meetings'] = isset($data['require_password_for_pmi_meetings']) ? $data['require_password_for_pmi_meetings'] : null;
-        $this->container['pmi_password'] = isset($data['pmi_password']) ? $data['pmi_password'] : null;
-        $this->container['embed_password_in_join_link'] = isset($data['embed_password_in_join_link']) ? $data['embed_password_in_join_link'] : null;
-        $this->container['meeting_password_requirement'] = isset($data['meeting_password_requirement']) ? $data['meeting_password_requirement'] : null;
-        $this->container['personal_meeting'] = isset($data['personal_meeting']) ? $data['personal_meeting'] : null;
+        $this->container['host_video'] = $data['host_video'] ?? null;
+        $this->container['participants_video'] = $data['participants_video'] ?? null;
+        $this->container['audio_type'] = $data['audio_type'] ?? 'voip';
+        $this->container['join_before_host'] = $data['join_before_host'] ?? null;
+        $this->container['force_pmi_jbh_password'] = $data['force_pmi_jbh_password'] ?? null;
+        $this->container['pstn_password_protected'] = $data['pstn_password_protected'] ?? null;
+        $this->container['use_pmi_for_scheduled_meetings'] = $data['use_pmi_for_scheduled_meetings'] ?? null;
+        $this->container['use_pmi_for_instant_meetings'] = $data['use_pmi_for_instant_meetings'] ?? null;
+        $this->container['require_password_for_scheduling_new_meetings'] = $data['require_password_for_scheduling_new_meetings'] ?? null;
+        $this->container['require_password_for_scheduled_meetings'] = $data['require_password_for_scheduled_meetings'] ?? null;
+        $this->container['default_password_for_scheduled_meetings'] = $data['default_password_for_scheduled_meetings'] ?? null;
+        $this->container['require_password_for_instant_meetings'] = $data['require_password_for_instant_meetings'] ?? null;
+        $this->container['require_password_for_pmi_meetings'] = $data['require_password_for_pmi_meetings'] ?? null;
+        $this->container['pmi_password'] = $data['pmi_password'] ?? null;
+        $this->container['embed_password_in_join_link'] = $data['embed_password_in_join_link'] ?? null;
+        $this->container['meeting_password_requirement'] = $data['meeting_password_requirement'] ?? null;
+        $this->container['personal_meeting'] = $data['personal_meeting'] ?? null;
     }
 
     /**
@@ -785,7 +785,7 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -797,9 +797,9 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -810,7 +810,7 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -826,7 +826,7 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -845,7 +845,7 @@ class UserSettingsScheduleMeeting implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

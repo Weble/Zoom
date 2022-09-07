@@ -100,7 +100,7 @@ class GroupsApi
      */
     public function getGroupLockSettings($group_id)
     {
-        list($response) = $this->getGroupLockSettingsWithHttpInfo($group_id);
+        [$response] = $this->getGroupLockSettingsWithHttpInfo($group_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class GroupsApi
      */
     public function getGroupLockSettingsWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20069';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20069::class;
         $request = $this->getGroupLockSettingsRequest($group_id);
 
         try {
@@ -149,12 +149,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class GroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20069',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20069::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class GroupsApi
     {
         return $this->getGroupLockSettingsAsyncWithHttpInfo($group_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class GroupsApi
      */
     public function getGroupLockSettingsAsyncWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20069';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20069::class;
         $request = $this->getGroupLockSettingsRequest($group_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -374,7 +372,7 @@ class GroupsApi
      */
     public function getGroupSettings($group_id, $option = null)
     {
-        list($response) = $this->getGroupSettingsWithHttpInfo($group_id, $option);
+        [$response] = $this->getGroupSettingsWithHttpInfo($group_id, $option);
         return $response;
     }
 
@@ -424,12 +422,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -469,9 +467,7 @@ class GroupsApi
     {
         return $this->getGroupSettingsAsyncWithHttpInfo($group_id, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -496,12 +492,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -613,7 +609,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -633,7 +629,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -655,7 +651,7 @@ class GroupsApi
      */
     public function group($group_id)
     {
-        list($response) = $this->groupWithHttpInfo($group_id);
+        [$response] = $this->groupWithHttpInfo($group_id);
         return $response;
     }
 
@@ -672,7 +668,7 @@ class GroupsApi
      */
     public function groupWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20017';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20017::class;
         $request = $this->groupRequest($group_id);
 
         try {
@@ -704,12 +700,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -724,7 +720,7 @@ class GroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20017',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20017::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -748,9 +744,7 @@ class GroupsApi
     {
         return $this->groupAsyncWithHttpInfo($group_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -766,7 +760,7 @@ class GroupsApi
      */
     public function groupAsyncWithHttpInfo($group_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20017';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20017::class;
         $request = $this->groupRequest($group_id);
 
         return $this->client
@@ -774,12 +768,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -886,7 +880,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -906,7 +900,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -982,7 +976,7 @@ class GroupsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2016',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2016::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1006,9 +1000,7 @@ class GroupsApi
     {
         return $this->groupCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1030,9 +1022,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1125,7 +1115,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1145,7 +1135,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1237,9 +1227,7 @@ class GroupsApi
     {
         return $this->groupDeleteAsyncWithHttpInfo($group_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1261,9 +1249,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1361,7 +1347,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1381,7 +1367,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1404,7 +1390,7 @@ class GroupsApi
      */
     public function groupLockedSettings($group_id, $body = null)
     {
-        list($response) = $this->groupLockedSettingsWithHttpInfo($group_id, $body);
+        [$response] = $this->groupLockedSettingsWithHttpInfo($group_id, $body);
         return $response;
     }
 
@@ -1454,12 +1440,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1499,9 +1485,7 @@ class GroupsApi
     {
         return $this->groupLockedSettingsAsyncWithHttpInfo($group_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1526,12 +1510,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1642,7 +1626,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1662,7 +1646,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1686,7 +1670,7 @@ class GroupsApi
      */
     public function groupMembers($group_id, $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->groupMembersWithHttpInfo($group_id, $page_size, $page_number);
+        [$response] = $this->groupMembersWithHttpInfo($group_id, $page_size, $page_number);
         return $response;
     }
 
@@ -1705,7 +1689,7 @@ class GroupsApi
      */
     public function groupMembersWithHttpInfo($group_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20018::class;
         $request = $this->groupMembersRequest($group_id, $page_size, $page_number);
 
         try {
@@ -1737,12 +1721,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1757,7 +1741,7 @@ class GroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20018',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20018::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1783,9 +1767,7 @@ class GroupsApi
     {
         return $this->groupMembersAsyncWithHttpInfo($group_id, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1803,7 +1785,7 @@ class GroupsApi
      */
     public function groupMembersAsyncWithHttpInfo($group_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20018';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20018::class;
         $request = $this->groupMembersRequest($group_id, $page_size, $page_number);
 
         return $this->client
@@ -1811,12 +1793,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1937,7 +1919,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1957,7 +1939,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2060,9 +2042,7 @@ class GroupsApi
     {
         return $this->groupMembersCreateAsyncWithHttpInfo($group_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2085,9 +2065,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2195,7 +2173,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2215,7 +2193,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2310,9 +2288,7 @@ class GroupsApi
     {
         return $this->groupMembersDeleteAsyncWithHttpInfo($group_id, $member_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2335,9 +2311,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2450,7 +2424,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2470,7 +2444,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2565,9 +2539,7 @@ class GroupsApi
     {
         return $this->groupUpdateAsyncWithHttpInfo($group_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2590,9 +2562,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2700,7 +2670,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2720,7 +2690,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2741,7 +2711,7 @@ class GroupsApi
      */
     public function groups()
     {
-        list($response) = $this->groupsWithHttpInfo();
+        [$response] = $this->groupsWithHttpInfo();
         return $response;
     }
 
@@ -2757,7 +2727,7 @@ class GroupsApi
      */
     public function groupsWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20016';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20016::class;
         $request = $this->groupsRequest();
 
         try {
@@ -2789,12 +2759,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2809,7 +2779,7 @@ class GroupsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20016',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20016::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2832,9 +2802,7 @@ class GroupsApi
     {
         return $this->groupsAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2849,7 +2817,7 @@ class GroupsApi
      */
     public function groupsAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20016';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20016::class;
         $request = $this->groupsRequest();
 
         return $this->client
@@ -2857,12 +2825,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2954,7 +2922,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2974,7 +2942,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2998,7 +2966,7 @@ class GroupsApi
      */
     public function updateAGroupMember($group_id, $member_id, $body = null)
     {
-        list($response) = $this->updateAGroupMemberWithHttpInfo($group_id, $member_id, $body);
+        [$response] = $this->updateAGroupMemberWithHttpInfo($group_id, $member_id, $body);
         return $response;
     }
 
@@ -3049,12 +3017,12 @@ class GroupsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3095,9 +3063,7 @@ class GroupsApi
     {
         return $this->updateAGroupMemberAsyncWithHttpInfo($group_id, $member_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3123,12 +3089,12 @@ class GroupsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3254,7 +3220,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3274,7 +3240,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3380,9 +3346,7 @@ class GroupsApi
     {
         return $this->updateGroupSettingsAsyncWithHttpInfo($group_id, $body, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3406,9 +3370,7 @@ class GroupsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3515,7 +3477,7 @@ class GroupsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3535,7 +3497,7 @@ class GroupsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

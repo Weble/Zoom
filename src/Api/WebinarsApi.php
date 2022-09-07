@@ -100,7 +100,7 @@ class WebinarsApi
      */
     public function getTrackingSources($webinar_id)
     {
-        list($response) = $this->getTrackingSourcesWithHttpInfo($webinar_id);
+        [$response] = $this->getTrackingSourcesWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class WebinarsApi
      */
     public function getTrackingSourcesWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20074';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20074::class;
         $request = $this->getTrackingSourcesRequest($webinar_id);
 
         try {
@@ -149,12 +149,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20074',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20074::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class WebinarsApi
     {
         return $this->getTrackingSourcesAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class WebinarsApi
      */
     public function getTrackingSourcesAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20074';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20074::class;
         $request = $this->getTrackingSourcesRequest($webinar_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -373,7 +371,7 @@ class WebinarsApi
      */
     public function listPastWebinarFiles($webinar_id)
     {
-        list($response) = $this->listPastWebinarFilesWithHttpInfo($webinar_id);
+        [$response] = $this->listPastWebinarFilesWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -390,7 +388,7 @@ class WebinarsApi
      */
     public function listPastWebinarFilesWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20084';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20084::class;
         $request = $this->listPastWebinarFilesRequest($webinar_id);
 
         try {
@@ -422,12 +420,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -442,7 +440,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20084',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20084::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -466,9 +464,7 @@ class WebinarsApi
     {
         return $this->listPastWebinarFilesAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -484,7 +480,7 @@ class WebinarsApi
      */
     public function listPastWebinarFilesAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20084';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20084::class;
         $request = $this->listPastWebinarFilesRequest($webinar_id);
 
         return $this->client
@@ -492,12 +488,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -604,7 +600,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -624,7 +620,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -646,7 +642,7 @@ class WebinarsApi
      */
     public function listPastWebinarPollResults($webinar_id)
     {
-        list($response) = $this->listPastWebinarPollResultsWithHttpInfo($webinar_id);
+        [$response] = $this->listPastWebinarPollResultsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -663,7 +659,7 @@ class WebinarsApi
      */
     public function listPastWebinarPollResultsWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20085';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20085::class;
         $request = $this->listPastWebinarPollResultsRequest($webinar_id);
 
         try {
@@ -695,12 +691,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -715,7 +711,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20085',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20085::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -739,9 +735,7 @@ class WebinarsApi
     {
         return $this->listPastWebinarPollResultsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -757,7 +751,7 @@ class WebinarsApi
      */
     public function listPastWebinarPollResultsAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20085';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20085::class;
         $request = $this->listPastWebinarPollResultsRequest($webinar_id);
 
         return $this->client
@@ -765,12 +759,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -877,7 +871,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -897,7 +891,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -919,7 +913,7 @@ class WebinarsApi
      */
     public function listPastWebinarQA($webinar_id)
     {
-        list($response) = $this->listPastWebinarQAWithHttpInfo($webinar_id);
+        [$response] = $this->listPastWebinarQAWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -936,7 +930,7 @@ class WebinarsApi
      */
     public function listPastWebinarQAWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20086';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20086::class;
         $request = $this->listPastWebinarQARequest($webinar_id);
 
         try {
@@ -968,12 +962,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -988,7 +982,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20086',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20086::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1012,9 +1006,7 @@ class WebinarsApi
     {
         return $this->listPastWebinarQAAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1030,7 +1022,7 @@ class WebinarsApi
      */
     public function listPastWebinarQAAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20086';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20086::class;
         $request = $this->listPastWebinarQARequest($webinar_id);
 
         return $this->client
@@ -1038,12 +1030,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1150,7 +1142,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1170,7 +1162,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1192,7 +1184,7 @@ class WebinarsApi
      */
     public function pastWebinars($webinar_id)
     {
-        list($response) = $this->pastWebinarsWithHttpInfo($webinar_id);
+        [$response] = $this->pastWebinarsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -1241,12 +1233,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1285,9 +1277,7 @@ class WebinarsApi
     {
         return $this->pastWebinarsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1311,12 +1301,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1423,7 +1413,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1443,7 +1433,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1467,7 +1457,7 @@ class WebinarsApi
      */
     public function webinar($webinar_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        list($response) = $this->webinarWithHttpInfo($webinar_id, $occurrence_id, $show_previous_occurrences);
+        [$response] = $this->webinarWithHttpInfo($webinar_id, $occurrence_id, $show_previous_occurrences);
         return $response;
     }
 
@@ -1486,7 +1476,7 @@ class WebinarsApi
      */
     public function webinarWithHttpInfo($webinar_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20054';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20054::class;
         $request = $this->webinarRequest($webinar_id, $occurrence_id, $show_previous_occurrences);
 
         try {
@@ -1518,12 +1508,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1538,7 +1528,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20054',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20054::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1564,9 +1554,7 @@ class WebinarsApi
     {
         return $this->webinarAsyncWithHttpInfo($webinar_id, $occurrence_id, $show_previous_occurrences)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1584,7 +1572,7 @@ class WebinarsApi
      */
     public function webinarAsyncWithHttpInfo($webinar_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20054';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20054::class;
         $request = $this->webinarRequest($webinar_id, $occurrence_id, $show_previous_occurrences);
 
         return $this->client
@@ -1592,12 +1580,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1714,7 +1702,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1734,7 +1722,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1759,7 +1747,7 @@ class WebinarsApi
      */
     public function webinarAbsentees($webinar_uuid, $occurrence_id = null, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->webinarAbsenteesWithHttpInfo($webinar_uuid, $occurrence_id, $page_size, $next_page_token);
+        [$response] = $this->webinarAbsenteesWithHttpInfo($webinar_uuid, $occurrence_id, $page_size, $next_page_token);
         return $response;
     }
 
@@ -1779,7 +1767,7 @@ class WebinarsApi
      */
     public function webinarAbsenteesWithHttpInfo($webinar_uuid, $occurrence_id = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->webinarAbsenteesRequest($webinar_uuid, $occurrence_id, $page_size, $next_page_token);
 
         try {
@@ -1811,12 +1799,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1831,7 +1819,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RegistrationList',
+                        '\\' . \Weble\Zoom\Model\RegistrationList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1858,9 +1846,7 @@ class WebinarsApi
     {
         return $this->webinarAbsenteesAsyncWithHttpInfo($webinar_uuid, $occurrence_id, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1879,7 +1865,7 @@ class WebinarsApi
      */
     public function webinarAbsenteesAsyncWithHttpInfo($webinar_uuid, $occurrence_id = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->webinarAbsenteesRequest($webinar_uuid, $occurrence_id, $page_size, $next_page_token);
 
         return $this->client
@@ -1887,12 +1873,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2018,7 +2004,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2038,7 +2024,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2061,7 +2047,7 @@ class WebinarsApi
      */
     public function webinarCreate($user_id, $body)
     {
-        list($response) = $this->webinarCreateWithHttpInfo($user_id, $body);
+        [$response] = $this->webinarCreateWithHttpInfo($user_id, $body);
         return $response;
     }
 
@@ -2079,7 +2065,7 @@ class WebinarsApi
      */
     public function webinarCreateWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20118';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20118::class;
         $request = $this->webinarCreateRequest($user_id, $body);
 
         try {
@@ -2111,12 +2097,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2131,7 +2117,7 @@ class WebinarsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20118',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20118::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2156,9 +2142,7 @@ class WebinarsApi
     {
         return $this->webinarCreateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2175,7 +2159,7 @@ class WebinarsApi
      */
     public function webinarCreateAsyncWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20118';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20118::class;
         $request = $this->webinarCreateRequest($user_id, $body);
 
         return $this->client
@@ -2183,12 +2167,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2305,7 +2289,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2325,7 +2309,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2420,9 +2404,7 @@ class WebinarsApi
     {
         return $this->webinarDeleteAsyncWithHttpInfo($webinar_id, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2445,9 +2427,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2550,7 +2530,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2570,7 +2550,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2648,7 +2628,7 @@ class WebinarsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20119',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20119::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2673,9 +2653,7 @@ class WebinarsApi
     {
         return $this->webinarPanelistCreateAsyncWithHttpInfo($webinar_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2698,9 +2676,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2808,7 +2784,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2828,7 +2804,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2923,9 +2899,7 @@ class WebinarsApi
     {
         return $this->webinarPanelistDeleteAsyncWithHttpInfo($webinar_id, $panelist_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2948,9 +2922,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3063,7 +3035,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3083,7 +3055,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3105,7 +3077,7 @@ class WebinarsApi
      */
     public function webinarPanelists($webinar_id)
     {
-        list($response) = $this->webinarPanelistsWithHttpInfo($webinar_id);
+        [$response] = $this->webinarPanelistsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -3122,7 +3094,7 @@ class WebinarsApi
      */
     public function webinarPanelistsWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20055';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20055::class;
         $request = $this->webinarPanelistsRequest($webinar_id);
 
         try {
@@ -3154,12 +3126,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3174,7 +3146,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20055',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20055::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3198,9 +3170,7 @@ class WebinarsApi
     {
         return $this->webinarPanelistsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3216,7 +3186,7 @@ class WebinarsApi
      */
     public function webinarPanelistsAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20055';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20055::class;
         $request = $this->webinarPanelistsRequest($webinar_id);
 
         return $this->client
@@ -3224,12 +3194,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3336,7 +3306,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3356,7 +3326,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3448,9 +3418,7 @@ class WebinarsApi
     {
         return $this->webinarPanelistsDeleteAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3472,9 +3440,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3572,7 +3538,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3592,7 +3558,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3615,7 +3581,7 @@ class WebinarsApi
      */
     public function webinarPollCreate($webinar_id, $body)
     {
-        list($response) = $this->webinarPollCreateWithHttpInfo($webinar_id, $body);
+        [$response] = $this->webinarPollCreateWithHttpInfo($webinar_id, $body);
         return $response;
     }
 
@@ -3633,7 +3599,7 @@ class WebinarsApi
      */
     public function webinarPollCreateWithHttpInfo($webinar_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20121';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20121::class;
         $request = $this->webinarPollCreateRequest($webinar_id, $body);
 
         try {
@@ -3665,12 +3631,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3685,7 +3651,7 @@ class WebinarsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20121',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20121::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3710,9 +3676,7 @@ class WebinarsApi
     {
         return $this->webinarPollCreateAsyncWithHttpInfo($webinar_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3729,7 +3693,7 @@ class WebinarsApi
      */
     public function webinarPollCreateAsyncWithHttpInfo($webinar_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20121';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20121::class;
         $request = $this->webinarPollCreateRequest($webinar_id, $body);
 
         return $this->client
@@ -3737,12 +3701,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3859,7 +3823,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3879,7 +3843,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3974,9 +3938,7 @@ class WebinarsApi
     {
         return $this->webinarPollDeleteAsyncWithHttpInfo($webinar_id, $poll_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3999,9 +3961,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4114,7 +4074,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4134,7 +4094,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4157,7 +4117,7 @@ class WebinarsApi
      */
     public function webinarPollGet($webinar_id, $poll_id)
     {
-        list($response) = $this->webinarPollGetWithHttpInfo($webinar_id, $poll_id);
+        [$response] = $this->webinarPollGetWithHttpInfo($webinar_id, $poll_id);
         return $response;
     }
 
@@ -4175,7 +4135,7 @@ class WebinarsApi
      */
     public function webinarPollGetWithHttpInfo($webinar_id, $poll_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20121';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20121::class;
         $request = $this->webinarPollGetRequest($webinar_id, $poll_id);
 
         try {
@@ -4207,12 +4167,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4227,7 +4187,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20121',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20121::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4252,9 +4212,7 @@ class WebinarsApi
     {
         return $this->webinarPollGetAsyncWithHttpInfo($webinar_id, $poll_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4271,7 +4229,7 @@ class WebinarsApi
      */
     public function webinarPollGetAsyncWithHttpInfo($webinar_id, $poll_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20121';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20121::class;
         $request = $this->webinarPollGetRequest($webinar_id, $poll_id);
 
         return $this->client
@@ -4279,12 +4237,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4406,7 +4364,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4426,7 +4384,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4524,9 +4482,7 @@ class WebinarsApi
     {
         return $this->webinarPollUpdateAsyncWithHttpInfo($webinar_id, $poll_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4550,9 +4506,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4675,7 +4629,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4695,7 +4649,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4717,7 +4671,7 @@ class WebinarsApi
      */
     public function webinarPolls($webinar_id)
     {
-        list($response) = $this->webinarPollsWithHttpInfo($webinar_id);
+        [$response] = $this->webinarPollsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -4766,12 +4720,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4810,9 +4764,7 @@ class WebinarsApi
     {
         return $this->webinarPollsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4836,12 +4788,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4948,7 +4900,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4968,7 +4920,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4992,7 +4944,7 @@ class WebinarsApi
      */
     public function webinarRegistrantCreate($webinar_id, $body, $occurrence_ids = null)
     {
-        list($response) = $this->webinarRegistrantCreateWithHttpInfo($webinar_id, $body, $occurrence_ids);
+        [$response] = $this->webinarRegistrantCreateWithHttpInfo($webinar_id, $body, $occurrence_ids);
         return $response;
     }
 
@@ -5011,7 +4963,7 @@ class WebinarsApi
      */
     public function webinarRegistrantCreateWithHttpInfo($webinar_id, $body, $occurrence_ids = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20120';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20120::class;
         $request = $this->webinarRegistrantCreateRequest($webinar_id, $body, $occurrence_ids);
 
         try {
@@ -5043,12 +4995,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5063,7 +5015,7 @@ class WebinarsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20120',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20120::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5089,9 +5041,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantCreateAsyncWithHttpInfo($webinar_id, $body, $occurrence_ids)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5109,7 +5059,7 @@ class WebinarsApi
      */
     public function webinarRegistrantCreateAsyncWithHttpInfo($webinar_id, $body, $occurrence_ids = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20120';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20120::class;
         $request = $this->webinarRegistrantCreateRequest($webinar_id, $body, $occurrence_ids);
 
         return $this->client
@@ -5117,12 +5067,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5244,7 +5194,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5264,7 +5214,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5288,7 +5238,7 @@ class WebinarsApi
      */
     public function webinarRegistrantGet($webinar_id, $registrant_id, $occurrence_id = null)
     {
-        list($response) = $this->webinarRegistrantGetWithHttpInfo($webinar_id, $registrant_id, $occurrence_id);
+        [$response] = $this->webinarRegistrantGetWithHttpInfo($webinar_id, $registrant_id, $occurrence_id);
         return $response;
     }
 
@@ -5307,7 +5257,7 @@ class WebinarsApi
      */
     public function webinarRegistrantGetWithHttpInfo($webinar_id, $registrant_id, $occurrence_id = null)
     {
-        $returnType = '\Weble\Zoom\Model\WebianrRegistrant';
+        $returnType = '\\' . \Weble\Zoom\Model\WebianrRegistrant::class;
         $request = $this->webinarRegistrantGetRequest($webinar_id, $registrant_id, $occurrence_id);
 
         try {
@@ -5339,12 +5289,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5359,7 +5309,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\WebianrRegistrant',
+                        '\\' . \Weble\Zoom\Model\WebianrRegistrant::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5385,9 +5335,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantGetAsyncWithHttpInfo($webinar_id, $registrant_id, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5405,7 +5353,7 @@ class WebinarsApi
      */
     public function webinarRegistrantGetAsyncWithHttpInfo($webinar_id, $registrant_id, $occurrence_id = null)
     {
-        $returnType = '\Weble\Zoom\Model\WebianrRegistrant';
+        $returnType = '\\' . \Weble\Zoom\Model\WebianrRegistrant::class;
         $request = $this->webinarRegistrantGetRequest($webinar_id, $registrant_id, $occurrence_id);
 
         return $this->client
@@ -5413,12 +5361,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5545,7 +5493,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5565,7 +5513,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5660,9 +5608,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantQuestionUpdateAsyncWithHttpInfo($webinar_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5685,9 +5631,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5795,7 +5739,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5815,7 +5759,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5913,9 +5857,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantStatusAsyncWithHttpInfo($webinar_id, $body, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5939,9 +5881,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -6054,7 +5994,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6074,7 +6014,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6100,7 +6040,7 @@ class WebinarsApi
      */
     public function webinarRegistrants($webinar_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->webinarRegistrantsWithHttpInfo($webinar_id, $occurrence_id, $status, $page_size, $page_number);
+        [$response] = $this->webinarRegistrantsWithHttpInfo($webinar_id, $occurrence_id, $status, $page_size, $page_number);
         return $response;
     }
 
@@ -6121,7 +6061,7 @@ class WebinarsApi
      */
     public function webinarRegistrantsWithHttpInfo($webinar_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->webinarRegistrantsRequest($webinar_id, $occurrence_id, $status, $page_size, $page_number);
 
         try {
@@ -6153,12 +6093,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6173,7 +6113,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RegistrationList',
+                        '\\' . \Weble\Zoom\Model\RegistrationList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6201,9 +6141,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantsAsyncWithHttpInfo($webinar_id, $occurrence_id, $status, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6223,7 +6161,7 @@ class WebinarsApi
      */
     public function webinarRegistrantsAsyncWithHttpInfo($webinar_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->webinarRegistrantsRequest($webinar_id, $occurrence_id, $status, $page_size, $page_number);
 
         return $this->client
@@ -6231,12 +6169,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6367,7 +6305,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6387,7 +6325,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6409,7 +6347,7 @@ class WebinarsApi
      */
     public function webinarRegistrantsQuestionsGet($webinar_id)
     {
-        list($response) = $this->webinarRegistrantsQuestionsGetWithHttpInfo($webinar_id);
+        [$response] = $this->webinarRegistrantsQuestionsGetWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -6426,7 +6364,7 @@ class WebinarsApi
      */
     public function webinarRegistrantsQuestionsGetWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20056';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20056::class;
         $request = $this->webinarRegistrantsQuestionsGetRequest($webinar_id);
 
         try {
@@ -6458,12 +6396,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6478,7 +6416,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20056',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20056::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6502,9 +6440,7 @@ class WebinarsApi
     {
         return $this->webinarRegistrantsQuestionsGetAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6520,7 +6456,7 @@ class WebinarsApi
      */
     public function webinarRegistrantsQuestionsGetAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20056';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20056::class;
         $request = $this->webinarRegistrantsQuestionsGetRequest($webinar_id);
 
         return $this->client
@@ -6528,12 +6464,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6640,7 +6576,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6660,7 +6596,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6755,9 +6691,7 @@ class WebinarsApi
     {
         return $this->webinarStatusAsyncWithHttpInfo($webinar_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6780,9 +6714,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -6890,7 +6822,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6910,7 +6842,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -7008,9 +6940,7 @@ class WebinarsApi
     {
         return $this->webinarUpdateAsyncWithHttpInfo($webinar_id, $body, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -7034,9 +6964,7 @@ class WebinarsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -7149,7 +7077,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -7169,7 +7097,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -7193,7 +7121,7 @@ class WebinarsApi
      */
     public function webinars($user_id, $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->webinarsWithHttpInfo($user_id, $page_size, $page_number);
+        [$response] = $this->webinarsWithHttpInfo($user_id, $page_size, $page_number);
         return $response;
     }
 
@@ -7212,7 +7140,7 @@ class WebinarsApi
      */
     public function webinarsWithHttpInfo($user_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\UserList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserList::class;
         $request = $this->webinarsRequest($user_id, $page_size, $page_number);
 
         try {
@@ -7244,12 +7172,12 @@ class WebinarsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -7264,7 +7192,7 @@ class WebinarsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\UserList',
+                        '\\' . \Weble\Zoom\Model\UserList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -7290,9 +7218,7 @@ class WebinarsApi
     {
         return $this->webinarsAsyncWithHttpInfo($user_id, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -7310,7 +7236,7 @@ class WebinarsApi
      */
     public function webinarsAsyncWithHttpInfo($user_id, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\UserList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserList::class;
         $request = $this->webinarsRequest($user_id, $page_size, $page_number);
 
         return $this->client
@@ -7318,12 +7244,12 @@ class WebinarsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -7444,7 +7370,7 @@ class WebinarsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -7464,7 +7390,7 @@ class WebinarsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

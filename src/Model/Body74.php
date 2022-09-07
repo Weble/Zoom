@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Body74 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -212,14 +212,14 @@ class Body74 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
-        $this->container['display_name'] = isset($data['display_name']) ? $data['display_name'] : null;
-        $this->container['description'] = isset($data['description']) ? $data['description'] : null;
-        $this->container['extension_number'] = isset($data['extension_number']) ? $data['extension_number'] : null;
-        $this->container['mac_address'] = isset($data['mac_address']) ? $data['mac_address'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['model'] = isset($data['model']) ? $data['model'] : null;
-        $this->container['time_zone'] = isset($data['time_zone']) ? $data['time_zone'] : null;
+        $this->container['site_id'] = $data['site_id'] ?? null;
+        $this->container['display_name'] = $data['display_name'] ?? null;
+        $this->container['description'] = $data['description'] ?? null;
+        $this->container['extension_number'] = $data['extension_number'] ?? null;
+        $this->container['mac_address'] = $data['mac_address'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['model'] = $data['model'] ?? null;
+        $this->container['time_zone'] = $data['time_zone'] ?? null;
     }
 
     /**
@@ -486,7 +486,7 @@ class Body74 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -498,9 +498,9 @@ class Body74 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -511,7 +511,7 @@ class Body74 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -527,7 +527,7 @@ class Body74 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -546,7 +546,7 @@ class Body74 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 
