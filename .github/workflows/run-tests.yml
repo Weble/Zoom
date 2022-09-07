@@ -37,3 +37,7 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+        env:
+          ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+          API_KEY: ${{ secrets.API_KEY }}
+          API_SECRET: ${{ secrets.API_SECRET }}
