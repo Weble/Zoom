@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -65,7 +65,7 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
         'monthly_week' => 'int',
         'monthly_week_day' => 'int',
         'end_times' => 'int',
-        'end_date_time' => '\DateTime'
+        'end_date_time' => '\\' . \DateTime::class
     ];
 
     /**
@@ -194,13 +194,13 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const WEEKLY_DAYS__1 = '1';
-    const WEEKLY_DAYS__2 = '2';
-    const WEEKLY_DAYS__3 = '3';
-    const WEEKLY_DAYS__4 = '4';
-    const WEEKLY_DAYS__5 = '5';
-    const WEEKLY_DAYS__6 = '6';
-    const WEEKLY_DAYS__7 = '7';
+    public const WEEKLY_DAYS__1 = '1';
+    public const WEEKLY_DAYS__2 = '2';
+    public const WEEKLY_DAYS__3 = '3';
+    public const WEEKLY_DAYS__4 = '4';
+    public const WEEKLY_DAYS__5 = '5';
+    public const WEEKLY_DAYS__6 = '6';
+    public const WEEKLY_DAYS__7 = '7';
 
 
 
@@ -238,14 +238,14 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['repeat_interval'] = isset($data['repeat_interval']) ? $data['repeat_interval'] : null;
-        $this->container['weekly_days'] = isset($data['weekly_days']) ? $data['weekly_days'] : null;
-        $this->container['monthly_day'] = isset($data['monthly_day']) ? $data['monthly_day'] : null;
-        $this->container['monthly_week'] = isset($data['monthly_week']) ? $data['monthly_week'] : null;
-        $this->container['monthly_week_day'] = isset($data['monthly_week_day']) ? $data['monthly_week_day'] : null;
-        $this->container['end_times'] = isset($data['end_times']) ? $data['end_times'] : null;
-        $this->container['end_date_time'] = isset($data['end_date_time']) ? $data['end_date_time'] : null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['repeat_interval'] = $data['repeat_interval'] ?? null;
+        $this->container['weekly_days'] = $data['weekly_days'] ?? null;
+        $this->container['monthly_day'] = $data['monthly_day'] ?? null;
+        $this->container['monthly_week'] = $data['monthly_week'] ?? null;
+        $this->container['monthly_week_day'] = $data['monthly_week_day'] ?? null;
+        $this->container['end_times'] = $data['end_times'] ?? null;
+        $this->container['end_date_time'] = $data['end_date_time'] ?? null;
     }
 
     /**
@@ -499,7 +499,7 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -511,9 +511,9 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -524,7 +524,7 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -540,7 +540,7 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -559,7 +559,7 @@ class UsersuserIdmeetingsRecurrence implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

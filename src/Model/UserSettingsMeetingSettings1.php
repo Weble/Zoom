@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -309,9 +309,9 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const ENTRY_EXIT_CHIME_HOST = 'host';
-    const ENTRY_EXIT_CHIME_ALL = 'all';
-    const ENTRY_EXIT_CHIME_NONE = 'none';
+    public const ENTRY_EXIT_CHIME_HOST = 'host';
+    public const ENTRY_EXIT_CHIME_ALL = 'all';
+    public const ENTRY_EXIT_CHIME_NONE = 'none';
 
 
 
@@ -345,37 +345,37 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['e2e_encryption'] = isset($data['e2e_encryption']) ? $data['e2e_encryption'] : null;
-        $this->container['chat'] = isset($data['chat']) ? $data['chat'] : false;
-        $this->container['private_chat'] = isset($data['private_chat']) ? $data['private_chat'] : false;
-        $this->container['auto_saving_chat'] = isset($data['auto_saving_chat']) ? $data['auto_saving_chat'] : false;
-        $this->container['entry_exit_chime'] = isset($data['entry_exit_chime']) ? $data['entry_exit_chime'] : 'all';
-        $this->container['record_play_voice'] = isset($data['record_play_voice']) ? $data['record_play_voice'] : null;
-        $this->container['feedback'] = isset($data['feedback']) ? $data['feedback'] : false;
-        $this->container['co_host'] = isset($data['co_host']) ? $data['co_host'] : false;
-        $this->container['polling'] = isset($data['polling']) ? $data['polling'] : false;
-        $this->container['attendee_on_hold'] = isset($data['attendee_on_hold']) ? $data['attendee_on_hold'] : false;
-        $this->container['annotation'] = isset($data['annotation']) ? $data['annotation'] : false;
-        $this->container['remote_control'] = isset($data['remote_control']) ? $data['remote_control'] : false;
-        $this->container['non_verbal_feedback'] = isset($data['non_verbal_feedback']) ? $data['non_verbal_feedback'] : false;
-        $this->container['breakout_room'] = isset($data['breakout_room']) ? $data['breakout_room'] : false;
-        $this->container['remote_support'] = isset($data['remote_support']) ? $data['remote_support'] : false;
-        $this->container['closed_caption'] = isset($data['closed_caption']) ? $data['closed_caption'] : false;
-        $this->container['group_hd'] = isset($data['group_hd']) ? $data['group_hd'] : false;
-        $this->container['virtual_background'] = isset($data['virtual_background']) ? $data['virtual_background'] : false;
-        $this->container['far_end_camera_control'] = isset($data['far_end_camera_control']) ? $data['far_end_camera_control'] : false;
-        $this->container['share_dual_camera'] = isset($data['share_dual_camera']) ? $data['share_dual_camera'] : false;
-        $this->container['waiting_room'] = isset($data['waiting_room']) ? $data['waiting_room'] : false;
-        $this->container['guest_only_to_place_in_waiting_room'] = isset($data['guest_only_to_place_in_waiting_room']) ? $data['guest_only_to_place_in_waiting_room'] : null;
-        $this->container['auto_admit_participants_with_specified_domains'] = isset($data['auto_admit_participants_with_specified_domains']) ? $data['auto_admit_participants_with_specified_domains'] : null;
-        $this->container['admit_participants_with_specified_domains'] = isset($data['admit_participants_with_specified_domains']) ? $data['admit_participants_with_specified_domains'] : null;
-        $this->container['allow_live_streaming'] = isset($data['allow_live_streaming']) ? $data['allow_live_streaming'] : null;
-        $this->container['workplace_by_facebook'] = isset($data['workplace_by_facebook']) ? $data['workplace_by_facebook'] : null;
-        $this->container['custom_live_streaming_service'] = isset($data['custom_live_streaming_service']) ? $data['custom_live_streaming_service'] : null;
-        $this->container['custom_service_instructions'] = isset($data['custom_service_instructions']) ? $data['custom_service_instructions'] : null;
-        $this->container['show_meeting_control_toolbar'] = isset($data['show_meeting_control_toolbar']) ? $data['show_meeting_control_toolbar'] : null;
-        $this->container['custom_data_center_regions'] = isset($data['custom_data_center_regions']) ? $data['custom_data_center_regions'] : null;
-        $this->container['data_center_regions'] = isset($data['data_center_regions']) ? $data['data_center_regions'] : null;
+        $this->container['e2e_encryption'] = $data['e2e_encryption'] ?? null;
+        $this->container['chat'] = $data['chat'] ?? false;
+        $this->container['private_chat'] = $data['private_chat'] ?? false;
+        $this->container['auto_saving_chat'] = $data['auto_saving_chat'] ?? false;
+        $this->container['entry_exit_chime'] = $data['entry_exit_chime'] ?? 'all';
+        $this->container['record_play_voice'] = $data['record_play_voice'] ?? null;
+        $this->container['feedback'] = $data['feedback'] ?? false;
+        $this->container['co_host'] = $data['co_host'] ?? false;
+        $this->container['polling'] = $data['polling'] ?? false;
+        $this->container['attendee_on_hold'] = $data['attendee_on_hold'] ?? false;
+        $this->container['annotation'] = $data['annotation'] ?? false;
+        $this->container['remote_control'] = $data['remote_control'] ?? false;
+        $this->container['non_verbal_feedback'] = $data['non_verbal_feedback'] ?? false;
+        $this->container['breakout_room'] = $data['breakout_room'] ?? false;
+        $this->container['remote_support'] = $data['remote_support'] ?? false;
+        $this->container['closed_caption'] = $data['closed_caption'] ?? false;
+        $this->container['group_hd'] = $data['group_hd'] ?? false;
+        $this->container['virtual_background'] = $data['virtual_background'] ?? false;
+        $this->container['far_end_camera_control'] = $data['far_end_camera_control'] ?? false;
+        $this->container['share_dual_camera'] = $data['share_dual_camera'] ?? false;
+        $this->container['waiting_room'] = $data['waiting_room'] ?? false;
+        $this->container['guest_only_to_place_in_waiting_room'] = $data['guest_only_to_place_in_waiting_room'] ?? null;
+        $this->container['auto_admit_participants_with_specified_domains'] = $data['auto_admit_participants_with_specified_domains'] ?? null;
+        $this->container['admit_participants_with_specified_domains'] = $data['admit_participants_with_specified_domains'] ?? null;
+        $this->container['allow_live_streaming'] = $data['allow_live_streaming'] ?? null;
+        $this->container['workplace_by_facebook'] = $data['workplace_by_facebook'] ?? null;
+        $this->container['custom_live_streaming_service'] = $data['custom_live_streaming_service'] ?? null;
+        $this->container['custom_service_instructions'] = $data['custom_service_instructions'] ?? null;
+        $this->container['show_meeting_control_toolbar'] = $data['show_meeting_control_toolbar'] ?? null;
+        $this->container['custom_data_center_regions'] = $data['custom_data_center_regions'] ?? null;
+        $this->container['data_center_regions'] = $data['data_center_regions'] ?? null;
     }
 
     /**
@@ -1169,7 +1169,7 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -1181,9 +1181,9 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -1194,7 +1194,7 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -1210,7 +1210,7 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -1229,7 +1229,7 @@ class UserSettingsMeetingSettings1 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

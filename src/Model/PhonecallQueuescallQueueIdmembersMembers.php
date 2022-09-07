@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -183,8 +183,8 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
      */
     public function __construct(array $data = null)
     {
-        $this->container['users'] = isset($data['users']) ? $data['users'] : null;
-        $this->container['common_area_phone_ids'] = isset($data['common_area_phone_ids']) ? $data['common_area_phone_ids'] : null;
+        $this->container['users'] = $data['users'] ?? null;
+        $this->container['common_area_phone_ids'] = $data['common_area_phone_ids'] ?? null;
     }
 
     /**
@@ -265,7 +265,7 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -277,9 +277,9 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -290,7 +290,7 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -306,7 +306,7 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -325,7 +325,7 @@ class PhonecallQueuescallQueueIdmembersMembers implements ModelInterface, ArrayA
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

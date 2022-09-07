@@ -100,7 +100,7 @@ class PhoneSiteApi
      */
     public function createPhoneSite($body = null)
     {
-        list($response) = $this->createPhoneSiteWithHttpInfo($body);
+        [$response] = $this->createPhoneSiteWithHttpInfo($body);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class PhoneSiteApi
      */
     public function createPhoneSiteWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse204';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse204::class;
         $request = $this->createPhoneSiteRequest($body);
 
         try {
@@ -149,12 +149,12 @@ class PhoneSiteApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class PhoneSiteApi
                 case 204:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse204',
+                        '\\' . \Weble\Zoom\Model\InlineResponse204::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class PhoneSiteApi
     {
         return $this->createPhoneSiteAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class PhoneSiteApi
      */
     public function createPhoneSiteAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse204';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse204::class;
         $request = $this->createPhoneSiteRequest($body);
 
         return $this->client
@@ -219,12 +217,12 @@ class PhoneSiteApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -320,7 +318,7 @@ class PhoneSiteApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -340,7 +338,7 @@ class PhoneSiteApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -363,7 +361,7 @@ class PhoneSiteApi
      */
     public function deletePhoneSite($site_id, $transfer_site_id)
     {
-        list($response) = $this->deletePhoneSiteWithHttpInfo($site_id, $transfer_site_id);
+        [$response] = $this->deletePhoneSiteWithHttpInfo($site_id, $transfer_site_id);
         return $response;
     }
 
@@ -413,12 +411,12 @@ class PhoneSiteApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -458,9 +456,7 @@ class PhoneSiteApi
     {
         return $this->deletePhoneSiteAsyncWithHttpInfo($site_id, $transfer_site_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -485,12 +481,12 @@ class PhoneSiteApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -608,7 +604,7 @@ class PhoneSiteApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -628,7 +624,7 @@ class PhoneSiteApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -650,7 +646,7 @@ class PhoneSiteApi
      */
     public function getASite($site_id)
     {
-        list($response) = $this->getASiteWithHttpInfo($site_id);
+        [$response] = $this->getASiteWithHttpInfo($site_id);
         return $response;
     }
 
@@ -667,7 +663,7 @@ class PhoneSiteApi
      */
     public function getASiteWithHttpInfo($site_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2004';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2004::class;
         $request = $this->getASiteRequest($site_id);
 
         try {
@@ -699,12 +695,12 @@ class PhoneSiteApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -719,7 +715,7 @@ class PhoneSiteApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2004',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2004::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -743,9 +739,7 @@ class PhoneSiteApi
     {
         return $this->getASiteAsyncWithHttpInfo($site_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -761,7 +755,7 @@ class PhoneSiteApi
      */
     public function getASiteAsyncWithHttpInfo($site_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2004';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2004::class;
         $request = $this->getASiteRequest($site_id);
 
         return $this->client
@@ -769,12 +763,12 @@ class PhoneSiteApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -881,7 +875,7 @@ class PhoneSiteApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -901,7 +895,7 @@ class PhoneSiteApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -924,7 +918,7 @@ class PhoneSiteApi
      */
     public function listPhoneSites($page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->listPhoneSitesWithHttpInfo($page_size, $next_page_token);
+        [$response] = $this->listPhoneSitesWithHttpInfo($page_size, $next_page_token);
         return $response;
     }
 
@@ -942,7 +936,7 @@ class PhoneSiteApi
      */
     public function listPhoneSitesWithHttpInfo($page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2003';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2003::class;
         $request = $this->listPhoneSitesRequest($page_size, $next_page_token);
 
         try {
@@ -974,12 +968,12 @@ class PhoneSiteApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -994,7 +988,7 @@ class PhoneSiteApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2003',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2003::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1019,9 +1013,7 @@ class PhoneSiteApi
     {
         return $this->listPhoneSitesAsyncWithHttpInfo($page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1038,7 +1030,7 @@ class PhoneSiteApi
      */
     public function listPhoneSitesAsyncWithHttpInfo($page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2003';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2003::class;
         $request = $this->listPhoneSitesRequest($page_size, $next_page_token);
 
         return $this->client
@@ -1046,12 +1038,12 @@ class PhoneSiteApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1157,7 +1149,7 @@ class PhoneSiteApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1177,7 +1169,7 @@ class PhoneSiteApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1200,7 +1192,7 @@ class PhoneSiteApi
      */
     public function updateSiteDetails($site_id, $body = null)
     {
-        list($response) = $this->updateSiteDetailsWithHttpInfo($site_id, $body);
+        [$response] = $this->updateSiteDetailsWithHttpInfo($site_id, $body);
         return $response;
     }
 
@@ -1250,12 +1242,12 @@ class PhoneSiteApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1295,9 +1287,7 @@ class PhoneSiteApi
     {
         return $this->updateSiteDetailsAsyncWithHttpInfo($site_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1322,12 +1312,12 @@ class PhoneSiteApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1438,7 +1428,7 @@ class PhoneSiteApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1458,7 +1448,7 @@ class PhoneSiteApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

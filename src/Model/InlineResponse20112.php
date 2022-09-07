@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20112 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -173,10 +173,10 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const STATUS_NOTSTART = 'notstart';
-    const STATUS_STARTED = 'started';
-    const STATUS_ENDED = 'ended';
-    const STATUS_SHARING = 'sharing';
+    public const STATUS_NOTSTART = 'notstart';
+    public const STATUS_STARTED = 'started';
+    public const STATUS_ENDED = 'ended';
+    public const STATUS_SHARING = 'sharing';
 
 
 
@@ -211,10 +211,10 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['questions'] = isset($data['questions']) ? $data['questions'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['questions'] = $data['questions'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['title'] = $data['title'] ?? null;
     }
 
     /**
@@ -360,7 +360,7 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -372,9 +372,9 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -385,7 +385,7 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -401,7 +401,7 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -420,7 +420,7 @@ class InlineResponse20112 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

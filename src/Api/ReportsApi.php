@@ -101,7 +101,7 @@ class ReportsApi
      */
     public function reportCloudRecording($from, $to)
     {
-        list($response) = $this->reportCloudRecordingWithHttpInfo($from, $to);
+        [$response] = $this->reportCloudRecordingWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -151,12 +151,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -196,9 +196,7 @@ class ReportsApi
     {
         return $this->reportCloudRecordingAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -223,12 +221,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -342,7 +340,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -362,7 +360,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -385,7 +383,7 @@ class ReportsApi
      */
     public function reportDaily($year = null, $month = null)
     {
-        list($response) = $this->reportDailyWithHttpInfo($year, $month);
+        [$response] = $this->reportDailyWithHttpInfo($year, $month);
         return $response;
     }
 
@@ -435,12 +433,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -480,9 +478,7 @@ class ReportsApi
     {
         return $this->reportDailyAsyncWithHttpInfo($year, $month)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -507,12 +503,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -614,7 +610,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -634,7 +630,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -656,7 +652,7 @@ class ReportsApi
      */
     public function reportMeetingDetails($meeting_id)
     {
-        list($response) = $this->reportMeetingDetailsWithHttpInfo($meeting_id);
+        [$response] = $this->reportMeetingDetailsWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -673,7 +669,7 @@ class ReportsApi
      */
     public function reportMeetingDetailsWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20036';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20036::class;
         $request = $this->reportMeetingDetailsRequest($meeting_id);
 
         try {
@@ -705,12 +701,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -725,7 +721,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20036',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20036::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -749,9 +745,7 @@ class ReportsApi
     {
         return $this->reportMeetingDetailsAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -767,7 +761,7 @@ class ReportsApi
      */
     public function reportMeetingDetailsAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20036';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20036::class;
         $request = $this->reportMeetingDetailsRequest($meeting_id);
 
         return $this->client
@@ -775,12 +769,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -887,7 +881,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -907,7 +901,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -931,7 +925,7 @@ class ReportsApi
      */
     public function reportMeetingParticipants($meeting_id, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->reportMeetingParticipantsWithHttpInfo($meeting_id, $page_size, $next_page_token);
+        [$response] = $this->reportMeetingParticipantsWithHttpInfo($meeting_id, $page_size, $next_page_token);
         return $response;
     }
 
@@ -950,7 +944,7 @@ class ReportsApi
      */
     public function reportMeetingParticipantsWithHttpInfo($meeting_id, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20037';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20037::class;
         $request = $this->reportMeetingParticipantsRequest($meeting_id, $page_size, $next_page_token);
 
         try {
@@ -982,12 +976,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1002,7 +996,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20037',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20037::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1028,9 +1022,7 @@ class ReportsApi
     {
         return $this->reportMeetingParticipantsAsyncWithHttpInfo($meeting_id, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1048,7 +1040,7 @@ class ReportsApi
      */
     public function reportMeetingParticipantsAsyncWithHttpInfo($meeting_id, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20037';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20037::class;
         $request = $this->reportMeetingParticipantsRequest($meeting_id, $page_size, $next_page_token);
 
         return $this->client
@@ -1056,12 +1048,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1182,7 +1174,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1202,7 +1194,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1224,7 +1216,7 @@ class ReportsApi
      */
     public function reportMeetingPolls($meeting_id)
     {
-        list($response) = $this->reportMeetingPollsWithHttpInfo($meeting_id);
+        [$response] = $this->reportMeetingPollsWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -1241,7 +1233,7 @@ class ReportsApi
      */
     public function reportMeetingPollsWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20038';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20038::class;
         $request = $this->reportMeetingPollsRequest($meeting_id);
 
         try {
@@ -1273,12 +1265,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1293,7 +1285,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20038',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20038::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1317,9 +1309,7 @@ class ReportsApi
     {
         return $this->reportMeetingPollsAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1335,7 +1325,7 @@ class ReportsApi
      */
     public function reportMeetingPollsAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20038';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20038::class;
         $request = $this->reportMeetingPollsRequest($meeting_id);
 
         return $this->client
@@ -1343,12 +1333,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1455,7 +1445,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1475,7 +1465,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1502,7 +1492,7 @@ class ReportsApi
      */
     public function reportMeetings($user_id, $from, $to, $page_size = '30', $next_page_token = null, $type = 'past')
     {
-        list($response) = $this->reportMeetingsWithHttpInfo($user_id, $from, $to, $page_size, $next_page_token, $type);
+        [$response] = $this->reportMeetingsWithHttpInfo($user_id, $from, $to, $page_size, $next_page_token, $type);
         return $response;
     }
 
@@ -1524,7 +1514,7 @@ class ReportsApi
      */
     public function reportMeetingsWithHttpInfo($user_id, $from, $to, $page_size = '30', $next_page_token = null, $type = 'past')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20035';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20035::class;
         $request = $this->reportMeetingsRequest($user_id, $from, $to, $page_size, $next_page_token, $type);
 
         try {
@@ -1556,12 +1546,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1576,7 +1566,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20035',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20035::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1605,9 +1595,7 @@ class ReportsApi
     {
         return $this->reportMeetingsAsyncWithHttpInfo($user_id, $from, $to, $page_size, $next_page_token, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1628,7 +1616,7 @@ class ReportsApi
      */
     public function reportMeetingsAsyncWithHttpInfo($user_id, $from, $to, $page_size = '30', $next_page_token = null, $type = 'past')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20035';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20035::class;
         $request = $this->reportMeetingsRequest($user_id, $from, $to, $page_size, $next_page_token, $type);
 
         return $this->client
@@ -1636,12 +1624,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1789,7 +1777,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1809,7 +1797,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1834,7 +1822,7 @@ class ReportsApi
      */
     public function reportOperationLogs($from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->reportOperationLogsWithHttpInfo($from, $to, $page_size, $next_page_token);
+        [$response] = $this->reportOperationLogsWithHttpInfo($from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -1854,7 +1842,7 @@ class ReportsApi
      */
     public function reportOperationLogsWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20044';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20044::class;
         $request = $this->reportOperationLogsRequest($from, $to, $page_size, $next_page_token);
 
         try {
@@ -1886,12 +1874,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1906,7 +1894,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20044',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20044::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1933,9 +1921,7 @@ class ReportsApi
     {
         return $this->reportOperationLogsAsyncWithHttpInfo($from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1954,7 +1940,7 @@ class ReportsApi
      */
     public function reportOperationLogsAsyncWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20044';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20044::class;
         $request = $this->reportOperationLogsRequest($from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -1962,12 +1948,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2095,7 +2081,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2115,7 +2101,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2140,7 +2126,7 @@ class ReportsApi
      */
     public function reportSignInSignOutActivities($from = null, $to = null, $page_size = null, $next_page_token = null)
     {
-        list($response) = $this->reportSignInSignOutActivitiesWithHttpInfo($from, $to, $page_size, $next_page_token);
+        [$response] = $this->reportSignInSignOutActivitiesWithHttpInfo($from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -2160,7 +2146,7 @@ class ReportsApi
      */
     public function reportSignInSignOutActivitiesWithHttpInfo($from = null, $to = null, $page_size = null, $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20068';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20068::class;
         $request = $this->reportSignInSignOutActivitiesRequest($from, $to, $page_size, $next_page_token);
 
         try {
@@ -2192,12 +2178,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2212,7 +2198,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20068',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20068::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2239,9 +2225,7 @@ class ReportsApi
     {
         return $this->reportSignInSignOutActivitiesAsyncWithHttpInfo($from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2260,7 +2244,7 @@ class ReportsApi
      */
     public function reportSignInSignOutActivitiesAsyncWithHttpInfo($from = null, $to = null, $page_size = null, $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20068';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20068::class;
         $request = $this->reportSignInSignOutActivitiesRequest($from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -2268,12 +2252,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2385,7 +2369,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2405,7 +2389,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2431,7 +2415,7 @@ class ReportsApi
      */
     public function reportTelephone($from, $to, $type = '1', $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->reportTelephoneWithHttpInfo($from, $to, $type, $page_size, $page_number);
+        [$response] = $this->reportTelephoneWithHttpInfo($from, $to, $type, $page_size, $page_number);
         return $response;
     }
 
@@ -2452,7 +2436,7 @@ class ReportsApi
      */
     public function reportTelephoneWithHttpInfo($from, $to, $type = '1', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20043';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20043::class;
         $request = $this->reportTelephoneRequest($from, $to, $type, $page_size, $page_number);
 
         try {
@@ -2484,12 +2468,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2504,7 +2488,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20043',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20043::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2532,9 +2516,7 @@ class ReportsApi
     {
         return $this->reportTelephoneAsyncWithHttpInfo($from, $to, $type, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2554,7 +2536,7 @@ class ReportsApi
      */
     public function reportTelephoneAsyncWithHttpInfo($from, $to, $type = '1', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20043';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20043::class;
         $request = $this->reportTelephoneRequest($from, $to, $type, $page_size, $page_number);
 
         return $this->client
@@ -2562,12 +2544,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2700,7 +2682,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2720,7 +2702,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2746,7 +2728,7 @@ class ReportsApi
      */
     public function reportUsers($from, $to, $type = null, $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->reportUsersWithHttpInfo($from, $to, $type, $page_size, $page_number);
+        [$response] = $this->reportUsersWithHttpInfo($from, $to, $type, $page_size, $page_number);
         return $response;
     }
 
@@ -2767,7 +2749,7 @@ class ReportsApi
      */
     public function reportUsersWithHttpInfo($from, $to, $type = null, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20034';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20034::class;
         $request = $this->reportUsersRequest($from, $to, $type, $page_size, $page_number);
 
         try {
@@ -2799,12 +2781,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2819,7 +2801,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20034',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20034::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2847,9 +2829,7 @@ class ReportsApi
     {
         return $this->reportUsersAsyncWithHttpInfo($from, $to, $type, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2869,7 +2849,7 @@ class ReportsApi
      */
     public function reportUsersAsyncWithHttpInfo($from, $to, $type = null, $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20034';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20034::class;
         $request = $this->reportUsersRequest($from, $to, $type, $page_size, $page_number);
 
         return $this->client
@@ -2877,12 +2857,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3015,7 +2995,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3035,7 +3015,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3057,7 +3037,7 @@ class ReportsApi
      */
     public function reportWebinarDetails($webinar_id)
     {
-        list($response) = $this->reportWebinarDetailsWithHttpInfo($webinar_id);
+        [$response] = $this->reportWebinarDetailsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -3074,7 +3054,7 @@ class ReportsApi
      */
     public function reportWebinarDetailsWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20039';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20039::class;
         $request = $this->reportWebinarDetailsRequest($webinar_id);
 
         try {
@@ -3106,12 +3086,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3126,7 +3106,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20039',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20039::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3150,9 +3130,7 @@ class ReportsApi
     {
         return $this->reportWebinarDetailsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3168,7 +3146,7 @@ class ReportsApi
      */
     public function reportWebinarDetailsAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20039';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20039::class;
         $request = $this->reportWebinarDetailsRequest($webinar_id);
 
         return $this->client
@@ -3176,12 +3154,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3288,7 +3266,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3308,7 +3286,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3332,7 +3310,7 @@ class ReportsApi
      */
     public function reportWebinarParticipants($webinar_id, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->reportWebinarParticipantsWithHttpInfo($webinar_id, $page_size, $next_page_token);
+        [$response] = $this->reportWebinarParticipantsWithHttpInfo($webinar_id, $page_size, $next_page_token);
         return $response;
     }
 
@@ -3351,7 +3329,7 @@ class ReportsApi
      */
     public function reportWebinarParticipantsWithHttpInfo($webinar_id, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20040';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20040::class;
         $request = $this->reportWebinarParticipantsRequest($webinar_id, $page_size, $next_page_token);
 
         try {
@@ -3383,12 +3361,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3403,7 +3381,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20040',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20040::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3429,9 +3407,7 @@ class ReportsApi
     {
         return $this->reportWebinarParticipantsAsyncWithHttpInfo($webinar_id, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3449,7 +3425,7 @@ class ReportsApi
      */
     public function reportWebinarParticipantsAsyncWithHttpInfo($webinar_id, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20040';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20040::class;
         $request = $this->reportWebinarParticipantsRequest($webinar_id, $page_size, $next_page_token);
 
         return $this->client
@@ -3457,12 +3433,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3583,7 +3559,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3603,7 +3579,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3625,7 +3601,7 @@ class ReportsApi
      */
     public function reportWebinarPolls($webinar_id)
     {
-        list($response) = $this->reportWebinarPollsWithHttpInfo($webinar_id);
+        [$response] = $this->reportWebinarPollsWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -3642,7 +3618,7 @@ class ReportsApi
      */
     public function reportWebinarPollsWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20041';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20041::class;
         $request = $this->reportWebinarPollsRequest($webinar_id);
 
         try {
@@ -3674,12 +3650,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3694,7 +3670,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20041',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20041::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3718,9 +3694,7 @@ class ReportsApi
     {
         return $this->reportWebinarPollsAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3736,7 +3710,7 @@ class ReportsApi
      */
     public function reportWebinarPollsAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20041';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20041::class;
         $request = $this->reportWebinarPollsRequest($webinar_id);
 
         return $this->client
@@ -3744,12 +3718,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3856,7 +3830,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3876,7 +3850,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3898,7 +3872,7 @@ class ReportsApi
      */
     public function reportWebinarQA($webinar_id)
     {
-        list($response) = $this->reportWebinarQAWithHttpInfo($webinar_id);
+        [$response] = $this->reportWebinarQAWithHttpInfo($webinar_id);
         return $response;
     }
 
@@ -3915,7 +3889,7 @@ class ReportsApi
      */
     public function reportWebinarQAWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20042';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20042::class;
         $request = $this->reportWebinarQARequest($webinar_id);
 
         try {
@@ -3947,12 +3921,12 @@ class ReportsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3967,7 +3941,7 @@ class ReportsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20042',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20042::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3991,9 +3965,7 @@ class ReportsApi
     {
         return $this->reportWebinarQAAsyncWithHttpInfo($webinar_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4009,7 +3981,7 @@ class ReportsApi
      */
     public function reportWebinarQAAsyncWithHttpInfo($webinar_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20042';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20042::class;
         $request = $this->reportWebinarQARequest($webinar_id);
 
         return $this->client
@@ -4017,12 +3989,12 @@ class ReportsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4129,7 +4101,7 @@ class ReportsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4149,7 +4121,7 @@ class ReportsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

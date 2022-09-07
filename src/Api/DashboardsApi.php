@@ -101,7 +101,7 @@ class DashboardsApi
      */
     public function dashboardCRC($from, $to)
     {
-        list($response) = $this->dashboardCRCWithHttpInfo($from, $to);
+        [$response] = $this->dashboardCRCWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -151,12 +151,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -196,9 +196,7 @@ class DashboardsApi
     {
         return $this->dashboardCRCAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -223,12 +221,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -342,7 +340,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -362,7 +360,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -385,7 +383,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedback($from, $to)
     {
-        list($response) = $this->dashboardClientFeedbackWithHttpInfo($from, $to);
+        [$response] = $this->dashboardClientFeedbackWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -403,7 +401,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedbackWithHttpInfo($from, $to)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20032';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20032::class;
         $request = $this->dashboardClientFeedbackRequest($from, $to);
 
         try {
@@ -435,12 +433,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -455,7 +453,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20032',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20032::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -480,9 +478,7 @@ class DashboardsApi
     {
         return $this->dashboardClientFeedbackAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -499,7 +495,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedbackAsyncWithHttpInfo($from, $to)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20032';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20032::class;
         $request = $this->dashboardClientFeedbackRequest($from, $to);
 
         return $this->client
@@ -507,12 +503,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -626,7 +622,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -646,7 +642,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -672,7 +668,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedbackDetail($feedback_id, $from = null, $to = null, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardClientFeedbackDetailWithHttpInfo($feedback_id, $from, $to, $page_size, $next_page_token);
+        [$response] = $this->dashboardClientFeedbackDetailWithHttpInfo($feedback_id, $from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -693,7 +689,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedbackDetailWithHttpInfo($feedback_id, $from = null, $to = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20059';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20059::class;
         $request = $this->dashboardClientFeedbackDetailRequest($feedback_id, $from, $to, $page_size, $next_page_token);
 
         try {
@@ -725,12 +721,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -745,7 +741,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20059',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20059::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -773,9 +769,7 @@ class DashboardsApi
     {
         return $this->dashboardClientFeedbackDetailAsyncWithHttpInfo($feedback_id, $from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -795,7 +789,7 @@ class DashboardsApi
      */
     public function dashboardClientFeedbackDetailAsyncWithHttpInfo($feedback_id, $from = null, $to = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20059';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20059::class;
         $request = $this->dashboardClientFeedbackDetailRequest($feedback_id, $from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -803,12 +797,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -935,7 +929,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -955,7 +949,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -980,7 +974,7 @@ class DashboardsApi
      */
     public function dashboardIM($from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardIMWithHttpInfo($from, $to, $page_size, $next_page_token);
+        [$response] = $this->dashboardIMWithHttpInfo($from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -1000,7 +994,7 @@ class DashboardsApi
      */
     public function dashboardIMWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20031';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20031::class;
         $request = $this->dashboardIMRequest($from, $to, $page_size, $next_page_token);
 
         try {
@@ -1032,12 +1026,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1052,7 +1046,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20031',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20031::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1079,9 +1073,7 @@ class DashboardsApi
     {
         return $this->dashboardIMAsyncWithHttpInfo($from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1100,7 +1092,7 @@ class DashboardsApi
      */
     public function dashboardIMAsyncWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20031';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20031::class;
         $request = $this->dashboardIMRequest($from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -1108,12 +1100,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1241,7 +1233,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1261,7 +1253,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1287,7 +1279,7 @@ class DashboardsApi
      */
     public function dashboardIssueDetailZoomRoom($zoomroom_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardIssueDetailZoomRoomWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token);
+        [$response] = $this->dashboardIssueDetailZoomRoomWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -1308,7 +1300,7 @@ class DashboardsApi
      */
     public function dashboardIssueDetailZoomRoomWithHttpInfo($zoomroom_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20033';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20033::class;
         $request = $this->dashboardIssueDetailZoomRoomRequest($zoomroom_id, $from, $to, $page_size, $next_page_token);
 
         try {
@@ -1340,12 +1332,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1360,7 +1352,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20033',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20033::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1388,9 +1380,7 @@ class DashboardsApi
     {
         return $this->dashboardIssueDetailZoomRoomAsyncWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1410,7 +1400,7 @@ class DashboardsApi
      */
     public function dashboardIssueDetailZoomRoomAsyncWithHttpInfo($zoomroom_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20033';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20033::class;
         $request = $this->dashboardIssueDetailZoomRoomRequest($zoomroom_id, $from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -1418,12 +1408,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1566,7 +1556,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1586,7 +1576,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1609,7 +1599,7 @@ class DashboardsApi
      */
     public function dashboardIssueZoomRoom($from, $to)
     {
-        list($response) = $this->dashboardIssueZoomRoomWithHttpInfo($from, $to);
+        [$response] = $this->dashboardIssueZoomRoomWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -1659,12 +1649,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1704,9 +1694,7 @@ class DashboardsApi
     {
         return $this->dashboardIssueZoomRoomAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1731,12 +1719,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1850,7 +1838,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1870,7 +1858,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1893,7 +1881,7 @@ class DashboardsApi
      */
     public function dashboardMeetingDetail($meeting_id, $type = 'live')
     {
-        list($response) = $this->dashboardMeetingDetailWithHttpInfo($meeting_id, $type);
+        [$response] = $this->dashboardMeetingDetailWithHttpInfo($meeting_id, $type);
         return $response;
     }
 
@@ -1911,7 +1899,7 @@ class DashboardsApi
      */
     public function dashboardMeetingDetailWithHttpInfo($meeting_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\MeetingMetrics';
+        $returnType = '\\' . \Weble\Zoom\Model\MeetingMetrics::class;
         $request = $this->dashboardMeetingDetailRequest($meeting_id, $type);
 
         try {
@@ -1943,12 +1931,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1963,7 +1951,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\MeetingMetrics',
+                        '\\' . \Weble\Zoom\Model\MeetingMetrics::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1988,9 +1976,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingDetailAsyncWithHttpInfo($meeting_id, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2007,7 +1993,7 @@ class DashboardsApi
      */
     public function dashboardMeetingDetailAsyncWithHttpInfo($meeting_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\MeetingMetrics';
+        $returnType = '\\' . \Weble\Zoom\Model\MeetingMetrics::class;
         $request = $this->dashboardMeetingDetailRequest($meeting_id, $type);
 
         return $this->client
@@ -2015,12 +2001,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2132,7 +2118,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2152,7 +2138,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2176,7 +2162,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantQOS($meeting_id, $participant_id, $type = 'live')
     {
-        list($response) = $this->dashboardMeetingParticipantQOSWithHttpInfo($meeting_id, $participant_id, $type);
+        [$response] = $this->dashboardMeetingParticipantQOSWithHttpInfo($meeting_id, $participant_id, $type);
         return $response;
     }
 
@@ -2195,7 +2181,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantQOSWithHttpInfo($meeting_id, $participant_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOS';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOS::class;
         $request = $this->dashboardMeetingParticipantQOSRequest($meeting_id, $participant_id, $type);
 
         try {
@@ -2227,12 +2213,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2247,7 +2233,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\ParticipantQOS',
+                        '\\' . \Weble\Zoom\Model\ParticipantQOS::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2273,9 +2259,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingParticipantQOSAsyncWithHttpInfo($meeting_id, $participant_id, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2293,7 +2277,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantQOSAsyncWithHttpInfo($meeting_id, $participant_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOS';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOS::class;
         $request = $this->dashboardMeetingParticipantQOSRequest($meeting_id, $participant_id, $type);
 
         return $this->client
@@ -2301,12 +2285,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2433,7 +2417,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2453,7 +2437,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2478,7 +2462,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantShare($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardMeetingParticipantShareWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardMeetingParticipantShareWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -2498,7 +2482,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantShareWithHttpInfo($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20028';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20028::class;
         $request = $this->dashboardMeetingParticipantShareRequest($meeting_id, $type, $page_size, $next_page_token);
 
         try {
@@ -2530,12 +2514,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2550,7 +2534,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20028',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20028::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2577,9 +2561,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingParticipantShareAsyncWithHttpInfo($meeting_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2598,7 +2580,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantShareAsyncWithHttpInfo($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20028';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20028::class;
         $request = $this->dashboardMeetingParticipantShareRequest($meeting_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -2606,12 +2588,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2737,7 +2719,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2757,7 +2739,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2782,7 +2764,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipants($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardMeetingParticipantsWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardMeetingParticipantsWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -2802,7 +2784,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantsWithHttpInfo($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20027';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20027::class;
         $request = $this->dashboardMeetingParticipantsRequest($meeting_id, $type, $page_size, $next_page_token);
 
         try {
@@ -2834,12 +2816,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2854,7 +2836,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20027',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20027::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2881,9 +2863,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingParticipantsAsyncWithHttpInfo($meeting_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2902,7 +2882,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantsAsyncWithHttpInfo($meeting_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20027';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20027::class;
         $request = $this->dashboardMeetingParticipantsRequest($meeting_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -2910,12 +2890,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3041,7 +3021,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3061,7 +3041,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3086,7 +3066,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantsQOS($meeting_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        list($response) = $this->dashboardMeetingParticipantsQOSWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardMeetingParticipantsQOSWithHttpInfo($meeting_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -3106,7 +3086,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantsQOSWithHttpInfo($meeting_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOSList';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOSList::class;
         $request = $this->dashboardMeetingParticipantsQOSRequest($meeting_id, $type, $page_size, $next_page_token);
 
         try {
@@ -3138,12 +3118,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3158,7 +3138,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\ParticipantQOSList',
+                        '\\' . \Weble\Zoom\Model\ParticipantQOSList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3185,9 +3165,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingParticipantsQOSAsyncWithHttpInfo($meeting_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3206,7 +3184,7 @@ class DashboardsApi
      */
     public function dashboardMeetingParticipantsQOSAsyncWithHttpInfo($meeting_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOSList';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOSList::class;
         $request = $this->dashboardMeetingParticipantsQOSRequest($meeting_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -3214,12 +3192,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3345,7 +3323,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3365,7 +3343,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3391,7 +3369,7 @@ class DashboardsApi
      */
     public function dashboardMeetings($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardMeetingsWithHttpInfo($from, $to, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardMeetingsWithHttpInfo($from, $to, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -3412,7 +3390,7 @@ class DashboardsApi
      */
     public function dashboardMeetingsWithHttpInfo($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20026';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20026::class;
         $request = $this->dashboardMeetingsRequest($from, $to, $type, $page_size, $next_page_token);
 
         try {
@@ -3444,12 +3422,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3464,7 +3442,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20026',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20026::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3492,9 +3470,7 @@ class DashboardsApi
     {
         return $this->dashboardMeetingsAsyncWithHttpInfo($from, $to, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3514,7 +3490,7 @@ class DashboardsApi
      */
     public function dashboardMeetingsAsyncWithHttpInfo($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20026';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20026::class;
         $request = $this->dashboardMeetingsRequest($from, $to, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -3522,12 +3498,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3660,7 +3636,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3680,7 +3656,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3703,7 +3679,7 @@ class DashboardsApi
      */
     public function dashboardWebinarDetail($webinar_id, $type = 'live')
     {
-        list($response) = $this->dashboardWebinarDetailWithHttpInfo($webinar_id, $type);
+        [$response] = $this->dashboardWebinarDetailWithHttpInfo($webinar_id, $type);
         return $response;
     }
 
@@ -3721,7 +3697,7 @@ class DashboardsApi
      */
     public function dashboardWebinarDetailWithHttpInfo($webinar_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\WebinarMetrics';
+        $returnType = '\\' . \Weble\Zoom\Model\WebinarMetrics::class;
         $request = $this->dashboardWebinarDetailRequest($webinar_id, $type);
 
         try {
@@ -3753,12 +3729,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3773,7 +3749,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\WebinarMetrics',
+                        '\\' . \Weble\Zoom\Model\WebinarMetrics::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3798,9 +3774,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarDetailAsyncWithHttpInfo($webinar_id, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3817,7 +3791,7 @@ class DashboardsApi
      */
     public function dashboardWebinarDetailAsyncWithHttpInfo($webinar_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\WebinarMetrics';
+        $returnType = '\\' . \Weble\Zoom\Model\WebinarMetrics::class;
         $request = $this->dashboardWebinarDetailRequest($webinar_id, $type);
 
         return $this->client
@@ -3825,12 +3799,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3942,7 +3916,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3962,7 +3936,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3986,7 +3960,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantQOS($webinar_id, $participant_id, $type = 'live')
     {
-        list($response) = $this->dashboardWebinarParticipantQOSWithHttpInfo($webinar_id, $participant_id, $type);
+        [$response] = $this->dashboardWebinarParticipantQOSWithHttpInfo($webinar_id, $participant_id, $type);
         return $response;
     }
 
@@ -4005,7 +3979,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantQOSWithHttpInfo($webinar_id, $participant_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOS';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOS::class;
         $request = $this->dashboardWebinarParticipantQOSRequest($webinar_id, $participant_id, $type);
 
         try {
@@ -4037,12 +4011,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4057,7 +4031,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\ParticipantQOS',
+                        '\\' . \Weble\Zoom\Model\ParticipantQOS::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4083,9 +4057,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarParticipantQOSAsyncWithHttpInfo($webinar_id, $participant_id, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4103,7 +4075,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantQOSAsyncWithHttpInfo($webinar_id, $participant_id, $type = 'live')
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOS';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOS::class;
         $request = $this->dashboardWebinarParticipantQOSRequest($webinar_id, $participant_id, $type);
 
         return $this->client
@@ -4111,12 +4083,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4243,7 +4215,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4263,7 +4235,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4288,7 +4260,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantShare($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardWebinarParticipantShareWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardWebinarParticipantShareWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -4308,7 +4280,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantShareWithHttpInfo($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20028';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20028::class;
         $request = $this->dashboardWebinarParticipantShareRequest($webinar_id, $type, $page_size, $next_page_token);
 
         try {
@@ -4340,12 +4312,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4360,7 +4332,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20028',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20028::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4387,9 +4359,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarParticipantShareAsyncWithHttpInfo($webinar_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4408,7 +4378,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantShareAsyncWithHttpInfo($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20028';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20028::class;
         $request = $this->dashboardWebinarParticipantShareRequest($webinar_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -4416,12 +4386,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4547,7 +4517,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4567,7 +4537,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4592,7 +4562,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipants($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardWebinarParticipantsWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardWebinarParticipantsWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -4612,7 +4582,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantsWithHttpInfo($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20030';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20030::class;
         $request = $this->dashboardWebinarParticipantsRequest($webinar_id, $type, $page_size, $next_page_token);
 
         try {
@@ -4644,12 +4614,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4664,7 +4634,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20030',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20030::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4691,9 +4661,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarParticipantsAsyncWithHttpInfo($webinar_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4712,7 +4680,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantsAsyncWithHttpInfo($webinar_id, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20030';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20030::class;
         $request = $this->dashboardWebinarParticipantsRequest($webinar_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -4720,12 +4688,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4851,7 +4819,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4871,7 +4839,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4896,7 +4864,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantsQOS($webinar_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        list($response) = $this->dashboardWebinarParticipantsQOSWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardWebinarParticipantsQOSWithHttpInfo($webinar_id, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -4916,7 +4884,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantsQOSWithHttpInfo($webinar_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOSList';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOSList::class;
         $request = $this->dashboardWebinarParticipantsQOSRequest($webinar_id, $type, $page_size, $next_page_token);
 
         try {
@@ -4948,12 +4916,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4968,7 +4936,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\ParticipantQOSList',
+                        '\\' . \Weble\Zoom\Model\ParticipantQOSList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4995,9 +4963,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarParticipantsQOSAsyncWithHttpInfo($webinar_id, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5016,7 +4982,7 @@ class DashboardsApi
      */
     public function dashboardWebinarParticipantsQOSAsyncWithHttpInfo($webinar_id, $type = 'live', $page_size = '1', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\ParticipantQOSList';
+        $returnType = '\\' . \Weble\Zoom\Model\ParticipantQOSList::class;
         $request = $this->dashboardWebinarParticipantsQOSRequest($webinar_id, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -5024,12 +4990,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5155,7 +5121,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5175,7 +5141,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5201,7 +5167,7 @@ class DashboardsApi
      */
     public function dashboardWebinars($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardWebinarsWithHttpInfo($from, $to, $type, $page_size, $next_page_token);
+        [$response] = $this->dashboardWebinarsWithHttpInfo($from, $to, $type, $page_size, $next_page_token);
         return $response;
     }
 
@@ -5222,7 +5188,7 @@ class DashboardsApi
      */
     public function dashboardWebinarsWithHttpInfo($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20029';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20029::class;
         $request = $this->dashboardWebinarsRequest($from, $to, $type, $page_size, $next_page_token);
 
         try {
@@ -5254,12 +5220,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5274,7 +5240,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20029',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20029::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5302,9 +5268,7 @@ class DashboardsApi
     {
         return $this->dashboardWebinarsAsyncWithHttpInfo($from, $to, $type, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5324,7 +5288,7 @@ class DashboardsApi
      */
     public function dashboardWebinarsAsyncWithHttpInfo($from, $to, $type = 'live', $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20029';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20029::class;
         $request = $this->dashboardWebinarsRequest($from, $to, $type, $page_size, $next_page_token);
 
         return $this->client
@@ -5332,12 +5296,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5470,7 +5434,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5490,7 +5454,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5516,7 +5480,7 @@ class DashboardsApi
      */
     public function dashboardZoomRoom($zoomroom_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->dashboardZoomRoomWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token);
+        [$response] = $this->dashboardZoomRoomWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -5569,12 +5533,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5617,9 +5581,7 @@ class DashboardsApi
     {
         return $this->dashboardZoomRoomAsyncWithHttpInfo($zoomroom_id, $from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5647,12 +5609,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5795,7 +5757,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5815,7 +5777,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5838,7 +5800,7 @@ class DashboardsApi
      */
     public function dashboardZoomRoomIssue($from, $to)
     {
-        list($response) = $this->dashboardZoomRoomIssueWithHttpInfo($from, $to);
+        [$response] = $this->dashboardZoomRoomIssueWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -5888,12 +5850,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5933,9 +5895,7 @@ class DashboardsApi
     {
         return $this->dashboardZoomRoomIssueAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5960,12 +5920,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6079,7 +6039,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6099,7 +6059,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6122,7 +6082,7 @@ class DashboardsApi
      */
     public function dashboardZoomRooms($page_size = '30', $page_number = '1')
     {
-        list($response) = $this->dashboardZoomRoomsWithHttpInfo($page_size, $page_number);
+        [$response] = $this->dashboardZoomRoomsWithHttpInfo($page_size, $page_number);
         return $response;
     }
 
@@ -6140,7 +6100,7 @@ class DashboardsApi
      */
     public function dashboardZoomRoomsWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\ZoomRoomList';
+        $returnType = '\\' . \Weble\Zoom\Model\ZoomRoomList::class;
         $request = $this->dashboardZoomRoomsRequest($page_size, $page_number);
 
         try {
@@ -6172,12 +6132,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6192,7 +6152,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\ZoomRoomList',
+                        '\\' . \Weble\Zoom\Model\ZoomRoomList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6217,9 +6177,7 @@ class DashboardsApi
     {
         return $this->dashboardZoomRoomsAsyncWithHttpInfo($page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6236,7 +6194,7 @@ class DashboardsApi
      */
     public function dashboardZoomRoomsAsyncWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\ZoomRoomList';
+        $returnType = '\\' . \Weble\Zoom\Model\ZoomRoomList::class;
         $request = $this->dashboardZoomRoomsRequest($page_size, $page_number);
 
         return $this->client
@@ -6244,12 +6202,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6355,7 +6313,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6375,7 +6333,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6398,7 +6356,7 @@ class DashboardsApi
      */
     public function listMeetingSatisfaction($from = null, $to = null)
     {
-        list($response) = $this->listMeetingSatisfactionWithHttpInfo($from, $to);
+        [$response] = $this->listMeetingSatisfactionWithHttpInfo($from, $to);
         return $response;
     }
 
@@ -6416,7 +6374,7 @@ class DashboardsApi
      */
     public function listMeetingSatisfactionWithHttpInfo($from = null, $to = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20087';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20087::class;
         $request = $this->listMeetingSatisfactionRequest($from, $to);
 
         try {
@@ -6448,12 +6406,12 @@ class DashboardsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6468,7 +6426,7 @@ class DashboardsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20087',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20087::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6493,9 +6451,7 @@ class DashboardsApi
     {
         return $this->listMeetingSatisfactionAsyncWithHttpInfo($from, $to)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6512,7 +6468,7 @@ class DashboardsApi
      */
     public function listMeetingSatisfactionAsyncWithHttpInfo($from = null, $to = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20087';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20087::class;
         $request = $this->listMeetingSatisfactionRequest($from, $to);
 
         return $this->client
@@ -6520,12 +6476,12 @@ class DashboardsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6627,7 +6583,7 @@ class DashboardsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6647,7 +6603,7 @@ class DashboardsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

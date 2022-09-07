@@ -101,7 +101,7 @@ class PhoneAutoReceptionistsApi
      */
     public function assignPhoneNumbersAutoReceptionist($auto_receptionist_id, $body = null)
     {
-        list($response) = $this->assignPhoneNumbersAutoReceptionistWithHttpInfo($auto_receptionist_id, $body);
+        [$response] = $this->assignPhoneNumbersAutoReceptionistWithHttpInfo($auto_receptionist_id, $body);
         return $response;
     }
 
@@ -151,12 +151,12 @@ class PhoneAutoReceptionistsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -196,9 +196,7 @@ class PhoneAutoReceptionistsApi
     {
         return $this->assignPhoneNumbersAutoReceptionistAsyncWithHttpInfo($auto_receptionist_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -223,12 +221,12 @@ class PhoneAutoReceptionistsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -339,7 +337,7 @@ class PhoneAutoReceptionistsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -359,7 +357,7 @@ class PhoneAutoReceptionistsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -382,7 +380,7 @@ class PhoneAutoReceptionistsApi
      */
     public function unassignAPhoneNumAutoReceptionist($auto_receptionist_id, $phone_number_id)
     {
-        list($response) = $this->unassignAPhoneNumAutoReceptionistWithHttpInfo($auto_receptionist_id, $phone_number_id);
+        [$response] = $this->unassignAPhoneNumAutoReceptionistWithHttpInfo($auto_receptionist_id, $phone_number_id);
         return $response;
     }
 
@@ -432,12 +430,12 @@ class PhoneAutoReceptionistsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -477,9 +475,7 @@ class PhoneAutoReceptionistsApi
     {
         return $this->unassignAPhoneNumAutoReceptionistAsyncWithHttpInfo($auto_receptionist_id, $phone_number_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -504,12 +500,12 @@ class PhoneAutoReceptionistsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -631,7 +627,7 @@ class PhoneAutoReceptionistsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -651,7 +647,7 @@ class PhoneAutoReceptionistsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -673,7 +669,7 @@ class PhoneAutoReceptionistsApi
      */
     public function unassignAllPhoneNumsAutoReceptionist($auto_receptionist_id)
     {
-        list($response) = $this->unassignAllPhoneNumsAutoReceptionistWithHttpInfo($auto_receptionist_id);
+        [$response] = $this->unassignAllPhoneNumsAutoReceptionistWithHttpInfo($auto_receptionist_id);
         return $response;
     }
 
@@ -722,12 +718,12 @@ class PhoneAutoReceptionistsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -766,9 +762,7 @@ class PhoneAutoReceptionistsApi
     {
         return $this->unassignAllPhoneNumsAutoReceptionistAsyncWithHttpInfo($auto_receptionist_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -792,12 +786,12 @@ class PhoneAutoReceptionistsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -904,7 +898,7 @@ class PhoneAutoReceptionistsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -924,7 +918,7 @@ class PhoneAutoReceptionistsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -947,7 +941,7 @@ class PhoneAutoReceptionistsApi
      */
     public function updateAutoReceptionist($auto_receptionist_id, $body = null)
     {
-        list($response) = $this->updateAutoReceptionistWithHttpInfo($auto_receptionist_id, $body);
+        [$response] = $this->updateAutoReceptionistWithHttpInfo($auto_receptionist_id, $body);
         return $response;
     }
 
@@ -997,12 +991,12 @@ class PhoneAutoReceptionistsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1042,9 +1036,7 @@ class PhoneAutoReceptionistsApi
     {
         return $this->updateAutoReceptionistAsyncWithHttpInfo($auto_receptionist_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1069,12 +1061,12 @@ class PhoneAutoReceptionistsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1185,7 +1177,7 @@ class PhoneAutoReceptionistsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1205,7 +1197,7 @@ class PhoneAutoReceptionistsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

@@ -101,7 +101,7 @@ class PhoneCallQueuesApi
      */
     public function addMembersToCallQueue($call_queue_id, $body = null)
     {
-        list($response) = $this->addMembersToCallQueueWithHttpInfo($call_queue_id, $body);
+        [$response] = $this->addMembersToCallQueueWithHttpInfo($call_queue_id, $body);
         return $response;
     }
 
@@ -151,12 +151,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -196,9 +196,7 @@ class PhoneCallQueuesApi
     {
         return $this->addMembersToCallQueueAsyncWithHttpInfo($call_queue_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -223,12 +221,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -339,7 +337,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -359,7 +357,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -382,7 +380,7 @@ class PhoneCallQueuesApi
      */
     public function assignPhoneToCallQueue($call_queue_id, $body = null)
     {
-        list($response) = $this->assignPhoneToCallQueueWithHttpInfo($call_queue_id, $body);
+        [$response] = $this->assignPhoneToCallQueueWithHttpInfo($call_queue_id, $body);
         return $response;
     }
 
@@ -432,12 +430,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -477,9 +475,7 @@ class PhoneCallQueuesApi
     {
         return $this->assignPhoneToCallQueueAsyncWithHttpInfo($call_queue_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -504,12 +500,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -620,7 +616,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -640,7 +636,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -663,7 +659,7 @@ class PhoneCallQueuesApi
      */
     public function changeCallQueueManager($call_queue_id, $body = null)
     {
-        list($response) = $this->changeCallQueueManagerWithHttpInfo($call_queue_id, $body);
+        [$response] = $this->changeCallQueueManagerWithHttpInfo($call_queue_id, $body);
         return $response;
     }
 
@@ -713,12 +709,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -758,9 +754,7 @@ class PhoneCallQueuesApi
     {
         return $this->changeCallQueueManagerAsyncWithHttpInfo($call_queue_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -785,12 +779,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -901,7 +895,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -921,7 +915,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -943,7 +937,7 @@ class PhoneCallQueuesApi
      */
     public function createCallQueue($body = null)
     {
-        list($response) = $this->createCallQueueWithHttpInfo($body);
+        [$response] = $this->createCallQueueWithHttpInfo($body);
         return $response;
     }
 
@@ -960,7 +954,7 @@ class PhoneCallQueuesApi
      */
     public function createCallQueueWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20123';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20123::class;
         $request = $this->createCallQueueRequest($body);
 
         try {
@@ -992,12 +986,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1012,7 +1006,7 @@ class PhoneCallQueuesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20123',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20123::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1036,9 +1030,7 @@ class PhoneCallQueuesApi
     {
         return $this->createCallQueueAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1054,7 +1046,7 @@ class PhoneCallQueuesApi
      */
     public function createCallQueueAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20123';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20123::class;
         $request = $this->createCallQueueRequest($body);
 
         return $this->client
@@ -1062,12 +1054,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1163,7 +1155,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1183,7 +1175,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1205,7 +1197,7 @@ class PhoneCallQueuesApi
      */
     public function deleteACallQueue($call_queue_id)
     {
-        list($response) = $this->deleteACallQueueWithHttpInfo($call_queue_id);
+        [$response] = $this->deleteACallQueueWithHttpInfo($call_queue_id);
         return $response;
     }
 
@@ -1254,12 +1246,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1298,9 +1290,7 @@ class PhoneCallQueuesApi
     {
         return $this->deleteACallQueueAsyncWithHttpInfo($call_queue_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1324,12 +1314,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1436,7 +1426,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1456,7 +1446,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1478,7 +1468,7 @@ class PhoneCallQueuesApi
      */
     public function getACallQueue($call_queue_id)
     {
-        list($response) = $this->getACallQueueWithHttpInfo($call_queue_id);
+        [$response] = $this->getACallQueueWithHttpInfo($call_queue_id);
         return $response;
     }
 
@@ -1495,7 +1485,7 @@ class PhoneCallQueuesApi
      */
     public function getACallQueueWithHttpInfo($call_queue_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20091';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20091::class;
         $request = $this->getACallQueueRequest($call_queue_id);
 
         try {
@@ -1527,12 +1517,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1547,7 +1537,7 @@ class PhoneCallQueuesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20091',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20091::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1571,9 +1561,7 @@ class PhoneCallQueuesApi
     {
         return $this->getACallQueueAsyncWithHttpInfo($call_queue_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1589,7 +1577,7 @@ class PhoneCallQueuesApi
      */
     public function getACallQueueAsyncWithHttpInfo($call_queue_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20091';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20091::class;
         $request = $this->getACallQueueRequest($call_queue_id);
 
         return $this->client
@@ -1597,12 +1585,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1709,7 +1697,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1729,7 +1717,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1752,7 +1740,7 @@ class PhoneCallQueuesApi
      */
     public function listCallQueues($next_page_token = null, $page_size = '30')
     {
-        list($response) = $this->listCallQueuesWithHttpInfo($next_page_token, $page_size);
+        [$response] = $this->listCallQueuesWithHttpInfo($next_page_token, $page_size);
         return $response;
     }
 
@@ -1770,7 +1758,7 @@ class PhoneCallQueuesApi
      */
     public function listCallQueuesWithHttpInfo($next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20090';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20090::class;
         $request = $this->listCallQueuesRequest($next_page_token, $page_size);
 
         try {
@@ -1802,12 +1790,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1822,7 +1810,7 @@ class PhoneCallQueuesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20090',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20090::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1847,9 +1835,7 @@ class PhoneCallQueuesApi
     {
         return $this->listCallQueuesAsyncWithHttpInfo($next_page_token, $page_size)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1866,7 +1852,7 @@ class PhoneCallQueuesApi
      */
     public function listCallQueuesAsyncWithHttpInfo($next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20090';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20090::class;
         $request = $this->listCallQueuesRequest($next_page_token, $page_size);
 
         return $this->client
@@ -1874,12 +1860,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1985,7 +1971,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2005,7 +1991,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2028,7 +2014,7 @@ class PhoneCallQueuesApi
      */
     public function unAssignPhoneNumCallQueue($call_queue_id, $phone_number_id)
     {
-        list($response) = $this->unAssignPhoneNumCallQueueWithHttpInfo($call_queue_id, $phone_number_id);
+        [$response] = $this->unAssignPhoneNumCallQueueWithHttpInfo($call_queue_id, $phone_number_id);
         return $response;
     }
 
@@ -2078,12 +2064,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2123,9 +2109,7 @@ class PhoneCallQueuesApi
     {
         return $this->unAssignPhoneNumCallQueueAsyncWithHttpInfo($call_queue_id, $phone_number_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2150,12 +2134,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2277,7 +2261,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2297,7 +2281,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2319,7 +2303,7 @@ class PhoneCallQueuesApi
      */
     public function unassignAPhoneNumCallQueue($call_queue_id)
     {
-        list($response) = $this->unassignAPhoneNumCallQueueWithHttpInfo($call_queue_id);
+        [$response] = $this->unassignAPhoneNumCallQueueWithHttpInfo($call_queue_id);
         return $response;
     }
 
@@ -2368,12 +2352,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2412,9 +2396,7 @@ class PhoneCallQueuesApi
     {
         return $this->unassignAPhoneNumCallQueueAsyncWithHttpInfo($call_queue_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2438,12 +2420,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2550,7 +2532,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2570,7 +2552,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2592,7 +2574,7 @@ class PhoneCallQueuesApi
      */
     public function unassignAllMembers($call_queue_id)
     {
-        list($response) = $this->unassignAllMembersWithHttpInfo($call_queue_id);
+        [$response] = $this->unassignAllMembersWithHttpInfo($call_queue_id);
         return $response;
     }
 
@@ -2641,12 +2623,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2685,9 +2667,7 @@ class PhoneCallQueuesApi
     {
         return $this->unassignAllMembersAsyncWithHttpInfo($call_queue_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2711,12 +2691,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2823,7 +2803,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2843,7 +2823,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2866,7 +2846,7 @@ class PhoneCallQueuesApi
      */
     public function unassignMemberFromCallQueue($call_queue_id, $member_id)
     {
-        list($response) = $this->unassignMemberFromCallQueueWithHttpInfo($call_queue_id, $member_id);
+        [$response] = $this->unassignMemberFromCallQueueWithHttpInfo($call_queue_id, $member_id);
         return $response;
     }
 
@@ -2916,12 +2896,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2961,9 +2941,7 @@ class PhoneCallQueuesApi
     {
         return $this->unassignMemberFromCallQueueAsyncWithHttpInfo($call_queue_id, $member_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2988,12 +2966,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3115,7 +3093,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3135,7 +3113,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3158,7 +3136,7 @@ class PhoneCallQueuesApi
      */
     public function updateCallQueue($call_queue_id, $body = null)
     {
-        list($response) = $this->updateCallQueueWithHttpInfo($call_queue_id, $body);
+        [$response] = $this->updateCallQueueWithHttpInfo($call_queue_id, $body);
         return $response;
     }
 
@@ -3208,12 +3186,12 @@ class PhoneCallQueuesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3253,9 +3231,7 @@ class PhoneCallQueuesApi
     {
         return $this->updateCallQueueAsyncWithHttpInfo($call_queue_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3280,12 +3256,12 @@ class PhoneCallQueuesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3396,7 +3372,7 @@ class PhoneCallQueuesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3416,7 +3392,7 @@ class PhoneCallQueuesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

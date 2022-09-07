@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -269,12 +269,12 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const AUDIO_BOTH = 'both';
-    const AUDIO_TELEPHONY = 'telephony';
-    const AUDIO_VOIP = 'voip';
-    const AUTO_RECORDING_LOCAL = 'local';
-    const AUTO_RECORDING_CLOUD = 'cloud';
-    const AUTO_RECORDING_NONE = 'none';
+    public const AUDIO_BOTH = 'both';
+    public const AUDIO_TELEPHONY = 'telephony';
+    public const AUDIO_VOIP = 'voip';
+    public const AUTO_RECORDING_LOCAL = 'local';
+    public const AUTO_RECORDING_CLOUD = 'cloud';
+    public const AUTO_RECORDING_NONE = 'none';
 
 
 
@@ -322,29 +322,29 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['host_video'] = isset($data['host_video']) ? $data['host_video'] : null;
-        $this->container['participant_video'] = isset($data['participant_video']) ? $data['participant_video'] : null;
-        $this->container['cn_meeting'] = isset($data['cn_meeting']) ? $data['cn_meeting'] : false;
-        $this->container['in_meeting'] = isset($data['in_meeting']) ? $data['in_meeting'] : false;
-        $this->container['join_before_host'] = isset($data['join_before_host']) ? $data['join_before_host'] : false;
-        $this->container['mute_upon_entry'] = isset($data['mute_upon_entry']) ? $data['mute_upon_entry'] : false;
-        $this->container['watermark'] = isset($data['watermark']) ? $data['watermark'] : false;
-        $this->container['use_pmi'] = isset($data['use_pmi']) ? $data['use_pmi'] : false;
-        $this->container['approval_type'] = isset($data['approval_type']) ? $data['approval_type'] : null;
-        $this->container['registration_type'] = isset($data['registration_type']) ? $data['registration_type'] : null;
-        $this->container['audio'] = isset($data['audio']) ? $data['audio'] : 'both';
-        $this->container['auto_recording'] = isset($data['auto_recording']) ? $data['auto_recording'] : 'none';
-        $this->container['alternative_hosts'] = isset($data['alternative_hosts']) ? $data['alternative_hosts'] : null;
-        $this->container['close_registration'] = isset($data['close_registration']) ? $data['close_registration'] : false;
-        $this->container['waiting_room'] = isset($data['waiting_room']) ? $data['waiting_room'] : null;
-        $this->container['global_dial_in_countries'] = isset($data['global_dial_in_countries']) ? $data['global_dial_in_countries'] : null;
-        $this->container['contact_name'] = isset($data['contact_name']) ? $data['contact_name'] : null;
-        $this->container['contact_email'] = isset($data['contact_email']) ? $data['contact_email'] : null;
-        $this->container['registrants_email_notification'] = isset($data['registrants_email_notification']) ? $data['registrants_email_notification'] : null;
-        $this->container['meeting_authentication'] = isset($data['meeting_authentication']) ? $data['meeting_authentication'] : null;
-        $this->container['authentication_option'] = isset($data['authentication_option']) ? $data['authentication_option'] : null;
-        $this->container['authentication_domains'] = isset($data['authentication_domains']) ? $data['authentication_domains'] : null;
-        $this->container['additional_data_center_regions'] = isset($data['additional_data_center_regions']) ? $data['additional_data_center_regions'] : null;
+        $this->container['host_video'] = $data['host_video'] ?? null;
+        $this->container['participant_video'] = $data['participant_video'] ?? null;
+        $this->container['cn_meeting'] = $data['cn_meeting'] ?? false;
+        $this->container['in_meeting'] = $data['in_meeting'] ?? false;
+        $this->container['join_before_host'] = $data['join_before_host'] ?? false;
+        $this->container['mute_upon_entry'] = $data['mute_upon_entry'] ?? false;
+        $this->container['watermark'] = $data['watermark'] ?? false;
+        $this->container['use_pmi'] = $data['use_pmi'] ?? false;
+        $this->container['approval_type'] = $data['approval_type'] ?? null;
+        $this->container['registration_type'] = $data['registration_type'] ?? null;
+        $this->container['audio'] = $data['audio'] ?? 'both';
+        $this->container['auto_recording'] = $data['auto_recording'] ?? 'none';
+        $this->container['alternative_hosts'] = $data['alternative_hosts'] ?? null;
+        $this->container['close_registration'] = $data['close_registration'] ?? false;
+        $this->container['waiting_room'] = $data['waiting_room'] ?? null;
+        $this->container['global_dial_in_countries'] = $data['global_dial_in_countries'] ?? null;
+        $this->container['contact_name'] = $data['contact_name'] ?? null;
+        $this->container['contact_email'] = $data['contact_email'] ?? null;
+        $this->container['registrants_email_notification'] = $data['registrants_email_notification'] ?? null;
+        $this->container['meeting_authentication'] = $data['meeting_authentication'] ?? null;
+        $this->container['authentication_option'] = $data['authentication_option'] ?? null;
+        $this->container['authentication_domains'] = $data['authentication_domains'] ?? null;
+        $this->container['additional_data_center_regions'] = $data['additional_data_center_regions'] ?? null;
     }
 
     /**
@@ -963,7 +963,7 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -975,9 +975,9 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -988,7 +988,7 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -1004,7 +1004,7 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -1023,7 +1023,7 @@ class UsersuserIdmeetingsSettings implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20118Settings implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -294,12 +294,12 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const AUDIO_BOTH = 'both';
-    const AUDIO_TELEPHONY = 'telephony';
-    const AUDIO_VOIP = 'voip';
-    const AUTO_RECORDING_LOCAL = 'local';
-    const AUTO_RECORDING_CLOUD = 'cloud';
-    const AUTO_RECORDING_NONE = 'none';
+    public const AUDIO_BOTH = 'both';
+    public const AUDIO_TELEPHONY = 'telephony';
+    public const AUDIO_VOIP = 'voip';
+    public const AUTO_RECORDING_LOCAL = 'local';
+    public const AUTO_RECORDING_CLOUD = 'cloud';
+    public const AUTO_RECORDING_NONE = 'none';
 
 
 
@@ -347,34 +347,34 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['host_video'] = isset($data['host_video']) ? $data['host_video'] : null;
-        $this->container['panelists_video'] = isset($data['panelists_video']) ? $data['panelists_video'] : null;
-        $this->container['practice_session'] = isset($data['practice_session']) ? $data['practice_session'] : false;
-        $this->container['hd_video'] = isset($data['hd_video']) ? $data['hd_video'] : false;
-        $this->container['approval_type'] = isset($data['approval_type']) ? $data['approval_type'] : null;
-        $this->container['registration_type'] = isset($data['registration_type']) ? $data['registration_type'] : null;
-        $this->container['audio'] = isset($data['audio']) ? $data['audio'] : 'both';
-        $this->container['auto_recording'] = isset($data['auto_recording']) ? $data['auto_recording'] : 'none';
-        $this->container['enforce_login'] = isset($data['enforce_login']) ? $data['enforce_login'] : null;
-        $this->container['enforce_login_domains'] = isset($data['enforce_login_domains']) ? $data['enforce_login_domains'] : null;
-        $this->container['alternative_hosts'] = isset($data['alternative_hosts']) ? $data['alternative_hosts'] : null;
-        $this->container['close_registration'] = isset($data['close_registration']) ? $data['close_registration'] : null;
-        $this->container['show_share_button'] = isset($data['show_share_button']) ? $data['show_share_button'] : null;
-        $this->container['allow_multiple_devices'] = isset($data['allow_multiple_devices']) ? $data['allow_multiple_devices'] : null;
-        $this->container['on_demand'] = isset($data['on_demand']) ? $data['on_demand'] : false;
-        $this->container['global_dial_in_countries'] = isset($data['global_dial_in_countries']) ? $data['global_dial_in_countries'] : null;
-        $this->container['contact_name'] = isset($data['contact_name']) ? $data['contact_name'] : null;
-        $this->container['contact_email'] = isset($data['contact_email']) ? $data['contact_email'] : null;
-        $this->container['registrants_confirmation_email'] = isset($data['registrants_confirmation_email']) ? $data['registrants_confirmation_email'] : null;
-        $this->container['registrants_restrict_number'] = isset($data['registrants_restrict_number']) ? $data['registrants_restrict_number'] : null;
-        $this->container['notify_registrants'] = isset($data['notify_registrants']) ? $data['notify_registrants'] : null;
-        $this->container['post_webinar_survey'] = isset($data['post_webinar_survey']) ? $data['post_webinar_survey'] : null;
-        $this->container['survey_url'] = isset($data['survey_url']) ? $data['survey_url'] : null;
-        $this->container['registrants_email_notification'] = isset($data['registrants_email_notification']) ? $data['registrants_email_notification'] : null;
-        $this->container['meeting_authentication'] = isset($data['meeting_authentication']) ? $data['meeting_authentication'] : null;
-        $this->container['authentication_option'] = isset($data['authentication_option']) ? $data['authentication_option'] : null;
-        $this->container['authentication_domains'] = isset($data['authentication_domains']) ? $data['authentication_domains'] : null;
-        $this->container['authentication_name'] = isset($data['authentication_name']) ? $data['authentication_name'] : null;
+        $this->container['host_video'] = $data['host_video'] ?? null;
+        $this->container['panelists_video'] = $data['panelists_video'] ?? null;
+        $this->container['practice_session'] = $data['practice_session'] ?? false;
+        $this->container['hd_video'] = $data['hd_video'] ?? false;
+        $this->container['approval_type'] = $data['approval_type'] ?? null;
+        $this->container['registration_type'] = $data['registration_type'] ?? null;
+        $this->container['audio'] = $data['audio'] ?? 'both';
+        $this->container['auto_recording'] = $data['auto_recording'] ?? 'none';
+        $this->container['enforce_login'] = $data['enforce_login'] ?? null;
+        $this->container['enforce_login_domains'] = $data['enforce_login_domains'] ?? null;
+        $this->container['alternative_hosts'] = $data['alternative_hosts'] ?? null;
+        $this->container['close_registration'] = $data['close_registration'] ?? null;
+        $this->container['show_share_button'] = $data['show_share_button'] ?? null;
+        $this->container['allow_multiple_devices'] = $data['allow_multiple_devices'] ?? null;
+        $this->container['on_demand'] = $data['on_demand'] ?? false;
+        $this->container['global_dial_in_countries'] = $data['global_dial_in_countries'] ?? null;
+        $this->container['contact_name'] = $data['contact_name'] ?? null;
+        $this->container['contact_email'] = $data['contact_email'] ?? null;
+        $this->container['registrants_confirmation_email'] = $data['registrants_confirmation_email'] ?? null;
+        $this->container['registrants_restrict_number'] = $data['registrants_restrict_number'] ?? null;
+        $this->container['notify_registrants'] = $data['notify_registrants'] ?? null;
+        $this->container['post_webinar_survey'] = $data['post_webinar_survey'] ?? null;
+        $this->container['survey_url'] = $data['survey_url'] ?? null;
+        $this->container['registrants_email_notification'] = $data['registrants_email_notification'] ?? null;
+        $this->container['meeting_authentication'] = $data['meeting_authentication'] ?? null;
+        $this->container['authentication_option'] = $data['authentication_option'] ?? null;
+        $this->container['authentication_domains'] = $data['authentication_domains'] ?? null;
+        $this->container['authentication_name'] = $data['authentication_name'] ?? null;
     }
 
     /**
@@ -1129,7 +1129,7 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -1141,9 +1141,9 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -1154,7 +1154,7 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -1170,7 +1170,7 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -1189,7 +1189,7 @@ class InlineResponse20118Settings implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

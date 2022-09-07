@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Body30 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -188,8 +188,8 @@ class Body30 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TSP_BRIDGE_US_TSP_TB = 'US_TSP_TB';
-    const TSP_BRIDGE_EU_TSP_TB = 'EU_TSP_TB';
+    public const TSP_BRIDGE_US_TSP_TB = 'US_TSP_TB';
+    public const TSP_BRIDGE_EU_TSP_TB = 'EU_TSP_TB';
 
 
 
@@ -222,13 +222,13 @@ class Body30 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['tsp_provider'] = isset($data['tsp_provider']) ? $data['tsp_provider'] : null;
-        $this->container['enable'] = isset($data['enable']) ? $data['enable'] : null;
-        $this->container['tsp_enabled'] = isset($data['tsp_enabled']) ? $data['tsp_enabled'] : null;
-        $this->container['master_account_setting_extended'] = isset($data['master_account_setting_extended']) ? $data['master_account_setting_extended'] : null;
-        $this->container['modify_credential_forbidden'] = isset($data['modify_credential_forbidden']) ? $data['modify_credential_forbidden'] : null;
-        $this->container['dial_in_number_unrestricted'] = isset($data['dial_in_number_unrestricted']) ? $data['dial_in_number_unrestricted'] : null;
-        $this->container['tsp_bridge'] = isset($data['tsp_bridge']) ? $data['tsp_bridge'] : null;
+        $this->container['tsp_provider'] = $data['tsp_provider'] ?? null;
+        $this->container['enable'] = $data['enable'] ?? null;
+        $this->container['tsp_enabled'] = $data['tsp_enabled'] ?? null;
+        $this->container['master_account_setting_extended'] = $data['master_account_setting_extended'] ?? null;
+        $this->container['modify_credential_forbidden'] = $data['modify_credential_forbidden'] ?? null;
+        $this->container['dial_in_number_unrestricted'] = $data['dial_in_number_unrestricted'] ?? null;
+        $this->container['tsp_bridge'] = $data['tsp_bridge'] ?? null;
     }
 
     /**
@@ -446,7 +446,7 @@ class Body30 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -458,9 +458,9 @@ class Body30 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -471,7 +471,7 @@ class Body30 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -487,7 +487,7 @@ class Body30 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -506,7 +506,7 @@ class Body30 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

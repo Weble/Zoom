@@ -99,7 +99,7 @@ class RoomsAccountApi
      */
     public function getZRAccountProfile()
     {
-        list($response) = $this->getZRAccountProfileWithHttpInfo();
+        [$response] = $this->getZRAccountProfileWithHttpInfo();
         return $response;
     }
 
@@ -115,7 +115,7 @@ class RoomsAccountApi
      */
     public function getZRAccountProfileWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20075';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20075::class;
         $request = $this->getZRAccountProfileRequest();
 
         try {
@@ -147,12 +147,12 @@ class RoomsAccountApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -167,7 +167,7 @@ class RoomsAccountApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20075',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20075::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -190,9 +190,7 @@ class RoomsAccountApi
     {
         return $this->getZRAccountProfileAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -207,7 +205,7 @@ class RoomsAccountApi
      */
     public function getZRAccountProfileAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20075';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20075::class;
         $request = $this->getZRAccountProfileRequest();
 
         return $this->client
@@ -215,12 +213,12 @@ class RoomsAccountApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -312,7 +310,7 @@ class RoomsAccountApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -332,7 +330,7 @@ class RoomsAccountApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -354,7 +352,7 @@ class RoomsAccountApi
      */
     public function getZRAccountSettings($setting_type)
     {
-        list($response) = $this->getZRAccountSettingsWithHttpInfo($setting_type);
+        [$response] = $this->getZRAccountSettingsWithHttpInfo($setting_type);
         return $response;
     }
 
@@ -403,12 +401,12 @@ class RoomsAccountApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -447,9 +445,7 @@ class RoomsAccountApi
     {
         return $this->getZRAccountSettingsAsyncWithHttpInfo($setting_type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -473,12 +469,12 @@ class RoomsAccountApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -581,7 +577,7 @@ class RoomsAccountApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -601,7 +597,7 @@ class RoomsAccountApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -623,7 +619,7 @@ class RoomsAccountApi
      */
     public function updateZRAccProfile($body = null)
     {
-        list($response) = $this->updateZRAccProfileWithHttpInfo($body);
+        [$response] = $this->updateZRAccProfileWithHttpInfo($body);
         return $response;
     }
 
@@ -672,12 +668,12 @@ class RoomsAccountApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -716,9 +712,7 @@ class RoomsAccountApi
     {
         return $this->updateZRAccProfileAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -742,12 +736,12 @@ class RoomsAccountApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -843,7 +837,7 @@ class RoomsAccountApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -863,7 +857,7 @@ class RoomsAccountApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -886,7 +880,7 @@ class RoomsAccountApi
      */
     public function updateZoomRoomAccSettings($setting_type, $body = null)
     {
-        list($response) = $this->updateZoomRoomAccSettingsWithHttpInfo($setting_type, $body);
+        [$response] = $this->updateZoomRoomAccSettingsWithHttpInfo($setting_type, $body);
         return $response;
     }
 
@@ -936,12 +930,12 @@ class RoomsAccountApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -981,9 +975,7 @@ class RoomsAccountApi
     {
         return $this->updateZoomRoomAccSettingsAsyncWithHttpInfo($setting_type, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1008,12 +1000,12 @@ class RoomsAccountApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1120,7 +1112,7 @@ class RoomsAccountApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1140,7 +1132,7 @@ class RoomsAccountApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

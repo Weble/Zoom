@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class IMGroup implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -174,9 +174,9 @@ class IMGroup implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TYPE_NORMAL = 'normal';
-    const TYPE_SHARED = 'shared';
-    const TYPE_RESTRICTED = 'restricted';
+    public const TYPE_NORMAL = 'normal';
+    public const TYPE_SHARED = 'shared';
+    public const TYPE_RESTRICTED = 'restricted';
 
 
 
@@ -210,10 +210,10 @@ class IMGroup implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['type'] = isset($data['type']) ? $data['type'] : 'normal';
-        $this->container['search_by_domain'] = isset($data['search_by_domain']) ? $data['search_by_domain'] : null;
-        $this->container['search_by_account'] = isset($data['search_by_account']) ? $data['search_by_account'] : null;
-        $this->container['search_by_ma_account'] = isset($data['search_by_ma_account']) ? $data['search_by_ma_account'] : null;
+        $this->container['type'] = $data['type'] ?? 'normal';
+        $this->container['search_by_domain'] = $data['search_by_domain'] ?? null;
+        $this->container['search_by_account'] = $data['search_by_account'] ?? null;
+        $this->container['search_by_ma_account'] = $data['search_by_ma_account'] ?? null;
     }
 
     /**
@@ -359,7 +359,7 @@ class IMGroup implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -371,9 +371,9 @@ class IMGroup implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -384,7 +384,7 @@ class IMGroup implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -400,7 +400,7 @@ class IMGroup implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -419,7 +419,7 @@ class IMGroup implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -101,7 +101,7 @@ class SIPConnectedAudioApi
      */
     public function assignSIPConfig($account_id, $body = null)
     {
-        list($response) = $this->assignSIPConfigWithHttpInfo($account_id, $body);
+        [$response] = $this->assignSIPConfigWithHttpInfo($account_id, $body);
         return $response;
     }
 
@@ -151,12 +151,12 @@ class SIPConnectedAudioApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -196,9 +196,7 @@ class SIPConnectedAudioApi
     {
         return $this->assignSIPConfigAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -223,12 +221,12 @@ class SIPConnectedAudioApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -339,7 +337,7 @@ class SIPConnectedAudioApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -359,7 +357,7 @@ class SIPConnectedAudioApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -382,7 +380,7 @@ class SIPConnectedAudioApi
      */
     public function assignSipTrunkNumbers($account_id, $body = null)
     {
-        list($response) = $this->assignSipTrunkNumbersWithHttpInfo($account_id, $body);
+        [$response] = $this->assignSipTrunkNumbersWithHttpInfo($account_id, $body);
         return $response;
     }
 
@@ -432,12 +430,12 @@ class SIPConnectedAudioApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -477,9 +475,7 @@ class SIPConnectedAudioApi
     {
         return $this->assignSipTrunkNumbersAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -504,12 +500,12 @@ class SIPConnectedAudioApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -620,7 +616,7 @@ class SIPConnectedAudioApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -640,7 +636,7 @@ class SIPConnectedAudioApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -662,7 +658,7 @@ class SIPConnectedAudioApi
      */
     public function deleteAllSipNumbers($account_id)
     {
-        list($response) = $this->deleteAllSipNumbersWithHttpInfo($account_id);
+        [$response] = $this->deleteAllSipNumbersWithHttpInfo($account_id);
         return $response;
     }
 
@@ -711,12 +707,12 @@ class SIPConnectedAudioApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -755,9 +751,7 @@ class SIPConnectedAudioApi
     {
         return $this->deleteAllSipNumbersAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -781,12 +775,12 @@ class SIPConnectedAudioApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -893,7 +887,7 @@ class SIPConnectedAudioApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -913,7 +907,7 @@ class SIPConnectedAudioApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -934,7 +928,7 @@ class SIPConnectedAudioApi
      */
     public function listSipTrunkNumbers()
     {
-        list($response) = $this->listSipTrunkNumbersWithHttpInfo();
+        [$response] = $this->listSipTrunkNumbersWithHttpInfo();
         return $response;
     }
 
@@ -950,7 +944,7 @@ class SIPConnectedAudioApi
      */
     public function listSipTrunkNumbersWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20082';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20082::class;
         $request = $this->listSipTrunkNumbersRequest();
 
         try {
@@ -982,12 +976,12 @@ class SIPConnectedAudioApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1002,7 +996,7 @@ class SIPConnectedAudioApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20082',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20082::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1025,9 +1019,7 @@ class SIPConnectedAudioApi
     {
         return $this->listSipTrunkNumbersAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1042,7 +1034,7 @@ class SIPConnectedAudioApi
      */
     public function listSipTrunkNumbersAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20082';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20082::class;
         $request = $this->listSipTrunkNumbersRequest();
 
         return $this->client
@@ -1050,12 +1042,12 @@ class SIPConnectedAudioApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1147,7 +1139,7 @@ class SIPConnectedAudioApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1167,7 +1159,7 @@ class SIPConnectedAudioApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

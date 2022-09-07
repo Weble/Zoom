@@ -154,7 +154,7 @@ class DevicesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2017',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2017::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -178,9 +178,7 @@ class DevicesApi
     {
         return $this->deviceCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -202,9 +200,7 @@ class DevicesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -297,7 +293,7 @@ class DevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -317,7 +313,7 @@ class DevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -409,9 +405,7 @@ class DevicesApi
     {
         return $this->deviceDeleteAsyncWithHttpInfo($device_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -433,9 +427,7 @@ class DevicesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -533,7 +525,7 @@ class DevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -553,7 +545,7 @@ class DevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -576,7 +568,7 @@ class DevicesApi
      */
     public function deviceList($page_size = '30', $page_number = '1')
     {
-        list($response) = $this->deviceListWithHttpInfo($page_size, $page_number);
+        [$response] = $this->deviceListWithHttpInfo($page_size, $page_number);
         return $response;
     }
 
@@ -594,7 +586,7 @@ class DevicesApi
      */
     public function deviceListWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\H323SIPDeviceList';
+        $returnType = '\\' . \Weble\Zoom\Model\H323SIPDeviceList::class;
         $request = $this->deviceListRequest($page_size, $page_number);
 
         try {
@@ -626,12 +618,12 @@ class DevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -646,7 +638,7 @@ class DevicesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\H323SIPDeviceList',
+                        '\\' . \Weble\Zoom\Model\H323SIPDeviceList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -671,9 +663,7 @@ class DevicesApi
     {
         return $this->deviceListAsyncWithHttpInfo($page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -690,7 +680,7 @@ class DevicesApi
      */
     public function deviceListAsyncWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\H323SIPDeviceList';
+        $returnType = '\\' . \Weble\Zoom\Model\H323SIPDeviceList::class;
         $request = $this->deviceListRequest($page_size, $page_number);
 
         return $this->client
@@ -698,12 +688,12 @@ class DevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -809,7 +799,7 @@ class DevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -829,7 +819,7 @@ class DevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -924,9 +914,7 @@ class DevicesApi
     {
         return $this->deviceUpdateAsyncWithHttpInfo($device_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -949,9 +937,7 @@ class DevicesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1059,7 +1045,7 @@ class DevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1079,7 +1065,7 @@ class DevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

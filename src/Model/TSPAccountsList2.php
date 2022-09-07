@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class TSPAccountsList2 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -174,8 +174,8 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const TSP_BRIDGE_US_TSP_TB = 'US_TSP_TB';
-    const TSP_BRIDGE_EU_TSP_TB = 'EU_TSP_TB';
+    public const TSP_BRIDGE_US_TSP_TB = 'US_TSP_TB';
+    public const TSP_BRIDGE_EU_TSP_TB = 'EU_TSP_TB';
 
 
 
@@ -208,10 +208,10 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['conference_code'] = isset($data['conference_code']) ? $data['conference_code'] : null;
-        $this->container['leader_pin'] = isset($data['leader_pin']) ? $data['leader_pin'] : null;
-        $this->container['dial_in_numbers'] = isset($data['dial_in_numbers']) ? $data['dial_in_numbers'] : null;
-        $this->container['tsp_bridge'] = isset($data['tsp_bridge']) ? $data['tsp_bridge'] : null;
+        $this->container['conference_code'] = $data['conference_code'] ?? null;
+        $this->container['leader_pin'] = $data['leader_pin'] ?? null;
+        $this->container['dial_in_numbers'] = $data['dial_in_numbers'] ?? null;
+        $this->container['tsp_bridge'] = $data['tsp_bridge'] ?? null;
     }
 
     /**
@@ -393,7 +393,7 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -405,9 +405,9 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -418,7 +418,7 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -434,7 +434,7 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -453,7 +453,7 @@ class TSPAccountsList2 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -104,7 +104,7 @@ class IMChatApi
      */
     public function imChatMessages($session_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->imChatMessagesWithHttpInfo($session_id, $from, $to, $page_size, $next_page_token);
+        [$response] = $this->imChatMessagesWithHttpInfo($session_id, $from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -125,7 +125,7 @@ class IMChatApi
      */
     public function imChatMessagesWithHttpInfo($session_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20021';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20021::class;
         $request = $this->imChatMessagesRequest($session_id, $from, $to, $page_size, $next_page_token);
 
         try {
@@ -157,12 +157,12 @@ class IMChatApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -177,7 +177,7 @@ class IMChatApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20021',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20021::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -205,9 +205,7 @@ class IMChatApi
     {
         return $this->imChatMessagesAsyncWithHttpInfo($session_id, $from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -227,7 +225,7 @@ class IMChatApi
      */
     public function imChatMessagesAsyncWithHttpInfo($session_id, $from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20021';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20021::class;
         $request = $this->imChatMessagesRequest($session_id, $from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -235,12 +233,12 @@ class IMChatApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -383,7 +381,7 @@ class IMChatApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -403,7 +401,7 @@ class IMChatApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -428,7 +426,7 @@ class IMChatApi
      */
     public function imChatSessions($from, $to, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->imChatSessionsWithHttpInfo($from, $to, $page_size, $next_page_token);
+        [$response] = $this->imChatSessionsWithHttpInfo($from, $to, $page_size, $next_page_token);
         return $response;
     }
 
@@ -448,7 +446,7 @@ class IMChatApi
      */
     public function imChatSessionsWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20020';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20020::class;
         $request = $this->imChatSessionsRequest($from, $to, $page_size, $next_page_token);
 
         try {
@@ -480,12 +478,12 @@ class IMChatApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -500,7 +498,7 @@ class IMChatApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20020',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20020::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -527,9 +525,7 @@ class IMChatApi
     {
         return $this->imChatSessionsAsyncWithHttpInfo($from, $to, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -548,7 +544,7 @@ class IMChatApi
      */
     public function imChatSessionsAsyncWithHttpInfo($from, $to, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20020';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20020::class;
         $request = $this->imChatSessionsRequest($from, $to, $page_size, $next_page_token);
 
         return $this->client
@@ -556,12 +552,12 @@ class IMChatApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -689,7 +685,7 @@ class IMChatApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -709,7 +705,7 @@ class IMChatApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -736,7 +732,7 @@ class IMChatApi
      */
     public function listimmessages($user_id, $chat_user = null, $channel = null, $date = null, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->listimmessagesWithHttpInfo($user_id, $chat_user, $channel, $date, $page_size, $next_page_token);
+        [$response] = $this->listimmessagesWithHttpInfo($user_id, $chat_user, $channel, $date, $page_size, $next_page_token);
         return $response;
     }
 
@@ -758,7 +754,7 @@ class IMChatApi
      */
     public function listimmessagesWithHttpInfo($user_id, $chat_user = null, $channel = null, $date = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20060';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20060::class;
         $request = $this->listimmessagesRequest($user_id, $chat_user, $channel, $date, $page_size, $next_page_token);
 
         try {
@@ -790,12 +786,12 @@ class IMChatApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -810,7 +806,7 @@ class IMChatApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20060',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20060::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -839,9 +835,7 @@ class IMChatApi
     {
         return $this->listimmessagesAsyncWithHttpInfo($user_id, $chat_user, $channel, $date, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -862,7 +856,7 @@ class IMChatApi
      */
     public function listimmessagesAsyncWithHttpInfo($user_id, $chat_user = null, $channel = null, $date = null, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20060';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20060::class;
         $request = $this->listimmessagesRequest($user_id, $chat_user, $channel, $date, $page_size, $next_page_token);
 
         return $this->client
@@ -870,12 +864,12 @@ class IMChatApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1014,7 +1008,7 @@ class IMChatApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1034,7 +1028,7 @@ class IMChatApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1057,7 +1051,7 @@ class IMChatApi
      */
     public function sendimmessages($body = null, $chat_user = null)
     {
-        list($response) = $this->sendimmessagesWithHttpInfo($body, $chat_user);
+        [$response] = $this->sendimmessagesWithHttpInfo($body, $chat_user);
         return $response;
     }
 
@@ -1075,7 +1069,7 @@ class IMChatApi
      */
     public function sendimmessagesWithHttpInfo($body = null, $chat_user = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20122';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20122::class;
         $request = $this->sendimmessagesRequest($body, $chat_user);
 
         try {
@@ -1107,12 +1101,12 @@ class IMChatApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1127,7 +1121,7 @@ class IMChatApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20122',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20122::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1152,9 +1146,7 @@ class IMChatApi
     {
         return $this->sendimmessagesAsyncWithHttpInfo($body, $chat_user)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1171,7 +1163,7 @@ class IMChatApi
      */
     public function sendimmessagesAsyncWithHttpInfo($body = null, $chat_user = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20122';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20122::class;
         $request = $this->sendimmessagesRequest($body, $chat_user);
 
         return $this->client
@@ -1179,12 +1171,12 @@ class IMChatApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1285,7 +1277,7 @@ class IMChatApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1305,7 +1297,7 @@ class IMChatApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

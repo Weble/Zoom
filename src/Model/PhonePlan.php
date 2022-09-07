@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class PhonePlan implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -58,7 +58,7 @@ class PhonePlan implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'plan_base' => '\Weble\Zoom\Model\PhonePlan1PlanBase',
+        'plan_base' => '\\' . \Weble\Zoom\Model\PhonePlan1PlanBase::class,
         'plan_calling' => '\Weble\Zoom\Model\PhonePlan1PlanCalling[]',
         'plan_number' => '\Weble\Zoom\Model\PhonePlan1PlanNumber[]'
     ];
@@ -188,9 +188,9 @@ class PhonePlan implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['plan_base'] = isset($data['plan_base']) ? $data['plan_base'] : null;
-        $this->container['plan_calling'] = isset($data['plan_calling']) ? $data['plan_calling'] : null;
-        $this->container['plan_number'] = isset($data['plan_number']) ? $data['plan_number'] : null;
+        $this->container['plan_base'] = $data['plan_base'] ?? null;
+        $this->container['plan_calling'] = $data['plan_calling'] ?? null;
+        $this->container['plan_number'] = $data['plan_number'] ?? null;
     }
 
     /**
@@ -295,7 +295,7 @@ class PhonePlan implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -307,9 +307,9 @@ class PhonePlan implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -320,7 +320,7 @@ class PhonePlan implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -336,7 +336,7 @@ class PhonePlan implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -355,7 +355,7 @@ class PhonePlan implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -100,7 +100,7 @@ class BillingApi
      */
     public function accountBilling($account_id)
     {
-        list($response) = $this->accountBillingWithHttpInfo($account_id);
+        [$response] = $this->accountBillingWithHttpInfo($account_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class BillingApi
      */
     public function accountBillingWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20014';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20014::class;
         $request = $this->accountBillingRequest($account_id);
 
         try {
@@ -149,12 +149,12 @@ class BillingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class BillingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20014',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20014::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class BillingApi
     {
         return $this->accountBillingAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class BillingApi
      */
     public function accountBillingAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20014';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20014::class;
         $request = $this->accountBillingRequest($account_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class BillingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -446,9 +444,7 @@ class BillingApi
     {
         return $this->accountBillingUpdateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -471,9 +467,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -581,7 +575,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -601,7 +595,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -704,9 +698,7 @@ class BillingApi
     {
         return $this->accountPlanAddonCancelAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -729,9 +721,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -833,7 +823,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -853,7 +843,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -948,9 +938,7 @@ class BillingApi
     {
         return $this->accountPlanAddonCreateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -973,9 +961,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1083,7 +1069,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1103,7 +1089,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1198,9 +1184,7 @@ class BillingApi
     {
         return $this->accountPlanAddonUpdateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1223,9 +1207,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1333,7 +1315,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1353,7 +1335,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1456,9 +1438,7 @@ class BillingApi
     {
         return $this->accountPlanBaseDeleteAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1481,9 +1461,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1585,7 +1563,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1605,7 +1583,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1700,9 +1678,7 @@ class BillingApi
     {
         return $this->accountPlanBaseUpdateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1725,9 +1701,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1835,7 +1809,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1855,7 +1829,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1933,7 +1907,7 @@ class BillingApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20015',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20015::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1958,9 +1932,7 @@ class BillingApi
     {
         return $this->accountPlanCreateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1983,9 +1955,7 @@ class BillingApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2093,7 +2063,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2113,7 +2083,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2135,7 +2105,7 @@ class BillingApi
      */
     public function accountPlans($account_id)
     {
-        list($response) = $this->accountPlansWithHttpInfo($account_id);
+        [$response] = $this->accountPlansWithHttpInfo($account_id);
         return $response;
     }
 
@@ -2152,7 +2122,7 @@ class BillingApi
      */
     public function accountPlansWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20015';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20015::class;
         $request = $this->accountPlansRequest($account_id);
 
         try {
@@ -2184,12 +2154,12 @@ class BillingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2204,7 +2174,7 @@ class BillingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20015',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20015::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2228,9 +2198,7 @@ class BillingApi
     {
         return $this->accountPlansAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2246,7 +2214,7 @@ class BillingApi
      */
     public function accountPlansAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20015';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20015::class;
         $request = $this->accountPlansRequest($account_id);
 
         return $this->client
@@ -2254,12 +2222,12 @@ class BillingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2366,7 +2334,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2386,7 +2354,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2408,7 +2376,7 @@ class BillingApi
      */
     public function getPlanUsage($account_id)
     {
-        list($response) = $this->getPlanUsageWithHttpInfo($account_id);
+        [$response] = $this->getPlanUsageWithHttpInfo($account_id);
         return $response;
     }
 
@@ -2425,7 +2393,7 @@ class BillingApi
      */
     public function getPlanUsageWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20072';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20072::class;
         $request = $this->getPlanUsageRequest($account_id);
 
         try {
@@ -2457,12 +2425,12 @@ class BillingApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2477,7 +2445,7 @@ class BillingApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20072',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20072::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2501,9 +2469,7 @@ class BillingApi
     {
         return $this->getPlanUsageAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2519,7 +2485,7 @@ class BillingApi
      */
     public function getPlanUsageAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20072';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20072::class;
         $request = $this->getPlanUsageRequest($account_id);
 
         return $this->client
@@ -2527,12 +2493,12 @@ class BillingApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2639,7 +2605,7 @@ class BillingApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2659,7 +2625,7 @@ class BillingApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

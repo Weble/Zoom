@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -70,7 +70,7 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
         'host_pause_stop_recording' => 'bool',
         'auto_delete_cmr' => 'bool',
         'auto_delete_cmr_days' => 'int',
-        'recording_password_requirement' => '\Weble\Zoom\Model\AccountSettingsRecordingRecordingPasswordRequirement'
+        'recording_password_requirement' => '\\' . \Weble\Zoom\Model\AccountSettingsRecordingRecordingPasswordRequirement::class
     ];
 
     /**
@@ -219,9 +219,9 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const AUTO_RECORDING_LOCAL = 'local';
-    const AUTO_RECORDING_CLOUD = 'cloud';
-    const AUTO_RECORDING_NONE = 'none';
+    public const AUTO_RECORDING_LOCAL = 'local';
+    public const AUTO_RECORDING_CLOUD = 'cloud';
+    public const AUTO_RECORDING_NONE = 'none';
 
 
 
@@ -255,19 +255,19 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['local_recording'] = isset($data['local_recording']) ? $data['local_recording'] : null;
-        $this->container['cloud_recording'] = isset($data['cloud_recording']) ? $data['cloud_recording'] : false;
-        $this->container['record_speaker_view'] = isset($data['record_speaker_view']) ? $data['record_speaker_view'] : false;
-        $this->container['record_gallery_view'] = isset($data['record_gallery_view']) ? $data['record_gallery_view'] : false;
-        $this->container['record_audio_file'] = isset($data['record_audio_file']) ? $data['record_audio_file'] : false;
-        $this->container['save_chat_text'] = isset($data['save_chat_text']) ? $data['save_chat_text'] : false;
-        $this->container['show_timestamp'] = isset($data['show_timestamp']) ? $data['show_timestamp'] : false;
-        $this->container['recording_audio_transcript'] = isset($data['recording_audio_transcript']) ? $data['recording_audio_transcript'] : null;
-        $this->container['auto_recording'] = isset($data['auto_recording']) ? $data['auto_recording'] : 'local';
-        $this->container['host_pause_stop_recording'] = isset($data['host_pause_stop_recording']) ? $data['host_pause_stop_recording'] : false;
-        $this->container['auto_delete_cmr'] = isset($data['auto_delete_cmr']) ? $data['auto_delete_cmr'] : false;
-        $this->container['auto_delete_cmr_days'] = isset($data['auto_delete_cmr_days']) ? $data['auto_delete_cmr_days'] : null;
-        $this->container['recording_password_requirement'] = isset($data['recording_password_requirement']) ? $data['recording_password_requirement'] : null;
+        $this->container['local_recording'] = $data['local_recording'] ?? null;
+        $this->container['cloud_recording'] = $data['cloud_recording'] ?? false;
+        $this->container['record_speaker_view'] = $data['record_speaker_view'] ?? false;
+        $this->container['record_gallery_view'] = $data['record_gallery_view'] ?? false;
+        $this->container['record_audio_file'] = $data['record_audio_file'] ?? false;
+        $this->container['save_chat_text'] = $data['save_chat_text'] ?? false;
+        $this->container['show_timestamp'] = $data['show_timestamp'] ?? false;
+        $this->container['recording_audio_transcript'] = $data['recording_audio_transcript'] ?? null;
+        $this->container['auto_recording'] = $data['auto_recording'] ?? 'local';
+        $this->container['host_pause_stop_recording'] = $data['host_pause_stop_recording'] ?? false;
+        $this->container['auto_delete_cmr'] = $data['auto_delete_cmr'] ?? false;
+        $this->container['auto_delete_cmr_days'] = $data['auto_delete_cmr_days'] ?? null;
+        $this->container['recording_password_requirement'] = $data['recording_password_requirement'] ?? null;
     }
 
     /**
@@ -645,7 +645,7 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -657,9 +657,9 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -670,7 +670,7 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -686,7 +686,7 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -705,7 +705,7 @@ class UserSettingsRecordingSettings implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

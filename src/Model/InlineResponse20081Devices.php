@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20081Devices implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -183,13 +183,13 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const DEVICE_TYPE_ZOOM_ROOMS_COMPUTER = 'Zoom Rooms Computer';
-    const DEVICE_TYPE_CONTROLLER = 'Controller';
-    const DEVICE_TYPE_SCHEDULING_DISPLAY = 'Scheduling Display';
-    const DEVICE_TYPE_ZOOM_ROOMS_CONTROL_SYSTEM = 'Zoom Rooms Control System';
-    const DEVICE_TYPE_COMPANION_WHITEBOARD = 'Companion Whiteboard';
-    const STATUS_ONLINE = 'Online';
-    const STATUS_OFFLINE = 'Offline';
+    public const DEVICE_TYPE_ZOOM_ROOMS_COMPUTER = 'Zoom Rooms Computer';
+    public const DEVICE_TYPE_CONTROLLER = 'Controller';
+    public const DEVICE_TYPE_SCHEDULING_DISPLAY = 'Scheduling Display';
+    public const DEVICE_TYPE_ZOOM_ROOMS_CONTROL_SYSTEM = 'Zoom Rooms Control System';
+    public const DEVICE_TYPE_COMPANION_WHITEBOARD = 'Companion Whiteboard';
+    public const STATUS_ONLINE = 'Online';
+    public const STATUS_OFFLINE = 'Offline';
 
 
 
@@ -238,12 +238,12 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['room_name'] = isset($data['room_name']) ? $data['room_name'] : null;
-        $this->container['device_type'] = isset($data['device_type']) ? $data['device_type'] : null;
-        $this->container['app_version'] = isset($data['app_version']) ? $data['app_version'] : null;
-        $this->container['device_system'] = isset($data['device_system']) ? $data['device_system'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['room_name'] = $data['room_name'] ?? null;
+        $this->container['device_type'] = $data['device_type'] ?? null;
+        $this->container['app_version'] = $data['app_version'] ?? null;
+        $this->container['device_system'] = $data['device_system'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
     }
 
     /**
@@ -454,7 +454,7 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -466,9 +466,9 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -479,7 +479,7 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -495,7 +495,7 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -514,7 +514,7 @@ class InlineResponse20081Devices implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

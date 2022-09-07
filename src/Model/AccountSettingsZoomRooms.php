@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -223,16 +223,16 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['upcoming_meeting_alert'] = isset($data['upcoming_meeting_alert']) ? $data['upcoming_meeting_alert'] : null;
-        $this->container['start_airplay_manually'] = isset($data['start_airplay_manually']) ? $data['start_airplay_manually'] : null;
-        $this->container['weekly_system_restart'] = isset($data['weekly_system_restart']) ? $data['weekly_system_restart'] : null;
-        $this->container['list_meetings_with_calendar'] = isset($data['list_meetings_with_calendar']) ? $data['list_meetings_with_calendar'] : null;
-        $this->container['zr_post_meeting_feedback'] = isset($data['zr_post_meeting_feedback']) ? $data['zr_post_meeting_feedback'] : null;
-        $this->container['ultrasonic'] = isset($data['ultrasonic']) ? $data['ultrasonic'] : null;
-        $this->container['force_private_meeting'] = isset($data['force_private_meeting']) ? $data['force_private_meeting'] : null;
-        $this->container['hide_host_information'] = isset($data['hide_host_information']) ? $data['hide_host_information'] : null;
-        $this->container['cmr_for_instant_meeting'] = isset($data['cmr_for_instant_meeting']) ? $data['cmr_for_instant_meeting'] : null;
-        $this->container['auto_start_stop_scheduled_meetings'] = isset($data['auto_start_stop_scheduled_meetings']) ? $data['auto_start_stop_scheduled_meetings'] : null;
+        $this->container['upcoming_meeting_alert'] = $data['upcoming_meeting_alert'] ?? null;
+        $this->container['start_airplay_manually'] = $data['start_airplay_manually'] ?? null;
+        $this->container['weekly_system_restart'] = $data['weekly_system_restart'] ?? null;
+        $this->container['list_meetings_with_calendar'] = $data['list_meetings_with_calendar'] ?? null;
+        $this->container['zr_post_meeting_feedback'] = $data['zr_post_meeting_feedback'] ?? null;
+        $this->container['ultrasonic'] = $data['ultrasonic'] ?? null;
+        $this->container['force_private_meeting'] = $data['force_private_meeting'] ?? null;
+        $this->container['hide_host_information'] = $data['hide_host_information'] ?? null;
+        $this->container['cmr_for_instant_meeting'] = $data['cmr_for_instant_meeting'] ?? null;
+        $this->container['auto_start_stop_scheduled_meetings'] = $data['auto_start_stop_scheduled_meetings'] ?? null;
     }
 
     /**
@@ -505,7 +505,7 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -517,9 +517,9 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -530,7 +530,7 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -546,7 +546,7 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -565,7 +565,7 @@ class AccountSettingsZoomRooms implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -102,7 +102,7 @@ class UsersApi
      */
     public function switchUserAccount($user_id, $account_id, $body = null)
     {
-        list($response) = $this->switchUserAccountWithHttpInfo($user_id, $account_id, $body);
+        [$response] = $this->switchUserAccountWithHttpInfo($user_id, $account_id, $body);
         return $response;
     }
 
@@ -153,12 +153,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -199,9 +199,7 @@ class UsersApi
     {
         return $this->switchUserAccountAsyncWithHttpInfo($user_id, $account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -227,12 +225,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -358,7 +356,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -378,7 +376,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -401,7 +399,7 @@ class UsersApi
      */
     public function user($user_id, $login_type = null)
     {
-        list($response) = $this->userWithHttpInfo($user_id, $login_type);
+        [$response] = $this->userWithHttpInfo($user_id, $login_type);
         return $response;
     }
 
@@ -419,7 +417,7 @@ class UsersApi
      */
     public function userWithHttpInfo($user_id, $login_type = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20047';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20047::class;
         $request = $this->userRequest($user_id, $login_type);
 
         try {
@@ -451,12 +449,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -471,7 +469,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20047',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20047::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -496,9 +494,7 @@ class UsersApi
     {
         return $this->userAsyncWithHttpInfo($user_id, $login_type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -515,7 +511,7 @@ class UsersApi
      */
     public function userAsyncWithHttpInfo($user_id, $login_type = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20047';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20047::class;
         $request = $this->userRequest($user_id, $login_type);
 
         return $this->client
@@ -523,12 +519,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -640,7 +636,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -660,7 +656,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -683,7 +679,7 @@ class UsersApi
      */
     public function userAssistantCreate($user_id, $body)
     {
-        list($response) = $this->userAssistantCreateWithHttpInfo($user_id, $body);
+        [$response] = $this->userAssistantCreateWithHttpInfo($user_id, $body);
         return $response;
     }
 
@@ -701,7 +697,7 @@ class UsersApi
      */
     public function userAssistantCreateWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20117';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20117::class;
         $request = $this->userAssistantCreateRequest($user_id, $body);
 
         try {
@@ -733,12 +729,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -753,7 +749,7 @@ class UsersApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20117',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20117::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -778,9 +774,7 @@ class UsersApi
     {
         return $this->userAssistantCreateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -797,7 +791,7 @@ class UsersApi
      */
     public function userAssistantCreateAsyncWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20117';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20117::class;
         $request = $this->userAssistantCreateRequest($user_id, $body);
 
         return $this->client
@@ -805,12 +799,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -927,7 +921,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -947,7 +941,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1042,9 +1036,7 @@ class UsersApi
     {
         return $this->userAssistantDeleteAsyncWithHttpInfo($user_id, $assistant_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1067,9 +1059,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1182,7 +1172,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1202,7 +1192,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1224,7 +1214,7 @@ class UsersApi
      */
     public function userAssistants($user_id)
     {
-        list($response) = $this->userAssistantsWithHttpInfo($user_id);
+        [$response] = $this->userAssistantsWithHttpInfo($user_id);
         return $response;
     }
 
@@ -1241,7 +1231,7 @@ class UsersApi
      */
     public function userAssistantsWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\UserAssistantsList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserAssistantsList::class;
         $request = $this->userAssistantsRequest($user_id);
 
         try {
@@ -1273,12 +1263,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1293,7 +1283,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\UserAssistantsList',
+                        '\\' . \Weble\Zoom\Model\UserAssistantsList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1317,9 +1307,7 @@ class UsersApi
     {
         return $this->userAssistantsAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1335,7 +1323,7 @@ class UsersApi
      */
     public function userAssistantsAsyncWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\UserAssistantsList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserAssistantsList::class;
         $request = $this->userAssistantsRequest($user_id);
 
         return $this->client
@@ -1343,12 +1331,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1455,7 +1443,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1475,7 +1463,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1567,9 +1555,7 @@ class UsersApi
     {
         return $this->userAssistantsDeleteAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1591,9 +1577,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1691,7 +1675,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1711,7 +1695,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1733,7 +1717,7 @@ class UsersApi
      */
     public function userCreate($body)
     {
-        list($response) = $this->userCreateWithHttpInfo($body);
+        [$response] = $this->userCreateWithHttpInfo($body);
         return $response;
     }
 
@@ -1750,7 +1734,7 @@ class UsersApi
      */
     public function userCreateWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20116';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20116::class;
         $request = $this->userCreateRequest($body);
 
         try {
@@ -1782,12 +1766,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1802,7 +1786,7 @@ class UsersApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20116',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20116::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1826,9 +1810,7 @@ class UsersApi
     {
         return $this->userCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1844,7 +1826,7 @@ class UsersApi
      */
     public function userCreateAsyncWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20116';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20116::class;
         $request = $this->userCreateRequest($body);
 
         return $this->client
@@ -1852,12 +1834,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1959,7 +1941,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1979,7 +1961,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2086,9 +2068,7 @@ class UsersApi
     {
         return $this->userDeleteAsyncWithHttpInfo($user_id, $action, $transfer_email, $transfer_meeting, $transfer_webinar, $transfer_recording)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2115,9 +2095,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2240,7 +2218,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2260,7 +2238,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2282,7 +2260,7 @@ class UsersApi
      */
     public function userEmail($email)
     {
-        list($response) = $this->userEmailWithHttpInfo($email);
+        [$response] = $this->userEmailWithHttpInfo($email);
         return $response;
     }
 
@@ -2299,7 +2277,7 @@ class UsersApi
      */
     public function userEmailWithHttpInfo($email)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20052';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20052::class;
         $request = $this->userEmailRequest($email);
 
         try {
@@ -2331,12 +2309,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2351,7 +2329,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20052',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20052::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2375,9 +2353,7 @@ class UsersApi
     {
         return $this->userEmailAsyncWithHttpInfo($email)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2393,7 +2369,7 @@ class UsersApi
      */
     public function userEmailAsyncWithHttpInfo($email)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20052';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20052::class;
         $request = $this->userEmailRequest($email);
 
         return $this->client
@@ -2401,12 +2377,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2509,7 +2485,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2529,7 +2505,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2624,9 +2600,7 @@ class UsersApi
     {
         return $this->userEmailUpdateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2649,9 +2623,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2759,7 +2731,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2779,7 +2751,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2874,9 +2846,7 @@ class UsersApi
     {
         return $this->userPasswordAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2899,9 +2869,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3009,7 +2977,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3029,7 +2997,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3051,7 +3019,7 @@ class UsersApi
      */
     public function userPermission($user_id)
     {
-        list($response) = $this->userPermissionWithHttpInfo($user_id);
+        [$response] = $this->userPermissionWithHttpInfo($user_id);
         return $response;
     }
 
@@ -3068,7 +3036,7 @@ class UsersApi
      */
     public function userPermissionWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20048';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20048::class;
         $request = $this->userPermissionRequest($user_id);
 
         try {
@@ -3100,12 +3068,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3120,7 +3088,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20048',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20048::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3144,9 +3112,7 @@ class UsersApi
     {
         return $this->userPermissionAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3162,7 +3128,7 @@ class UsersApi
      */
     public function userPermissionAsyncWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20048';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20048::class;
         $request = $this->userPermissionRequest($user_id);
 
         return $this->client
@@ -3170,12 +3136,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3282,7 +3248,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3302,7 +3268,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3397,9 +3363,7 @@ class UsersApi
     {
         return $this->userPictureAsyncWithHttpInfo($user_id, $pic_file)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3422,9 +3386,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3534,7 +3496,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3554,7 +3516,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3646,9 +3608,7 @@ class UsersApi
     {
         return $this->userSSOTokenDeleteAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3670,9 +3630,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3770,7 +3728,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3790,7 +3748,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3885,9 +3843,7 @@ class UsersApi
     {
         return $this->userSchedulerDeleteAsyncWithHttpInfo($user_id, $scheduler_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3910,9 +3866,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4025,7 +3979,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4045,7 +3999,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4067,7 +4021,7 @@ class UsersApi
      */
     public function userSchedulers($user_id)
     {
-        list($response) = $this->userSchedulersWithHttpInfo($user_id);
+        [$response] = $this->userSchedulersWithHttpInfo($user_id);
         return $response;
     }
 
@@ -4084,7 +4038,7 @@ class UsersApi
      */
     public function userSchedulersWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\UserSchedulersList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserSchedulersList::class;
         $request = $this->userSchedulersRequest($user_id);
 
         try {
@@ -4116,12 +4070,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4136,7 +4090,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\UserSchedulersList',
+                        '\\' . \Weble\Zoom\Model\UserSchedulersList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4160,9 +4114,7 @@ class UsersApi
     {
         return $this->userSchedulersAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4178,7 +4130,7 @@ class UsersApi
      */
     public function userSchedulersAsyncWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\UserSchedulersList';
+        $returnType = '\\' . \Weble\Zoom\Model\UserSchedulersList::class;
         $request = $this->userSchedulersRequest($user_id);
 
         return $this->client
@@ -4186,12 +4138,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4298,7 +4250,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4318,7 +4270,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4410,9 +4362,7 @@ class UsersApi
     {
         return $this->userSchedulersDeleteAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4434,9 +4384,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4534,7 +4482,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4554,7 +4502,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4578,7 +4526,7 @@ class UsersApi
      */
     public function userSettings($user_id, $login_type = null, $option = null)
     {
-        list($response) = $this->userSettingsWithHttpInfo($user_id, $login_type, $option);
+        [$response] = $this->userSettingsWithHttpInfo($user_id, $login_type, $option);
         return $response;
     }
 
@@ -4629,12 +4577,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4675,9 +4623,7 @@ class UsersApi
     {
         return $this->userSettingsAsyncWithHttpInfo($user_id, $login_type, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4703,12 +4649,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4825,7 +4771,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4845,7 +4791,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4943,9 +4889,7 @@ class UsersApi
     {
         return $this->userSettingsUpdateAsyncWithHttpInfo($body, $user_id, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4969,9 +4913,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5084,7 +5026,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5104,7 +5046,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5199,9 +5141,7 @@ class UsersApi
     {
         return $this->userStatusAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5224,9 +5164,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5334,7 +5272,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5354,7 +5292,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5377,7 +5315,7 @@ class UsersApi
      */
     public function userToken($user_id, $type = null)
     {
-        list($response) = $this->userTokenWithHttpInfo($user_id, $type);
+        [$response] = $this->userTokenWithHttpInfo($user_id, $type);
         return $response;
     }
 
@@ -5395,7 +5333,7 @@ class UsersApi
      */
     public function userTokenWithHttpInfo($user_id, $type = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20051';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20051::class;
         $request = $this->userTokenRequest($user_id, $type);
 
         try {
@@ -5427,12 +5365,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5447,7 +5385,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20051',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20051::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5472,9 +5410,7 @@ class UsersApi
     {
         return $this->userTokenAsyncWithHttpInfo($user_id, $type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5491,7 +5427,7 @@ class UsersApi
      */
     public function userTokenAsyncWithHttpInfo($user_id, $type = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20051';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20051::class;
         $request = $this->userTokenRequest($user_id, $type);
 
         return $this->client
@@ -5499,12 +5435,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5616,7 +5552,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5636,7 +5572,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5734,9 +5670,7 @@ class UsersApi
     {
         return $this->userUpdateAsyncWithHttpInfo($user_id, $body, $login_type)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5760,9 +5694,7 @@ class UsersApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5875,7 +5807,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5895,7 +5827,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5917,7 +5849,7 @@ class UsersApi
      */
     public function userVanityName($vanity_name)
     {
-        list($response) = $this->userVanityNameWithHttpInfo($vanity_name);
+        [$response] = $this->userVanityNameWithHttpInfo($vanity_name);
         return $response;
     }
 
@@ -5934,7 +5866,7 @@ class UsersApi
      */
     public function userVanityNameWithHttpInfo($vanity_name)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20053';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20053::class;
         $request = $this->userVanityNameRequest($vanity_name);
 
         try {
@@ -5966,12 +5898,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5986,7 +5918,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20053',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20053::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6010,9 +5942,7 @@ class UsersApi
     {
         return $this->userVanityNameAsyncWithHttpInfo($vanity_name)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6028,7 +5958,7 @@ class UsersApi
      */
     public function userVanityNameAsyncWithHttpInfo($vanity_name)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20053';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20053::class;
         $request = $this->userVanityNameRequest($vanity_name);
 
         return $this->client
@@ -6036,12 +5966,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6144,7 +6074,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6164,7 +6094,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6189,7 +6119,7 @@ class UsersApi
      */
     public function users($status = 'active', $page_size = '30', $page_number = '1', $role_id = null)
     {
-        list($response) = $this->usersWithHttpInfo($status, $page_size, $page_number, $role_id);
+        [$response] = $this->usersWithHttpInfo($status, $page_size, $page_number, $role_id);
         return $response;
     }
 
@@ -6209,7 +6139,7 @@ class UsersApi
      */
     public function usersWithHttpInfo($status = 'active', $page_size = '30', $page_number = '1', $role_id = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20046';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20046::class;
         $request = $this->usersRequest($status, $page_size, $page_number, $role_id);
 
         try {
@@ -6241,12 +6171,12 @@ class UsersApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6261,7 +6191,7 @@ class UsersApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20046',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20046::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6288,9 +6218,7 @@ class UsersApi
     {
         return $this->usersAsyncWithHttpInfo($status, $page_size, $page_number, $role_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6309,7 +6237,7 @@ class UsersApi
      */
     public function usersAsyncWithHttpInfo($status = 'active', $page_size = '30', $page_number = '1', $role_id = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20046';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20046::class;
         $request = $this->usersRequest($status, $page_size, $page_number, $role_id);
 
         return $this->client
@@ -6317,12 +6245,12 @@ class UsersApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6438,7 +6366,7 @@ class UsersApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6458,7 +6386,7 @@ class UsersApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

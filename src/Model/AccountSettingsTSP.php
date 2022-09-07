@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsTSP implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -193,10 +193,10 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['call_out'] = isset($data['call_out']) ? $data['call_out'] : null;
-        $this->container['call_out_countries'] = isset($data['call_out_countries']) ? $data['call_out_countries'] : null;
-        $this->container['show_international_numbers_link'] = isset($data['show_international_numbers_link']) ? $data['show_international_numbers_link'] : null;
-        $this->container['display_toll_free_numbers'] = isset($data['display_toll_free_numbers']) ? $data['display_toll_free_numbers'] : null;
+        $this->container['call_out'] = $data['call_out'] ?? null;
+        $this->container['call_out_countries'] = $data['call_out_countries'] ?? null;
+        $this->container['show_international_numbers_link'] = $data['show_international_numbers_link'] ?? null;
+        $this->container['display_toll_free_numbers'] = $data['display_toll_free_numbers'] ?? null;
     }
 
     /**
@@ -325,7 +325,7 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -337,9 +337,9 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -350,7 +350,7 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -366,7 +366,7 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -385,7 +385,7 @@ class AccountSettingsTSP implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

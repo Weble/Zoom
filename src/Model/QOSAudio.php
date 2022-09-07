@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class QOSAudio implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -198,11 +198,11 @@ class QOSAudio implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['bitrate'] = isset($data['bitrate']) ? $data['bitrate'] : null;
-        $this->container['latency'] = isset($data['latency']) ? $data['latency'] : null;
-        $this->container['jitter'] = isset($data['jitter']) ? $data['jitter'] : null;
-        $this->container['avg_loss'] = isset($data['avg_loss']) ? $data['avg_loss'] : null;
-        $this->container['max_loss'] = isset($data['max_loss']) ? $data['max_loss'] : null;
+        $this->container['bitrate'] = $data['bitrate'] ?? null;
+        $this->container['latency'] = $data['latency'] ?? null;
+        $this->container['jitter'] = $data['jitter'] ?? null;
+        $this->container['avg_loss'] = $data['avg_loss'] ?? null;
+        $this->container['max_loss'] = $data['max_loss'] ?? null;
     }
 
     /**
@@ -355,7 +355,7 @@ class QOSAudio implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -367,9 +367,9 @@ class QOSAudio implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -380,7 +380,7 @@ class QOSAudio implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -396,7 +396,7 @@ class QOSAudio implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -415,7 +415,7 @@ class QOSAudio implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

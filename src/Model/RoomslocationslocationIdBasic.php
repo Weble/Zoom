@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -212,14 +212,14 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['description_'] = isset($data['description_']) ? $data['description_'] : null;
-        $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
-        $this->container['address'] = isset($data['address']) ? $data['address'] : null;
-        $this->container['support_email'] = isset($data['support_email']) ? $data['support_email'] : null;
-        $this->container['support_phone'] = isset($data['support_phone']) ? $data['support_phone'] : null;
-        $this->container['room_passcode'] = isset($data['room_passcode']) ? $data['room_passcode'] : null;
-        $this->container['required_code_to_ext'] = isset($data['required_code_to_ext']) ? $data['required_code_to_ext'] : null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['description_'] = $data['description_'] ?? null;
+        $this->container['timezone'] = $data['timezone'] ?? null;
+        $this->container['address'] = $data['address'] ?? null;
+        $this->container['support_email'] = $data['support_email'] ?? null;
+        $this->container['support_phone'] = $data['support_phone'] ?? null;
+        $this->container['room_passcode'] = $data['room_passcode'] ?? null;
+        $this->container['required_code_to_ext'] = $data['required_code_to_ext'] ?? null;
     }
 
     /**
@@ -459,7 +459,7 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -471,9 +471,9 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -484,7 +484,7 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -500,7 +500,7 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -519,7 +519,7 @@ class RoomslocationslocationIdBasic implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

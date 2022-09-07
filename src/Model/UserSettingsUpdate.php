@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class UserSettingsUpdate implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -57,13 +57,13 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'schedule_meeting' => '\Weble\Zoom\Model\UserSettingsMeetingSettings',
-        'in_meeting' => '\Weble\Zoom\Model\UserSettingsMeetingSettings1',
-        'email_notification' => '\Weble\Zoom\Model\UserSettingsNotificationSettings',
-        'recording' => '\Weble\Zoom\Model\UserSettingsRecordingSettings',
-        'telephony' => '\Weble\Zoom\Model\UserSettingsMeetingSettings2',
-        'feature' => '\Weble\Zoom\Model\UserSettingsFeatureSettings1',
-        'tsp' => '\Weble\Zoom\Model\UserSettingsTSPSettings'
+        'schedule_meeting' => '\\' . \Weble\Zoom\Model\UserSettingsMeetingSettings::class,
+        'in_meeting' => '\\' . \Weble\Zoom\Model\UserSettingsMeetingSettings1::class,
+        'email_notification' => '\\' . \Weble\Zoom\Model\UserSettingsNotificationSettings::class,
+        'recording' => '\\' . \Weble\Zoom\Model\UserSettingsRecordingSettings::class,
+        'telephony' => '\\' . \Weble\Zoom\Model\UserSettingsMeetingSettings2::class,
+        'feature' => '\\' . \Weble\Zoom\Model\UserSettingsFeatureSettings1::class,
+        'tsp' => '\\' . \Weble\Zoom\Model\UserSettingsTSPSettings::class
     ];
 
     /**
@@ -207,13 +207,13 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['schedule_meeting'] = isset($data['schedule_meeting']) ? $data['schedule_meeting'] : null;
-        $this->container['in_meeting'] = isset($data['in_meeting']) ? $data['in_meeting'] : null;
-        $this->container['email_notification'] = isset($data['email_notification']) ? $data['email_notification'] : null;
-        $this->container['recording'] = isset($data['recording']) ? $data['recording'] : null;
-        $this->container['telephony'] = isset($data['telephony']) ? $data['telephony'] : null;
-        $this->container['feature'] = isset($data['feature']) ? $data['feature'] : null;
-        $this->container['tsp'] = isset($data['tsp']) ? $data['tsp'] : null;
+        $this->container['schedule_meeting'] = $data['schedule_meeting'] ?? null;
+        $this->container['in_meeting'] = $data['in_meeting'] ?? null;
+        $this->container['email_notification'] = $data['email_notification'] ?? null;
+        $this->container['recording'] = $data['recording'] ?? null;
+        $this->container['telephony'] = $data['telephony'] ?? null;
+        $this->container['feature'] = $data['feature'] ?? null;
+        $this->container['tsp'] = $data['tsp'] ?? null;
     }
 
     /**
@@ -414,7 +414,7 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -426,9 +426,9 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -439,7 +439,7 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -455,7 +455,7 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -474,7 +474,7 @@ class UserSettingsUpdate implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

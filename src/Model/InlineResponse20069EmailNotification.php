@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20069EmailNotification implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -197,11 +197,11 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
      */
     public function __construct(array $data = null)
     {
-        $this->container['cloud_recording_available_reminder'] = isset($data['cloud_recording_available_reminder']) ? $data['cloud_recording_available_reminder'] : null;
-        $this->container['jbh_reminder'] = isset($data['jbh_reminder']) ? $data['jbh_reminder'] : null;
-        $this->container['cancel_meeting_reminder'] = isset($data['cancel_meeting_reminder']) ? $data['cancel_meeting_reminder'] : null;
-        $this->container['alternative_host_reminder'] = isset($data['alternative_host_reminder']) ? $data['alternative_host_reminder'] : null;
-        $this->container['schedule_for_host_reminder'] = isset($data['schedule_for_host_reminder']) ? $data['schedule_for_host_reminder'] : null;
+        $this->container['cloud_recording_available_reminder'] = $data['cloud_recording_available_reminder'] ?? null;
+        $this->container['jbh_reminder'] = $data['jbh_reminder'] ?? null;
+        $this->container['cancel_meeting_reminder'] = $data['cancel_meeting_reminder'] ?? null;
+        $this->container['alternative_host_reminder'] = $data['alternative_host_reminder'] ?? null;
+        $this->container['schedule_for_host_reminder'] = $data['schedule_for_host_reminder'] ?? null;
     }
 
     /**
@@ -354,7 +354,7 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -366,9 +366,9 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -379,7 +379,7 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -395,7 +395,7 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -414,7 +414,7 @@ class InlineResponse20069EmailNotification implements ModelInterface, ArrayAcces
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

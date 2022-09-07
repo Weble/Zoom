@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class RecordingSettings1 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -203,9 +203,9 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const SHARE_RECORDING_PUBLICLY = 'publicly';
-    const SHARE_RECORDING_INTERNALLY = 'internally';
-    const SHARE_RECORDING_NONE = 'none';
+    public const SHARE_RECORDING_PUBLICLY = 'publicly';
+    public const SHARE_RECORDING_INTERNALLY = 'internally';
+    public const SHARE_RECORDING_NONE = 'none';
 
 
 
@@ -239,16 +239,16 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['share_recording'] = isset($data['share_recording']) ? $data['share_recording'] : null;
-        $this->container['recording_authentication'] = isset($data['recording_authentication']) ? $data['recording_authentication'] : null;
-        $this->container['authentication_option'] = isset($data['authentication_option']) ? $data['authentication_option'] : null;
-        $this->container['authentication_domains'] = isset($data['authentication_domains']) ? $data['authentication_domains'] : null;
-        $this->container['viewer_download'] = isset($data['viewer_download']) ? $data['viewer_download'] : null;
-        $this->container['password'] = isset($data['password']) ? $data['password'] : null;
-        $this->container['on_demand'] = isset($data['on_demand']) ? $data['on_demand'] : null;
-        $this->container['approval_type'] = isset($data['approval_type']) ? $data['approval_type'] : null;
-        $this->container['send_email_to_host'] = isset($data['send_email_to_host']) ? $data['send_email_to_host'] : null;
-        $this->container['show_social_share_buttons'] = isset($data['show_social_share_buttons']) ? $data['show_social_share_buttons'] : null;
+        $this->container['share_recording'] = $data['share_recording'] ?? null;
+        $this->container['recording_authentication'] = $data['recording_authentication'] ?? null;
+        $this->container['authentication_option'] = $data['authentication_option'] ?? null;
+        $this->container['authentication_domains'] = $data['authentication_domains'] ?? null;
+        $this->container['viewer_download'] = $data['viewer_download'] ?? null;
+        $this->container['password'] = $data['password'] ?? null;
+        $this->container['on_demand'] = $data['on_demand'] ?? null;
+        $this->container['approval_type'] = $data['approval_type'] ?? null;
+        $this->container['send_email_to_host'] = $data['send_email_to_host'] ?? null;
+        $this->container['show_social_share_buttons'] = $data['show_social_share_buttons'] ?? null;
     }
 
     /**
@@ -553,7 +553,7 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -565,9 +565,9 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -578,7 +578,7 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -594,7 +594,7 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -613,7 +613,7 @@ class RecordingSettings1 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

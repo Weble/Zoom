@@ -100,7 +100,7 @@ class PhoneDevicesApi
      */
     public function addPhoneDevice($body = null)
     {
-        list($response) = $this->addPhoneDeviceWithHttpInfo($body);
+        [$response] = $this->addPhoneDeviceWithHttpInfo($body);
         return $response;
     }
 
@@ -149,12 +149,12 @@ class PhoneDevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -193,9 +193,7 @@ class PhoneDevicesApi
     {
         return $this->addPhoneDeviceAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -219,12 +217,12 @@ class PhoneDevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -320,7 +318,7 @@ class PhoneDevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -340,7 +338,7 @@ class PhoneDevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -362,7 +360,7 @@ class PhoneDevicesApi
      */
     public function deleteADevice($device_id)
     {
-        list($response) = $this->deleteADeviceWithHttpInfo($device_id);
+        [$response] = $this->deleteADeviceWithHttpInfo($device_id);
         return $response;
     }
 
@@ -411,12 +409,12 @@ class PhoneDevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -455,9 +453,7 @@ class PhoneDevicesApi
     {
         return $this->deleteADeviceAsyncWithHttpInfo($device_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -481,12 +477,12 @@ class PhoneDevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -593,7 +589,7 @@ class PhoneDevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -613,7 +609,7 @@ class PhoneDevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -635,7 +631,7 @@ class PhoneDevicesApi
      */
     public function getADevice($device_id)
     {
-        list($response) = $this->getADeviceWithHttpInfo($device_id);
+        [$response] = $this->getADeviceWithHttpInfo($device_id);
         return $response;
     }
 
@@ -652,7 +648,7 @@ class PhoneDevicesApi
      */
     public function getADeviceWithHttpInfo($device_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20089';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20089::class;
         $request = $this->getADeviceRequest($device_id);
 
         try {
@@ -684,12 +680,12 @@ class PhoneDevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -704,7 +700,7 @@ class PhoneDevicesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20089',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20089::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -728,9 +724,7 @@ class PhoneDevicesApi
     {
         return $this->getADeviceAsyncWithHttpInfo($device_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -746,7 +740,7 @@ class PhoneDevicesApi
      */
     public function getADeviceAsyncWithHttpInfo($device_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20089';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20089::class;
         $request = $this->getADeviceRequest($device_id);
 
         return $this->client
@@ -754,12 +748,12 @@ class PhoneDevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -866,7 +860,7 @@ class PhoneDevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -886,7 +880,7 @@ class PhoneDevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -910,7 +904,7 @@ class PhoneDevicesApi
      */
     public function listPhoneDevices($type, $next_page_token = null, $page_size = '30')
     {
-        list($response) = $this->listPhoneDevicesWithHttpInfo($type, $next_page_token, $page_size);
+        [$response] = $this->listPhoneDevicesWithHttpInfo($type, $next_page_token, $page_size);
         return $response;
     }
 
@@ -929,7 +923,7 @@ class PhoneDevicesApi
      */
     public function listPhoneDevicesWithHttpInfo($type, $next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20088';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20088::class;
         $request = $this->listPhoneDevicesRequest($type, $next_page_token, $page_size);
 
         try {
@@ -961,12 +955,12 @@ class PhoneDevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -981,7 +975,7 @@ class PhoneDevicesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20088',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20088::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1007,9 +1001,7 @@ class PhoneDevicesApi
     {
         return $this->listPhoneDevicesAsyncWithHttpInfo($type, $next_page_token, $page_size)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1027,7 +1019,7 @@ class PhoneDevicesApi
      */
     public function listPhoneDevicesAsyncWithHttpInfo($type, $next_page_token = null, $page_size = '30')
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20088';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20088::class;
         $request = $this->listPhoneDevicesRequest($type, $next_page_token, $page_size);
 
         return $this->client
@@ -1035,12 +1027,12 @@ class PhoneDevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1157,7 +1149,7 @@ class PhoneDevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1177,7 +1169,7 @@ class PhoneDevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1200,7 +1192,7 @@ class PhoneDevicesApi
      */
     public function updateADevice($device_id, $body = null)
     {
-        list($response) = $this->updateADeviceWithHttpInfo($device_id, $body);
+        [$response] = $this->updateADeviceWithHttpInfo($device_id, $body);
         return $response;
     }
 
@@ -1250,12 +1242,12 @@ class PhoneDevicesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1295,9 +1287,7 @@ class PhoneDevicesApi
     {
         return $this->updateADeviceAsyncWithHttpInfo($device_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1322,12 +1312,12 @@ class PhoneDevicesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1438,7 +1428,7 @@ class PhoneDevicesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1458,7 +1448,7 @@ class PhoneDevicesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

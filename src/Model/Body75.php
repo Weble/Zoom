@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class Body75 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -173,9 +173,9 @@ class Body75 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
 
-    
+
+
 
     /**
      * Associative array for storing property values
@@ -192,10 +192,10 @@ class Body75 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['site_id'] = isset($data['site_id']) ? $data['site_id'] : null;
-        $this->container['display_name'] = isset($data['display_name']) ? $data['display_name'] : null;
-        $this->container['extension_number'] = isset($data['extension_number']) ? $data['extension_number'] : null;
-        $this->container['mac_address'] = isset($data['mac_address']) ? $data['mac_address'] : null;
+        $this->container['site_id'] = $data['site_id'] ?? null;
+        $this->container['display_name'] = $data['display_name'] ?? null;
+        $this->container['extension_number'] = $data['extension_number'] ?? null;
+        $this->container['mac_address'] = $data['mac_address'] ?? null;
     }
 
     /**
@@ -324,7 +324,7 @@ class Body75 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -336,9 +336,9 @@ class Body75 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -349,7 +349,7 @@ class Body75 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -365,7 +365,7 @@ class Body75 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -384,7 +384,7 @@ class Body75 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

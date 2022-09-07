@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -203,7 +203,7 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const STATUS_COMPLETED = 'completed';
+    public const STATUS_COMPLETED = 'completed';
 
 
 
@@ -235,16 +235,16 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['recording_start'] = isset($data['recording_start']) ? $data['recording_start'] : null;
-        $this->container['recording_end'] = isset($data['recording_end']) ? $data['recording_end'] : null;
-        $this->container['file_type'] = isset($data['file_type']) ? $data['file_type'] : null;
-        $this->container['file_size'] = isset($data['file_size']) ? $data['file_size'] : null;
-        $this->container['play_url'] = isset($data['play_url']) ? $data['play_url'] : null;
-        $this->container['download_url'] = isset($data['download_url']) ? $data['download_url'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['recording_type'] = isset($data['recording_type']) ? $data['recording_type'] : null;
-        $this->container['meeting_id'] = isset($data['meeting_id']) ? $data['meeting_id'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['recording_start'] = $data['recording_start'] ?? null;
+        $this->container['recording_end'] = $data['recording_end'] ?? null;
+        $this->container['file_type'] = $data['file_type'] ?? null;
+        $this->container['file_size'] = $data['file_size'] ?? null;
+        $this->container['play_url'] = $data['play_url'] ?? null;
+        $this->container['download_url'] = $data['download_url'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['recording_type'] = $data['recording_type'] ?? null;
+        $this->container['meeting_id'] = $data['meeting_id'] ?? null;
     }
 
     /**
@@ -534,7 +534,7 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -546,9 +546,9 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -559,7 +559,7 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -575,7 +575,7 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -594,7 +594,7 @@ class InlineResponse20073RecordingFiles implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -182,8 +182,8 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
      */
     public function __construct(array $data = null)
     {
-        $this->container['active_speaker_name'] = isset($data['active_speaker_name']) ? $data['active_speaker_name'] : null;
-        $this->container['display_name'] = isset($data['display_name']) ? $data['display_name'] : null;
+        $this->container['active_speaker_name'] = $data['active_speaker_name'] ?? null;
+        $this->container['display_name'] = $data['display_name'] ?? null;
     }
 
     /**
@@ -279,7 +279,7 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -291,9 +291,9 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -304,7 +304,7 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -320,7 +320,7 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -339,7 +339,7 @@ class MeetingsmeetingIdlivestreamstatusSettings implements ModelInterface, Array
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

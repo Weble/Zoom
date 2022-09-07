@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -197,11 +197,11 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['source_name'] = isset($data['source_name']) ? $data['source_name'] : null;
-        $this->container['tracking_url'] = isset($data['tracking_url']) ? $data['tracking_url'] : null;
-        $this->container['registration_count'] = isset($data['registration_count']) ? $data['registration_count'] : null;
-        $this->container['visitor_count'] = isset($data['visitor_count']) ? $data['visitor_count'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['source_name'] = $data['source_name'] ?? null;
+        $this->container['tracking_url'] = $data['tracking_url'] ?? null;
+        $this->container['registration_count'] = $data['registration_count'] ?? null;
+        $this->container['visitor_count'] = $data['visitor_count'] ?? null;
     }
 
     /**
@@ -354,7 +354,7 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -366,9 +366,9 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -379,7 +379,7 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -395,7 +395,7 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -414,7 +414,7 @@ class InlineResponse20074TrackingSources implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

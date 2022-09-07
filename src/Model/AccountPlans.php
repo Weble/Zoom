@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountPlans implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -58,14 +58,14 @@ class AccountPlans implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'plan_base' => '\Weble\Zoom\Model\Body13',
-        'plan_zoom_rooms' => '\Weble\Zoom\Model\InlineResponse20015PlanZoomRooms',
-        'plan_room_connector' => '\Weble\Zoom\Model\InlineResponse20015PlanZoomRooms',
+        'plan_base' => '\\' . \Weble\Zoom\Model\Body13::class,
+        'plan_zoom_rooms' => '\\' . \Weble\Zoom\Model\InlineResponse20015PlanZoomRooms::class,
+        'plan_room_connector' => '\\' . \Weble\Zoom\Model\InlineResponse20015PlanZoomRooms::class,
         'plan_large_meeting' => '\Weble\Zoom\Model\InlineResponse20015PlanZoomRooms[]',
         'plan_webinar' => '\Weble\Zoom\Model\InlineResponse20015PlanZoomRooms[]',
         'plan_recording' => 'string',
-        'plan_audio' => '\Weble\Zoom\Model\InlineResponse20015PlanAudio',
-        'plan_phone' => '\Weble\Zoom\Model\PhonePlan1'
+        'plan_audio' => '\\' . \Weble\Zoom\Model\InlineResponse20015PlanAudio::class,
+        'plan_phone' => '\\' . \Weble\Zoom\Model\PhonePlan1::class
     ];
 
     /**
@@ -213,14 +213,14 @@ class AccountPlans implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['plan_base'] = isset($data['plan_base']) ? $data['plan_base'] : null;
-        $this->container['plan_zoom_rooms'] = isset($data['plan_zoom_rooms']) ? $data['plan_zoom_rooms'] : null;
-        $this->container['plan_room_connector'] = isset($data['plan_room_connector']) ? $data['plan_room_connector'] : null;
-        $this->container['plan_large_meeting'] = isset($data['plan_large_meeting']) ? $data['plan_large_meeting'] : null;
-        $this->container['plan_webinar'] = isset($data['plan_webinar']) ? $data['plan_webinar'] : null;
-        $this->container['plan_recording'] = isset($data['plan_recording']) ? $data['plan_recording'] : null;
-        $this->container['plan_audio'] = isset($data['plan_audio']) ? $data['plan_audio'] : null;
-        $this->container['plan_phone'] = isset($data['plan_phone']) ? $data['plan_phone'] : null;
+        $this->container['plan_base'] = $data['plan_base'] ?? null;
+        $this->container['plan_zoom_rooms'] = $data['plan_zoom_rooms'] ?? null;
+        $this->container['plan_room_connector'] = $data['plan_room_connector'] ?? null;
+        $this->container['plan_large_meeting'] = $data['plan_large_meeting'] ?? null;
+        $this->container['plan_webinar'] = $data['plan_webinar'] ?? null;
+        $this->container['plan_recording'] = $data['plan_recording'] ?? null;
+        $this->container['plan_audio'] = $data['plan_audio'] ?? null;
+        $this->container['plan_phone'] = $data['plan_phone'] ?? null;
     }
 
     /**
@@ -448,7 +448,7 @@ class AccountPlans implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -460,9 +460,9 @@ class AccountPlans implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -473,7 +473,7 @@ class AccountPlans implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -489,7 +489,7 @@ class AccountPlans implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -508,7 +508,7 @@ class AccountPlans implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

@@ -99,7 +99,7 @@ class TSPApi
      */
     public function tsp()
     {
-        list($response) = $this->tspWithHttpInfo();
+        [$response] = $this->tspWithHttpInfo();
         return $response;
     }
 
@@ -115,7 +115,7 @@ class TSPApi
      */
     public function tspWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20045';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20045::class;
         $request = $this->tspRequest();
 
         try {
@@ -147,12 +147,12 @@ class TSPApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -167,7 +167,7 @@ class TSPApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20045',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20045::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -190,9 +190,7 @@ class TSPApi
     {
         return $this->tspAsyncWithHttpInfo()
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -207,7 +205,7 @@ class TSPApi
      */
     public function tspAsyncWithHttpInfo()
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20045';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20045::class;
         $request = $this->tspRequest();
 
         return $this->client
@@ -215,12 +213,12 @@ class TSPApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -312,7 +310,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -332,7 +330,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -424,9 +422,7 @@ class TSPApi
     {
         return $this->tspUpdateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -448,9 +444,7 @@ class TSPApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -543,7 +537,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -563,7 +557,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -658,9 +652,7 @@ class TSPApi
     {
         return $this->tspUrlUpdateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -683,9 +675,7 @@ class TSPApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -787,7 +777,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -807,7 +797,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -830,7 +820,7 @@ class TSPApi
      */
     public function userTSP($user_id, $tsp_id)
     {
-        list($response) = $this->userTSPWithHttpInfo($user_id, $tsp_id);
+        [$response] = $this->userTSPWithHttpInfo($user_id, $tsp_id);
         return $response;
     }
 
@@ -848,7 +838,7 @@ class TSPApi
      */
     public function userTSPWithHttpInfo($user_id, $tsp_id)
     {
-        $returnType = '\Weble\Zoom\Model\TSPAccount';
+        $returnType = '\\' . \Weble\Zoom\Model\TSPAccount::class;
         $request = $this->userTSPRequest($user_id, $tsp_id);
 
         try {
@@ -880,12 +870,12 @@ class TSPApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -900,7 +890,7 @@ class TSPApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\TSPAccount',
+                        '\\' . \Weble\Zoom\Model\TSPAccount::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -925,9 +915,7 @@ class TSPApi
     {
         return $this->userTSPAsyncWithHttpInfo($user_id, $tsp_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -944,7 +932,7 @@ class TSPApi
      */
     public function userTSPAsyncWithHttpInfo($user_id, $tsp_id)
     {
-        $returnType = '\Weble\Zoom\Model\TSPAccount';
+        $returnType = '\\' . \Weble\Zoom\Model\TSPAccount::class;
         $request = $this->userTSPRequest($user_id, $tsp_id);
 
         return $this->client
@@ -952,12 +940,12 @@ class TSPApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1079,7 +1067,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1099,7 +1087,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1122,7 +1110,7 @@ class TSPApi
      */
     public function userTSPCreate($user_id, $body)
     {
-        list($response) = $this->userTSPCreateWithHttpInfo($user_id, $body);
+        [$response] = $this->userTSPCreateWithHttpInfo($user_id, $body);
         return $response;
     }
 
@@ -1140,7 +1128,7 @@ class TSPApi
      */
     public function userTSPCreateWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\TSPAccountsList2';
+        $returnType = '\\' . \Weble\Zoom\Model\TSPAccountsList2::class;
         $request = $this->userTSPCreateRequest($user_id, $body);
 
         try {
@@ -1172,12 +1160,12 @@ class TSPApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1192,7 +1180,7 @@ class TSPApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\TSPAccountsList2',
+                        '\\' . \Weble\Zoom\Model\TSPAccountsList2::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1217,9 +1205,7 @@ class TSPApi
     {
         return $this->userTSPCreateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1236,7 +1222,7 @@ class TSPApi
      */
     public function userTSPCreateAsyncWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\TSPAccountsList2';
+        $returnType = '\\' . \Weble\Zoom\Model\TSPAccountsList2::class;
         $request = $this->userTSPCreateRequest($user_id, $body);
 
         return $this->client
@@ -1244,12 +1230,12 @@ class TSPApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1366,7 +1352,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1386,7 +1372,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1481,9 +1467,7 @@ class TSPApi
     {
         return $this->userTSPDeleteAsyncWithHttpInfo($user_id, $tsp_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1506,9 +1490,7 @@ class TSPApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1621,7 +1603,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1641,7 +1623,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1739,9 +1721,7 @@ class TSPApi
     {
         return $this->userTSPUpdateAsyncWithHttpInfo($user_id, $tsp_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1765,9 +1745,7 @@ class TSPApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1890,7 +1868,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1910,7 +1888,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1932,7 +1910,7 @@ class TSPApi
      */
     public function userTSPs($user_id)
     {
-        list($response) = $this->userTSPsWithHttpInfo($user_id);
+        [$response] = $this->userTSPsWithHttpInfo($user_id);
         return $response;
     }
 
@@ -1949,7 +1927,7 @@ class TSPApi
      */
     public function userTSPsWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20050';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20050::class;
         $request = $this->userTSPsRequest($user_id);
 
         try {
@@ -1981,12 +1959,12 @@ class TSPApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2001,7 +1979,7 @@ class TSPApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20050',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20050::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2025,9 +2003,7 @@ class TSPApi
     {
         return $this->userTSPsAsyncWithHttpInfo($user_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2043,7 +2019,7 @@ class TSPApi
      */
     public function userTSPsAsyncWithHttpInfo($user_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20050';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20050::class;
         $request = $this->userTSPsRequest($user_id);
 
         return $this->client
@@ -2051,12 +2027,12 @@ class TSPApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2163,7 +2139,7 @@ class TSPApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2183,7 +2159,7 @@ class TSPApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

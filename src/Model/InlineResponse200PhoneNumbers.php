@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -63,8 +63,8 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
         'status' => 'string',
         'number_type' => 'string',
         'location' => 'string',
-        'assignee' => '\Weble\Zoom\Model\InlineResponse200Assignee',
-        'site' => '\Weble\Zoom\Model\InlineResponse200Site'
+        'assignee' => '\\' . \Weble\Zoom\Model\InlineResponse200Assignee::class,
+        'site' => '\\' . \Weble\Zoom\Model\InlineResponse200Site::class
     ];
 
     /**
@@ -193,12 +193,12 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const SOURCE_INTERNAL = 'internal';
-    const SOURCE_EXTERNAL = 'external';
-    const STATUS_PENDING = 'pending';
-    const STATUS_AVAILABLE = 'available';
-    const NUMBER_TYPE_TOLL = 'toll';
-    const NUMBER_TYPE_TOLLFREE = 'tollfree';
+    public const SOURCE_INTERNAL = 'internal';
+    public const SOURCE_EXTERNAL = 'external';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_AVAILABLE = 'available';
+    public const NUMBER_TYPE_TOLL = 'toll';
+    public const NUMBER_TYPE_TOLLFREE = 'tollfree';
 
 
 
@@ -257,14 +257,14 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['number'] = isset($data['number']) ? $data['number'] : null;
-        $this->container['source'] = isset($data['source']) ? $data['source'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['number_type'] = isset($data['number_type']) ? $data['number_type'] : null;
-        $this->container['location'] = isset($data['location']) ? $data['location'] : null;
-        $this->container['assignee'] = isset($data['assignee']) ? $data['assignee'] : null;
-        $this->container['site'] = isset($data['site']) ? $data['site'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['number'] = $data['number'] ?? null;
+        $this->container['source'] = $data['source'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['number_type'] = $data['number_type'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+        $this->container['assignee'] = $data['assignee'] ?? null;
+        $this->container['site'] = $data['site'] ?? null;
     }
 
     /**
@@ -540,7 +540,7 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -552,9 +552,9 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -565,7 +565,7 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -581,7 +581,7 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -600,7 +600,7 @@ class InlineResponse200PhoneNumbers implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

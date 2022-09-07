@@ -170,9 +170,7 @@ class SIPPhoneApi
     {
         return $this->createSIPPhoneAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -194,9 +192,7 @@ class SIPPhoneApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -283,7 +279,7 @@ class SIPPhoneApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -303,7 +299,7 @@ class SIPPhoneApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -403,9 +399,7 @@ class SIPPhoneApi
     {
         return $this->deleteSIPPhoneAsyncWithHttpInfo($phone_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -427,9 +421,7 @@ class SIPPhoneApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -527,7 +519,7 @@ class SIPPhoneApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -547,7 +539,7 @@ class SIPPhoneApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -571,7 +563,7 @@ class SIPPhoneApi
      */
     public function listSipPhones($page_number = '1', $search_key = null, $page_size = null)
     {
-        list($response) = $this->listSipPhonesWithHttpInfo($page_number, $search_key, $page_size);
+        [$response] = $this->listSipPhonesWithHttpInfo($page_number, $search_key, $page_size);
         return $response;
     }
 
@@ -590,7 +582,7 @@ class SIPPhoneApi
      */
     public function listSipPhonesWithHttpInfo($page_number = '1', $search_key = null, $page_size = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2001';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2001::class;
         $request = $this->listSipPhonesRequest($page_number, $search_key, $page_size);
 
         try {
@@ -622,12 +614,12 @@ class SIPPhoneApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -642,7 +634,7 @@ class SIPPhoneApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2001',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2001::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -668,9 +660,7 @@ class SIPPhoneApi
     {
         return $this->listSipPhonesAsyncWithHttpInfo($page_number, $search_key, $page_size)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -688,7 +678,7 @@ class SIPPhoneApi
      */
     public function listSipPhonesAsyncWithHttpInfo($page_number = '1', $search_key = null, $page_size = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2001';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2001::class;
         $request = $this->listSipPhonesRequest($page_number, $search_key, $page_size);
 
         return $this->client
@@ -696,12 +686,12 @@ class SIPPhoneApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -808,7 +798,7 @@ class SIPPhoneApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -828,7 +818,7 @@ class SIPPhoneApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -931,9 +921,7 @@ class SIPPhoneApi
     {
         return $this->updateSIPPhoneAsyncWithHttpInfo($phone_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -956,9 +944,7 @@ class SIPPhoneApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1060,7 +1046,7 @@ class SIPPhoneApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1080,7 +1066,7 @@ class SIPPhoneApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

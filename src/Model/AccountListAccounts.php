@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountListAccounts implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -62,9 +62,9 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
         'owner_email' => 'string',
         'account_type' => 'string',
         'seats' => 'int',
-        'subscription_start_time' => '\DateTime',
-        'subscription_end_time' => '\DateTime',
-        'created_at' => '\DateTime',
+        'subscription_start_time' => '\\' . \DateTime::class,
+        'subscription_end_time' => '\\' . \DateTime::class,
+        'created_at' => '\\' . \DateTime::class,
         'account_number' => 'string'
     ];
 
@@ -217,15 +217,15 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['account_name'] = isset($data['account_name']) ? $data['account_name'] : null;
-        $this->container['owner_email'] = isset($data['owner_email']) ? $data['owner_email'] : null;
-        $this->container['account_type'] = isset($data['account_type']) ? $data['account_type'] : null;
-        $this->container['seats'] = isset($data['seats']) ? $data['seats'] : null;
-        $this->container['subscription_start_time'] = isset($data['subscription_start_time']) ? $data['subscription_start_time'] : null;
-        $this->container['subscription_end_time'] = isset($data['subscription_end_time']) ? $data['subscription_end_time'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['account_number'] = isset($data['account_number']) ? $data['account_number'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['account_name'] = $data['account_name'] ?? null;
+        $this->container['owner_email'] = $data['owner_email'] ?? null;
+        $this->container['account_type'] = $data['account_type'] ?? null;
+        $this->container['seats'] = $data['seats'] ?? null;
+        $this->container['subscription_start_time'] = $data['subscription_start_time'] ?? null;
+        $this->container['subscription_end_time'] = $data['subscription_end_time'] ?? null;
+        $this->container['created_at'] = $data['created_at'] ?? null;
+        $this->container['account_number'] = $data['account_number'] ?? null;
     }
 
     /**
@@ -474,7 +474,7 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -486,9 +486,9 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -499,7 +499,7 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -515,7 +515,7 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -534,7 +534,7 @@ class AccountListAccounts implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

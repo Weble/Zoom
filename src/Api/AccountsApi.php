@@ -100,7 +100,7 @@ class AccountsApi
      */
     public function account($account_id)
     {
-        list($response) = $this->accountWithHttpInfo($account_id);
+        [$response] = $this->accountWithHttpInfo($account_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class AccountsApi
      */
     public function accountWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20012';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20012::class;
         $request = $this->accountRequest($account_id);
 
         try {
@@ -149,12 +149,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class AccountsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20012',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20012::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class AccountsApi
     {
         return $this->accountAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class AccountsApi
      */
     public function accountAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20012';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20012::class;
         $request = $this->accountRequest($account_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -373,7 +371,7 @@ class AccountsApi
      */
     public function accountCreate($body)
     {
-        list($response) = $this->accountCreateWithHttpInfo($body);
+        [$response] = $this->accountCreateWithHttpInfo($body);
         return $response;
     }
 
@@ -390,7 +388,7 @@ class AccountsApi
      */
     public function accountCreateWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2015';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2015::class;
         $request = $this->accountCreateRequest($body);
 
         try {
@@ -422,12 +420,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -442,7 +440,7 @@ class AccountsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2015',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2015::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -466,9 +464,7 @@ class AccountsApi
     {
         return $this->accountCreateAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -484,7 +480,7 @@ class AccountsApi
      */
     public function accountCreateAsyncWithHttpInfo($body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2015';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2015::class;
         $request = $this->accountCreateRequest($body);
 
         return $this->client
@@ -492,12 +488,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -599,7 +595,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -619,7 +615,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -711,9 +707,7 @@ class AccountsApi
     {
         return $this->accountDisassociateAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -735,9 +729,7 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -835,7 +827,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -855,7 +847,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -877,7 +869,7 @@ class AccountsApi
      */
     public function accountManagedDomain($account_id)
     {
-        list($response) = $this->accountManagedDomainWithHttpInfo($account_id);
+        [$response] = $this->accountManagedDomainWithHttpInfo($account_id);
         return $response;
     }
 
@@ -894,7 +886,7 @@ class AccountsApi
      */
     public function accountManagedDomainWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20013';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20013::class;
         $request = $this->accountManagedDomainRequest($account_id);
 
         try {
@@ -926,12 +918,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -946,7 +938,7 @@ class AccountsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20013',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20013::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -970,9 +962,7 @@ class AccountsApi
     {
         return $this->accountManagedDomainAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -988,7 +978,7 @@ class AccountsApi
      */
     public function accountManagedDomainAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20013';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20013::class;
         $request = $this->accountManagedDomainRequest($account_id);
 
         return $this->client
@@ -996,12 +986,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1108,7 +1098,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1128,7 +1118,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1223,9 +1213,7 @@ class AccountsApi
     {
         return $this->accountOptionsUpdateAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1248,9 +1236,7 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1358,7 +1344,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1378,7 +1364,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1401,7 +1387,7 @@ class AccountsApi
      */
     public function accountSettings($account_id, $option = null)
     {
-        list($response) = $this->accountSettingsWithHttpInfo($account_id, $option);
+        [$response] = $this->accountSettingsWithHttpInfo($account_id, $option);
         return $response;
     }
 
@@ -1451,12 +1437,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1496,9 +1482,7 @@ class AccountsApi
     {
         return $this->accountSettingsAsyncWithHttpInfo($account_id, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1523,12 +1507,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1640,7 +1624,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1660,7 +1644,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1758,9 +1742,7 @@ class AccountsApi
     {
         return $this->accountSettingsUpdateAsyncWithHttpInfo($account_id, $body, $option)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1784,9 +1766,7 @@ class AccountsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1899,7 +1879,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1919,7 +1899,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1941,7 +1921,7 @@ class AccountsApi
      */
     public function accountTrustedDomain($account_id)
     {
-        list($response) = $this->accountTrustedDomainWithHttpInfo($account_id);
+        [$response] = $this->accountTrustedDomainWithHttpInfo($account_id);
         return $response;
     }
 
@@ -1990,12 +1970,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2034,9 +2014,7 @@ class AccountsApi
     {
         return $this->accountTrustedDomainAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2060,12 +2038,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2172,7 +2150,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2192,7 +2170,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2215,7 +2193,7 @@ class AccountsApi
      */
     public function accounts($page_size = '30', $page_number = '1')
     {
-        list($response) = $this->accountsWithHttpInfo($page_size, $page_number);
+        [$response] = $this->accountsWithHttpInfo($page_size, $page_number);
         return $response;
     }
 
@@ -2233,7 +2211,7 @@ class AccountsApi
      */
     public function accountsWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\AccountList';
+        $returnType = '\\' . \Weble\Zoom\Model\AccountList::class;
         $request = $this->accountsRequest($page_size, $page_number);
 
         try {
@@ -2265,12 +2243,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2285,7 +2263,7 @@ class AccountsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\AccountList',
+                        '\\' . \Weble\Zoom\Model\AccountList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2310,9 +2288,7 @@ class AccountsApi
     {
         return $this->accountsAsyncWithHttpInfo($page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2329,7 +2305,7 @@ class AccountsApi
      */
     public function accountsAsyncWithHttpInfo($page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\AccountList';
+        $returnType = '\\' . \Weble\Zoom\Model\AccountList::class;
         $request = $this->accountsRequest($page_size, $page_number);
 
         return $this->client
@@ -2337,12 +2313,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2448,7 +2424,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2468,7 +2444,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2490,7 +2466,7 @@ class AccountsApi
      */
     public function getAccountLockSettings($account_id)
     {
-        list($response) = $this->getAccountLockSettingsWithHttpInfo($account_id);
+        [$response] = $this->getAccountLockSettingsWithHttpInfo($account_id);
         return $response;
     }
 
@@ -2507,7 +2483,7 @@ class AccountsApi
      */
     public function getAccountLockSettingsWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20070';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20070::class;
         $request = $this->getAccountLockSettingsRequest($account_id);
 
         try {
@@ -2539,12 +2515,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2559,7 +2535,7 @@ class AccountsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20070',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20070::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2583,9 +2559,7 @@ class AccountsApi
     {
         return $this->getAccountLockSettingsAsyncWithHttpInfo($account_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2601,7 +2575,7 @@ class AccountsApi
      */
     public function getAccountLockSettingsAsyncWithHttpInfo($account_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20070';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20070::class;
         $request = $this->getAccountLockSettingsRequest($account_id);
 
         return $this->client
@@ -2609,12 +2583,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2721,7 +2695,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2741,7 +2715,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2764,7 +2738,7 @@ class AccountsApi
      */
     public function updateAccountLockSettings($account_id, $body = null)
     {
-        list($response) = $this->updateAccountLockSettingsWithHttpInfo($account_id, $body);
+        [$response] = $this->updateAccountLockSettingsWithHttpInfo($account_id, $body);
         return $response;
     }
 
@@ -2814,12 +2788,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2867,9 +2841,7 @@ class AccountsApi
     {
         return $this->updateAccountLockSettingsAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2894,12 +2866,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3010,7 +2982,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3030,7 +3002,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3053,7 +3025,7 @@ class AccountsApi
      */
     public function updateAccountOwner($account_id, $body = null)
     {
-        list($response) = $this->updateAccountOwnerWithHttpInfo($account_id, $body);
+        [$response] = $this->updateAccountOwnerWithHttpInfo($account_id, $body);
         return $response;
     }
 
@@ -3103,12 +3075,12 @@ class AccountsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3148,9 +3120,7 @@ class AccountsApi
     {
         return $this->updateAccountOwnerAsyncWithHttpInfo($account_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3175,12 +3145,12 @@ class AccountsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3291,7 +3261,7 @@ class AccountsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3311,7 +3281,7 @@ class AccountsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

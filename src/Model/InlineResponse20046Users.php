@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20046Users implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -66,8 +66,8 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
         'pmi' => 'int',
         'timezone' => 'string',
         'dept' => 'string',
-        'created_at' => '\DateTime',
-        'last_login_time' => '\DateTime',
+        'created_at' => '\\' . \DateTime::class,
+        'last_login_time' => '\\' . \DateTime::class,
         'last_client_version' => 'string',
         'group_ids' => 'string[]',
         'im_group_ids' => 'string[]',
@@ -247,21 +247,21 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['first_name'] = isset($data['first_name']) ? $data['first_name'] : null;
-        $this->container['last_name'] = isset($data['last_name']) ? $data['last_name'] : null;
-        $this->container['email'] = isset($data['email']) ? $data['email'] : 'john.doe@gmail.com';
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['pmi'] = isset($data['pmi']) ? $data['pmi'] : null;
-        $this->container['timezone'] = isset($data['timezone']) ? $data['timezone'] : null;
-        $this->container['dept'] = isset($data['dept']) ? $data['dept'] : null;
-        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
-        $this->container['last_login_time'] = isset($data['last_login_time']) ? $data['last_login_time'] : null;
-        $this->container['last_client_version'] = isset($data['last_client_version']) ? $data['last_client_version'] : null;
-        $this->container['group_ids'] = isset($data['group_ids']) ? $data['group_ids'] : null;
-        $this->container['im_group_ids'] = isset($data['im_group_ids']) ? $data['im_group_ids'] : null;
-        $this->container['verified'] = isset($data['verified']) ? $data['verified'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['first_name'] = $data['first_name'] ?? null;
+        $this->container['last_name'] = $data['last_name'] ?? null;
+        $this->container['email'] = $data['email'] ?? 'john.doe@gmail.com';
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['pmi'] = $data['pmi'] ?? null;
+        $this->container['timezone'] = $data['timezone'] ?? null;
+        $this->container['dept'] = $data['dept'] ?? null;
+        $this->container['created_at'] = $data['created_at'] ?? null;
+        $this->container['last_login_time'] = $data['last_login_time'] ?? null;
+        $this->container['last_client_version'] = $data['last_client_version'] ?? null;
+        $this->container['group_ids'] = $data['group_ids'] ?? null;
+        $this->container['im_group_ids'] = $data['im_group_ids'] ?? null;
+        $this->container['verified'] = $data['verified'] ?? null;
     }
 
     /**
@@ -676,7 +676,7 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -688,9 +688,9 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -701,7 +701,7 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -717,7 +717,7 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -736,7 +736,7 @@ class InlineResponse20046Users implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

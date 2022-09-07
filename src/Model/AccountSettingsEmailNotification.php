@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -203,12 +203,12 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['cloud_recording_avaliable_reminder'] = isset($data['cloud_recording_avaliable_reminder']) ? $data['cloud_recording_avaliable_reminder'] : null;
-        $this->container['jbh_reminder'] = isset($data['jbh_reminder']) ? $data['jbh_reminder'] : null;
-        $this->container['cancel_meeting_reminder'] = isset($data['cancel_meeting_reminder']) ? $data['cancel_meeting_reminder'] : null;
-        $this->container['low_host_count_reminder'] = isset($data['low_host_count_reminder']) ? $data['low_host_count_reminder'] : null;
-        $this->container['alternative_host_reminder'] = isset($data['alternative_host_reminder']) ? $data['alternative_host_reminder'] : null;
-        $this->container['schedule_for_reminder'] = isset($data['schedule_for_reminder']) ? $data['schedule_for_reminder'] : null;
+        $this->container['cloud_recording_avaliable_reminder'] = $data['cloud_recording_avaliable_reminder'] ?? null;
+        $this->container['jbh_reminder'] = $data['jbh_reminder'] ?? null;
+        $this->container['cancel_meeting_reminder'] = $data['cancel_meeting_reminder'] ?? null;
+        $this->container['low_host_count_reminder'] = $data['low_host_count_reminder'] ?? null;
+        $this->container['alternative_host_reminder'] = $data['alternative_host_reminder'] ?? null;
+        $this->container['schedule_for_reminder'] = $data['schedule_for_reminder'] ?? null;
     }
 
     /**
@@ -385,7 +385,7 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -397,9 +397,9 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -410,7 +410,7 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -426,7 +426,7 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -445,7 +445,7 @@ class AccountSettingsEmailNotification implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

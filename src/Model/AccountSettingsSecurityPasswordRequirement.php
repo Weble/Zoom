@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsSecurityPasswordRequirement implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -193,10 +193,10 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
      */
     public function __construct(array $data = null)
     {
-        $this->container['minimum_password_length'] = isset($data['minimum_password_length']) ? $data['minimum_password_length'] : null;
-        $this->container['have_special_character'] = isset($data['have_special_character']) ? $data['have_special_character'] : null;
-        $this->container['consecutive_characters_length'] = isset($data['consecutive_characters_length']) ? $data['consecutive_characters_length'] : null;
-        $this->container['weak_enhance_detection'] = isset($data['weak_enhance_detection']) ? $data['weak_enhance_detection'] : null;
+        $this->container['minimum_password_length'] = $data['minimum_password_length'] ?? null;
+        $this->container['have_special_character'] = $data['have_special_character'] ?? null;
+        $this->container['consecutive_characters_length'] = $data['consecutive_characters_length'] ?? null;
+        $this->container['weak_enhance_detection'] = $data['weak_enhance_detection'] ?? null;
     }
 
     /**
@@ -341,7 +341,7 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -353,9 +353,9 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -366,7 +366,7 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -382,7 +382,7 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -401,7 +401,7 @@ class AccountSettingsSecurityPasswordRequirement implements ModelInterface, Arra
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

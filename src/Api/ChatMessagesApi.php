@@ -176,9 +176,7 @@ class ChatMessagesApi
     {
         return $this->deleteChatMessageAsyncWithHttpInfo($message_id, $to_contact, $to_channel)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -202,9 +200,7 @@ class ChatMessagesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -312,7 +308,7 @@ class ChatMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -332,7 +328,7 @@ class ChatMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -427,9 +423,7 @@ class ChatMessagesApi
     {
         return $this->editMessageAsyncWithHttpInfo($message_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -452,9 +446,7 @@ class ChatMessagesApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -556,7 +548,7 @@ class ChatMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -576,7 +568,7 @@ class ChatMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -603,7 +595,7 @@ class ChatMessagesApi
      */
     public function getChatMessages($user_id, $to_contact = null, $to_channel = null, $date_ = null, $page_size = '10', $next_page_token = null)
     {
-        list($response) = $this->getChatMessagesWithHttpInfo($user_id, $to_contact, $to_channel, $date_, $page_size, $next_page_token);
+        [$response] = $this->getChatMessagesWithHttpInfo($user_id, $to_contact, $to_channel, $date_, $page_size, $next_page_token);
         return $response;
     }
 
@@ -625,7 +617,7 @@ class ChatMessagesApi
      */
     public function getChatMessagesWithHttpInfo($user_id, $to_contact = null, $to_channel = null, $date_ = null, $page_size = '10', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2006';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2006::class;
         $request = $this->getChatMessagesRequest($user_id, $to_contact, $to_channel, $date_, $page_size, $next_page_token);
 
         try {
@@ -657,12 +649,12 @@ class ChatMessagesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -677,7 +669,7 @@ class ChatMessagesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2006',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2006::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -706,9 +698,7 @@ class ChatMessagesApi
     {
         return $this->getChatMessagesAsyncWithHttpInfo($user_id, $to_contact, $to_channel, $date_, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -729,7 +719,7 @@ class ChatMessagesApi
      */
     public function getChatMessagesAsyncWithHttpInfo($user_id, $to_contact = null, $to_channel = null, $date_ = null, $page_size = '10', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2006';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2006::class;
         $request = $this->getChatMessagesRequest($user_id, $to_contact, $to_channel, $date_, $page_size, $next_page_token);
 
         return $this->client
@@ -737,12 +727,12 @@ class ChatMessagesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -878,7 +868,7 @@ class ChatMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -898,7 +888,7 @@ class ChatMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -920,7 +910,7 @@ class ChatMessagesApi
      */
     public function sendaChatMessage($body = null)
     {
-        list($response) = $this->sendaChatMessageWithHttpInfo($body);
+        [$response] = $this->sendaChatMessageWithHttpInfo($body);
         return $response;
     }
 
@@ -937,7 +927,7 @@ class ChatMessagesApi
      */
     public function sendaChatMessageWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2011';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2011::class;
         $request = $this->sendaChatMessageRequest($body);
 
         try {
@@ -969,12 +959,12 @@ class ChatMessagesApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -989,7 +979,7 @@ class ChatMessagesApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse2011',
+                        '\\' . \Weble\Zoom\Model\InlineResponse2011::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1013,9 +1003,7 @@ class ChatMessagesApi
     {
         return $this->sendaChatMessageAsyncWithHttpInfo($body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1031,7 +1019,7 @@ class ChatMessagesApi
      */
     public function sendaChatMessageAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse2011';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse2011::class;
         $request = $this->sendaChatMessageRequest($body);
 
         return $this->client
@@ -1039,12 +1027,12 @@ class ChatMessagesApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1140,7 +1128,7 @@ class ChatMessagesApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1160,7 +1148,7 @@ class ChatMessagesApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

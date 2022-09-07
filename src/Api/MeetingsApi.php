@@ -100,7 +100,7 @@ class MeetingsApi
      */
     public function listPastMeetingFiles($meeting_id)
     {
-        list($response) = $this->listPastMeetingFilesWithHttpInfo($meeting_id);
+        [$response] = $this->listPastMeetingFilesWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -117,7 +117,7 @@ class MeetingsApi
      */
     public function listPastMeetingFilesWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20084';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20084::class;
         $request = $this->listPastMeetingFilesRequest($meeting_id);
 
         try {
@@ -149,12 +149,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -169,7 +169,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20084',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20084::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -193,9 +193,7 @@ class MeetingsApi
     {
         return $this->listPastMeetingFilesAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -211,7 +209,7 @@ class MeetingsApi
      */
     public function listPastMeetingFilesAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20084';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20084::class;
         $request = $this->listPastMeetingFilesRequest($meeting_id);
 
         return $this->client
@@ -219,12 +217,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -331,7 +329,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -351,7 +349,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -373,7 +371,7 @@ class MeetingsApi
      */
     public function listPastMeetingPolls($meeting_id)
     {
-        list($response) = $this->listPastMeetingPollsWithHttpInfo($meeting_id);
+        [$response] = $this->listPastMeetingPollsWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -390,7 +388,7 @@ class MeetingsApi
      */
     public function listPastMeetingPollsWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20083';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20083::class;
         $request = $this->listPastMeetingPollsRequest($meeting_id);
 
         try {
@@ -422,12 +420,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -442,7 +440,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20083',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20083::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -466,9 +464,7 @@ class MeetingsApi
     {
         return $this->listPastMeetingPollsAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -484,7 +480,7 @@ class MeetingsApi
      */
     public function listPastMeetingPollsAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20083';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20083::class;
         $request = $this->listPastMeetingPollsRequest($meeting_id);
 
         return $this->client
@@ -492,12 +488,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -604,7 +600,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -624,7 +620,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -648,7 +644,7 @@ class MeetingsApi
      */
     public function meeting($meeting_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        list($response) = $this->meetingWithHttpInfo($meeting_id, $occurrence_id, $show_previous_occurrences);
+        [$response] = $this->meetingWithHttpInfo($meeting_id, $occurrence_id, $show_previous_occurrences);
         return $response;
     }
 
@@ -667,7 +663,7 @@ class MeetingsApi
      */
     public function meetingWithHttpInfo($meeting_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20022';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20022::class;
         $request = $this->meetingRequest($meeting_id, $occurrence_id, $show_previous_occurrences);
 
         try {
@@ -699,12 +695,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -719,7 +715,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20022',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20022::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -745,9 +741,7 @@ class MeetingsApi
     {
         return $this->meetingAsyncWithHttpInfo($meeting_id, $occurrence_id, $show_previous_occurrences)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -765,7 +759,7 @@ class MeetingsApi
      */
     public function meetingAsyncWithHttpInfo($meeting_id, $occurrence_id = null, $show_previous_occurrences = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20022';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20022::class;
         $request = $this->meetingRequest($meeting_id, $occurrence_id, $show_previous_occurrences);
 
         return $this->client
@@ -773,12 +767,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -895,7 +889,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -915,7 +909,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -938,7 +932,7 @@ class MeetingsApi
      */
     public function meetingCreate($user_id, $body)
     {
-        list($response) = $this->meetingCreateWithHttpInfo($user_id, $body);
+        [$response] = $this->meetingCreateWithHttpInfo($user_id, $body);
         return $response;
     }
 
@@ -956,7 +950,7 @@ class MeetingsApi
      */
     public function meetingCreateWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20110';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20110::class;
         $request = $this->meetingCreateRequest($user_id, $body);
 
         try {
@@ -988,12 +982,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1008,7 +1002,7 @@ class MeetingsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20110',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20110::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1033,9 +1027,7 @@ class MeetingsApi
     {
         return $this->meetingCreateAsyncWithHttpInfo($user_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1052,7 +1044,7 @@ class MeetingsApi
      */
     public function meetingCreateAsyncWithHttpInfo($user_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20110';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20110::class;
         $request = $this->meetingCreateRequest($user_id, $body);
 
         return $this->client
@@ -1060,12 +1052,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1182,7 +1174,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1202,7 +1194,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1300,9 +1292,7 @@ class MeetingsApi
     {
         return $this->meetingDeleteAsyncWithHttpInfo($meeting_id, $occurrence_id, $schedule_for_reminder)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1326,9 +1316,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1436,7 +1424,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1456,7 +1444,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1478,7 +1466,7 @@ class MeetingsApi
      */
     public function meetingInvitation($meeting_id)
     {
-        list($response) = $this->meetingInvitationWithHttpInfo($meeting_id);
+        [$response] = $this->meetingInvitationWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -1495,7 +1483,7 @@ class MeetingsApi
      */
     public function meetingInvitationWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\MeetingInvitation';
+        $returnType = '\\' . \Weble\Zoom\Model\MeetingInvitation::class;
         $request = $this->meetingInvitationRequest($meeting_id);
 
         try {
@@ -1527,12 +1515,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -1547,7 +1535,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\MeetingInvitation',
+                        '\\' . \Weble\Zoom\Model\MeetingInvitation::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1571,9 +1559,7 @@ class MeetingsApi
     {
         return $this->meetingInvitationAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1589,7 +1575,7 @@ class MeetingsApi
      */
     public function meetingInvitationAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\MeetingInvitation';
+        $returnType = '\\' . \Weble\Zoom\Model\MeetingInvitation::class;
         $request = $this->meetingInvitationRequest($meeting_id);
 
         return $this->client
@@ -1597,12 +1583,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -1709,7 +1695,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1729,7 +1715,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -1824,9 +1810,7 @@ class MeetingsApi
     {
         return $this->meetingLiveStreamStatusUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -1849,9 +1833,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -1959,7 +1941,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -1979,7 +1961,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2074,9 +2056,7 @@ class MeetingsApi
     {
         return $this->meetingLiveStreamUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2099,9 +2079,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2209,7 +2187,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2229,7 +2207,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2252,7 +2230,7 @@ class MeetingsApi
      */
     public function meetingPollCreate($meeting_id, $body)
     {
-        list($response) = $this->meetingPollCreateWithHttpInfo($meeting_id, $body);
+        [$response] = $this->meetingPollCreateWithHttpInfo($meeting_id, $body);
         return $response;
     }
 
@@ -2270,7 +2248,7 @@ class MeetingsApi
      */
     public function meetingPollCreateWithHttpInfo($meeting_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20112';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20112::class;
         $request = $this->meetingPollCreateRequest($meeting_id, $body);
 
         try {
@@ -2302,12 +2280,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2322,7 +2300,7 @@ class MeetingsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20112',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20112::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2347,9 +2325,7 @@ class MeetingsApi
     {
         return $this->meetingPollCreateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2366,7 +2342,7 @@ class MeetingsApi
      */
     public function meetingPollCreateAsyncWithHttpInfo($meeting_id, $body)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20112';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20112::class;
         $request = $this->meetingPollCreateRequest($meeting_id, $body);
 
         return $this->client
@@ -2374,12 +2350,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -2496,7 +2472,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2516,7 +2492,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2611,9 +2587,7 @@ class MeetingsApi
     {
         return $this->meetingPollDeleteAsyncWithHttpInfo($meeting_id, $poll_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2636,9 +2610,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -2751,7 +2723,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -2771,7 +2743,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'DELETE',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -2794,7 +2766,7 @@ class MeetingsApi
      */
     public function meetingPollGet($meeting_id, $poll_id)
     {
-        list($response) = $this->meetingPollGetWithHttpInfo($meeting_id, $poll_id);
+        [$response] = $this->meetingPollGetWithHttpInfo($meeting_id, $poll_id);
         return $response;
     }
 
@@ -2812,7 +2784,7 @@ class MeetingsApi
      */
     public function meetingPollGetWithHttpInfo($meeting_id, $poll_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20112';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20112::class;
         $request = $this->meetingPollGetRequest($meeting_id, $poll_id);
 
         try {
@@ -2844,12 +2816,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -2864,7 +2836,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20112',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20112::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2889,9 +2861,7 @@ class MeetingsApi
     {
         return $this->meetingPollGetAsyncWithHttpInfo($meeting_id, $poll_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -2908,7 +2878,7 @@ class MeetingsApi
      */
     public function meetingPollGetAsyncWithHttpInfo($meeting_id, $poll_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20112';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20112::class;
         $request = $this->meetingPollGetRequest($meeting_id, $poll_id);
 
         return $this->client
@@ -2916,12 +2886,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3043,7 +3013,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3063,7 +3033,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3161,9 +3131,7 @@ class MeetingsApi
     {
         return $this->meetingPollUpdateAsyncWithHttpInfo($meeting_id, $poll_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3187,9 +3155,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -3312,7 +3278,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3332,7 +3298,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3354,7 +3320,7 @@ class MeetingsApi
      */
     public function meetingPolls($meeting_id)
     {
-        list($response) = $this->meetingPollsWithHttpInfo($meeting_id);
+        [$response] = $this->meetingPollsWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -3403,12 +3369,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3447,9 +3413,7 @@ class MeetingsApi
     {
         return $this->meetingPollsAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3473,12 +3437,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3585,7 +3549,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3605,7 +3569,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3629,7 +3593,7 @@ class MeetingsApi
      */
     public function meetingRegistrantCreate($meeting_id, $body, $occurrence_ids = null)
     {
-        list($response) = $this->meetingRegistrantCreateWithHttpInfo($meeting_id, $body, $occurrence_ids);
+        [$response] = $this->meetingRegistrantCreateWithHttpInfo($meeting_id, $body, $occurrence_ids);
         return $response;
     }
 
@@ -3648,7 +3612,7 @@ class MeetingsApi
      */
     public function meetingRegistrantCreateWithHttpInfo($meeting_id, $body, $occurrence_ids = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20111';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20111::class;
         $request = $this->meetingRegistrantCreateRequest($meeting_id, $body, $occurrence_ids);
 
         try {
@@ -3680,12 +3644,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -3700,7 +3664,7 @@ class MeetingsApi
                 case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20111',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20111::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -3726,9 +3690,7 @@ class MeetingsApi
     {
         return $this->meetingRegistrantCreateAsyncWithHttpInfo($meeting_id, $body, $occurrence_ids)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -3746,7 +3708,7 @@ class MeetingsApi
      */
     public function meetingRegistrantCreateAsyncWithHttpInfo($meeting_id, $body, $occurrence_ids = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20111';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20111::class;
         $request = $this->meetingRegistrantCreateRequest($meeting_id, $body, $occurrence_ids);
 
         return $this->client
@@ -3754,12 +3716,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -3881,7 +3843,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -3901,7 +3863,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'POST',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -3996,9 +3958,7 @@ class MeetingsApi
     {
         return $this->meetingRegistrantQuestionUpdateAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4021,9 +3981,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4131,7 +4089,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4151,7 +4109,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4249,9 +4207,7 @@ class MeetingsApi
     {
         return $this->meetingRegistrantStatusAsyncWithHttpInfo($meeting_id, $body, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4275,9 +4231,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -4390,7 +4344,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4410,7 +4364,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4436,7 +4390,7 @@ class MeetingsApi
      */
     public function meetingRegistrants($meeting_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->meetingRegistrantsWithHttpInfo($meeting_id, $occurrence_id, $status, $page_size, $page_number);
+        [$response] = $this->meetingRegistrantsWithHttpInfo($meeting_id, $occurrence_id, $status, $page_size, $page_number);
         return $response;
     }
 
@@ -4457,7 +4411,7 @@ class MeetingsApi
      */
     public function meetingRegistrantsWithHttpInfo($meeting_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->meetingRegistrantsRequest($meeting_id, $occurrence_id, $status, $page_size, $page_number);
 
         try {
@@ -4489,12 +4443,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4509,7 +4463,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\RegistrationList',
+                        '\\' . \Weble\Zoom\Model\RegistrationList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4537,9 +4491,7 @@ class MeetingsApi
     {
         return $this->meetingRegistrantsAsyncWithHttpInfo($meeting_id, $occurrence_id, $status, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4559,7 +4511,7 @@ class MeetingsApi
      */
     public function meetingRegistrantsAsyncWithHttpInfo($meeting_id, $occurrence_id = null, $status = 'approved', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\RegistrationList';
+        $returnType = '\\' . \Weble\Zoom\Model\RegistrationList::class;
         $request = $this->meetingRegistrantsRequest($meeting_id, $occurrence_id, $status, $page_size, $page_number);
 
         return $this->client
@@ -4567,12 +4519,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4703,7 +4655,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4723,7 +4675,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -4745,7 +4697,7 @@ class MeetingsApi
      */
     public function meetingRegistrantsQuestionsGet($meeting_id)
     {
-        list($response) = $this->meetingRegistrantsQuestionsGetWithHttpInfo($meeting_id);
+        [$response] = $this->meetingRegistrantsQuestionsGetWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -4762,7 +4714,7 @@ class MeetingsApi
      */
     public function meetingRegistrantsQuestionsGetWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20025';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20025::class;
         $request = $this->meetingRegistrantsQuestionsGetRequest($meeting_id);
 
         try {
@@ -4794,12 +4746,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -4814,7 +4766,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20025',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20025::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -4838,9 +4790,7 @@ class MeetingsApi
     {
         return $this->meetingRegistrantsQuestionsGetAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -4856,7 +4806,7 @@ class MeetingsApi
      */
     public function meetingRegistrantsQuestionsGetAsyncWithHttpInfo($meeting_id)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20025';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20025::class;
         $request = $this->meetingRegistrantsQuestionsGetRequest($meeting_id);
 
         return $this->client
@@ -4864,12 +4814,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -4976,7 +4926,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -4996,7 +4946,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5091,9 +5041,7 @@ class MeetingsApi
     {
         return $this->meetingStatusAsyncWithHttpInfo($meeting_id, $body)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5116,9 +5064,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5226,7 +5172,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5246,7 +5192,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PUT',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5344,9 +5290,7 @@ class MeetingsApi
     {
         return $this->meetingUpdateAsyncWithHttpInfo($meeting_id, $body, $occurrence_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5370,9 +5314,7 @@ class MeetingsApi
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
+                fn($response) => [null, $response->getStatusCode(), $response->getHeaders()],
                 function ($exception) {
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
@@ -5485,7 +5427,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5505,7 +5447,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5530,7 +5472,7 @@ class MeetingsApi
      */
     public function meetings($user_id, $type = 'live', $page_size = '30', $page_number = '1')
     {
-        list($response) = $this->meetingsWithHttpInfo($user_id, $type, $page_size, $page_number);
+        [$response] = $this->meetingsWithHttpInfo($user_id, $type, $page_size, $page_number);
         return $response;
     }
 
@@ -5550,7 +5492,7 @@ class MeetingsApi
      */
     public function meetingsWithHttpInfo($user_id, $type = 'live', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\GroupList';
+        $returnType = '\\' . \Weble\Zoom\Model\GroupList::class;
         $request = $this->meetingsRequest($user_id, $type, $page_size, $page_number);
 
         try {
@@ -5582,12 +5524,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5602,7 +5544,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\GroupList',
+                        '\\' . \Weble\Zoom\Model\GroupList::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5629,9 +5571,7 @@ class MeetingsApi
     {
         return $this->meetingsAsyncWithHttpInfo($user_id, $type, $page_size, $page_number)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5650,7 +5590,7 @@ class MeetingsApi
      */
     public function meetingsAsyncWithHttpInfo($user_id, $type = 'live', $page_size = '30', $page_number = '1')
     {
-        $returnType = '\Weble\Zoom\Model\GroupList';
+        $returnType = '\\' . \Weble\Zoom\Model\GroupList::class;
         $request = $this->meetingsRequest($user_id, $type, $page_size, $page_number);
 
         return $this->client
@@ -5658,12 +5598,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -5789,7 +5729,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -5809,7 +5749,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -5831,7 +5771,7 @@ class MeetingsApi
      */
     public function pastMeetingDetails($meeting_uuid)
     {
-        list($response) = $this->pastMeetingDetailsWithHttpInfo($meeting_uuid);
+        [$response] = $this->pastMeetingDetailsWithHttpInfo($meeting_uuid);
         return $response;
     }
 
@@ -5848,7 +5788,7 @@ class MeetingsApi
      */
     public function pastMeetingDetailsWithHttpInfo($meeting_uuid)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20023';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20023::class;
         $request = $this->pastMeetingDetailsRequest($meeting_uuid);
 
         try {
@@ -5880,12 +5820,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -5900,7 +5840,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20023',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20023::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -5924,9 +5864,7 @@ class MeetingsApi
     {
         return $this->pastMeetingDetailsAsyncWithHttpInfo($meeting_uuid)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -5942,7 +5880,7 @@ class MeetingsApi
      */
     public function pastMeetingDetailsAsyncWithHttpInfo($meeting_uuid)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20023';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20023::class;
         $request = $this->pastMeetingDetailsRequest($meeting_uuid);
 
         return $this->client
@@ -5950,12 +5888,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6062,7 +6000,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6082,7 +6020,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6106,7 +6044,7 @@ class MeetingsApi
      */
     public function pastMeetingParticipants($meeting_uuid, $page_size = '30', $next_page_token = null)
     {
-        list($response) = $this->pastMeetingParticipantsWithHttpInfo($meeting_uuid, $page_size, $next_page_token);
+        [$response] = $this->pastMeetingParticipantsWithHttpInfo($meeting_uuid, $page_size, $next_page_token);
         return $response;
     }
 
@@ -6125,7 +6063,7 @@ class MeetingsApi
      */
     public function pastMeetingParticipantsWithHttpInfo($meeting_uuid, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20024';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20024::class;
         $request = $this->pastMeetingParticipantsRequest($meeting_uuid, $page_size, $next_page_token);
 
         try {
@@ -6157,12 +6095,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6177,7 +6115,7 @@ class MeetingsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Weble\Zoom\Model\InlineResponse20024',
+                        '\\' . \Weble\Zoom\Model\InlineResponse20024::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -6203,9 +6141,7 @@ class MeetingsApi
     {
         return $this->pastMeetingParticipantsAsyncWithHttpInfo($meeting_uuid, $page_size, $next_page_token)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6223,7 +6159,7 @@ class MeetingsApi
      */
     public function pastMeetingParticipantsAsyncWithHttpInfo($meeting_uuid, $page_size = '30', $next_page_token = null)
     {
-        $returnType = '\Weble\Zoom\Model\InlineResponse20024';
+        $returnType = '\\' . \Weble\Zoom\Model\InlineResponse20024::class;
         $request = $this->pastMeetingParticipantsRequest($meeting_uuid, $page_size, $next_page_token);
 
         return $this->client
@@ -6231,12 +6167,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6357,7 +6293,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6377,7 +6313,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -6399,7 +6335,7 @@ class MeetingsApi
      */
     public function pastMeetings($meeting_id)
     {
-        list($response) = $this->pastMeetingsWithHttpInfo($meeting_id);
+        [$response] = $this->pastMeetingsWithHttpInfo($meeting_id);
         return $response;
     }
 
@@ -6448,12 +6384,12 @@ class MeetingsApi
             }
 
             $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
+            if ($returnType === '\\' . \SplFileObject::class) {
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                 }
             }
 
@@ -6492,9 +6428,7 @@ class MeetingsApi
     {
         return $this->pastMeetingsAsyncWithHttpInfo($meeting_id)
             ->then(
-                function ($response) {
-                    return $response[0];
-                }
+                fn($response) => $response[0]
             );
     }
 
@@ -6518,12 +6452,12 @@ class MeetingsApi
             ->then(
                 function ($response) use ($returnType) {
                     $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
+                    if ($returnType === '\\' . \SplFileObject::class) {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = json_decode($content, null, 512, JSON_THROW_ON_ERROR);
                         }
                     }
 
@@ -6630,7 +6564,7 @@ class MeetingsApi
 
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
             }
         }
 
@@ -6650,7 +6584,7 @@ class MeetingsApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),

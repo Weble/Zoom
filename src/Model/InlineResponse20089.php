@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class InlineResponse20089 implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -61,9 +61,9 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
         'display_name' => 'string',
         'device_type' => 'string',
         'mac_address' => 'string',
-        'assignee' => '\Weble\Zoom\Model\InlineResponse20089Assignee',
+        'assignee' => '\\' . \Weble\Zoom\Model\InlineResponse20089Assignee::class,
         'status' => 'string',
-        'site' => '\Weble\Zoom\Model\InlineResponse20088Site'
+        'site' => '\\' . \Weble\Zoom\Model\InlineResponse20088Site::class
     ];
 
     /**
@@ -188,8 +188,8 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const STATUS_ONLINE = 'online';
-    const STATUS_OFFLINE = 'offline';
+    public const STATUS_ONLINE = 'online';
+    public const STATUS_OFFLINE = 'offline';
 
 
 
@@ -222,13 +222,13 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['display_name'] = isset($data['display_name']) ? $data['display_name'] : null;
-        $this->container['device_type'] = isset($data['device_type']) ? $data['device_type'] : null;
-        $this->container['mac_address'] = isset($data['mac_address']) ? $data['mac_address'] : null;
-        $this->container['assignee'] = isset($data['assignee']) ? $data['assignee'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
-        $this->container['site'] = isset($data['site']) ? $data['site'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['display_name'] = $data['display_name'] ?? null;
+        $this->container['device_type'] = $data['device_type'] ?? null;
+        $this->container['mac_address'] = $data['mac_address'] ?? null;
+        $this->container['assignee'] = $data['assignee'] ?? null;
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['site'] = $data['site'] ?? null;
     }
 
     /**
@@ -446,7 +446,7 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -458,9 +458,9 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -471,7 +471,7 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -487,7 +487,7 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -506,7 +506,7 @@ class InlineResponse20089 implements ModelInterface, ArrayAccess
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

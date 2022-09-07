@@ -43,7 +43,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -198,11 +198,11 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
      */
     public function __construct(array $data = null)
     {
-        $this->container['length'] = isset($data['length']) ? $data['length'] : null;
-        $this->container['have_letter'] = isset($data['have_letter']) ? $data['have_letter'] : null;
-        $this->container['have_number'] = isset($data['have_number']) ? $data['have_number'] : null;
-        $this->container['have_special_character'] = isset($data['have_special_character']) ? $data['have_special_character'] : null;
-        $this->container['only_allow_numeric'] = isset($data['only_allow_numeric']) ? $data['only_allow_numeric'] : null;
+        $this->container['length'] = $data['length'] ?? null;
+        $this->container['have_letter'] = $data['have_letter'] ?? null;
+        $this->container['have_number'] = $data['have_number'] ?? null;
+        $this->container['have_special_character'] = $data['have_special_character'] ?? null;
+        $this->container['only_allow_numeric'] = $data['only_allow_numeric'] ?? null;
     }
 
     /**
@@ -364,7 +364,7 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -376,9 +376,9 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -389,7 +389,7 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -405,7 +405,7 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -424,7 +424,7 @@ class AccountSettingsRecordingRecordingPasswordRequirement implements ModelInter
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 

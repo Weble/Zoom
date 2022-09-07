@@ -42,7 +42,7 @@ use \Weble\Zoom\ObjectSerializer;
  */
 class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implements ModelInterface, ArrayAccess
 {
-    const DISCRIMINATOR = null;
+    public const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
@@ -183,12 +183,12 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
         return self::$swaggerModelName;
     }
 
-    const TYPE_INTERNALLY = 'internally';
-    const TYPE_ENFORCE_LOGIN = 'enforce_login';
-    const TYPE_ENFORCE_LOGIN_WITH_DOMAINS = 'enforce_login_with_domains';
-    const ACTION_UPDATE = 'update';
-    const ACTION_ADD = 'add';
-    const ACTION_DELETE = 'delete';
+    public const TYPE_INTERNALLY = 'internally';
+    public const TYPE_ENFORCE_LOGIN = 'enforce_login';
+    public const TYPE_ENFORCE_LOGIN_WITH_DOMAINS = 'enforce_login_with_domains';
+    public const ACTION_UPDATE = 'update';
+    public const ACTION_ADD = 'add';
+    public const ACTION_DELETE = 'delete';
 
 
 
@@ -236,12 +236,12 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['default_option'] = isset($data['default_option']) ? $data['default_option'] : null;
-        $this->container['action'] = isset($data['action']) ? $data['action'] : null;
-        $this->container['domains'] = isset($data['domains']) ? $data['domains'] : null;
+        $this->container['id'] = $data['id'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['default_option'] = $data['default_option'] ?? null;
+        $this->container['action'] = $data['action'] ?? null;
+        $this->container['domains'] = $data['domains'] ?? null;
     }
 
     /**
@@ -452,7 +452,7 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -464,9 +464,9 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+        return $this->container[$offset] ?? null;
     }
 
     /**
@@ -477,7 +477,7 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -493,7 +493,7 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->container[$offset]);
     }
@@ -512,7 +512,7 @@ class AccountSettingsRecordingAuthenticationUpdateAuthenticationOption implement
             );
         }
 
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), JSON_THROW_ON_ERROR);
     }
 }
 
