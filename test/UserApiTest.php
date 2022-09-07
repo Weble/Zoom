@@ -9,10 +9,13 @@ class UserApiTest extends TestCase
     /** @test */
     public function generates_oauth_token()
     {
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+        $dotenv->load();
+
         // @see https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/
-        $account_id = 'vCGX5uzaQKSwVnDApR2TzQ';
-        $apiKey = "BWbLI2YpQFqPXEULUPxbCg";
-        $apiSecret = "swsJ337bokb5uQmdgVidTOxvX0wTlf3N";
+        $account_id = $_ENV['ACCOUNT_ID'] ?? null;
+        $apiKey = $_ENV['API_KEY'] ?? null;
+        $apiSecret = $_ENV['API_SECRET'] ?? null;
 
 
         // Valid for 1 hour.
